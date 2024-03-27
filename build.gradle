@@ -1,0 +1,21 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation("dk.cachet.carp.common:carp.common-jvm:${property("carpCoreVersion")}")
+    implementation("dk.cachet.carp.protocols:carp.protocols.core-jvm:${property("carpCoreVersion")}")
+    implementation("dk.cachet.carp.deployments:carp.deployments.core-jvm:${property("carpCoreVersion")}")
+    implementation("dk.cachet.carp.studies:carp.studies.core-jvm:${property("carpCoreVersion")}")
+    implementation("dk.cachet.carp.data:carp.data.core-jvm:${property("carpCoreVersion")}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+}
