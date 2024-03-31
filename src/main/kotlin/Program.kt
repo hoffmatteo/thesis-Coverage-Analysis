@@ -1,3 +1,4 @@
+import carp.covanalyser.core.infrastructure.AltitudeExpectation
 import carp.ws.domain.DataPoint
 import carp.ws.domain.DataPointHeaderDto
 import kotlinx.datetime.Clock
@@ -18,14 +19,14 @@ fun main(args: Array<String>) {
         Instant.parse("2020-06-30T14:44:01.251Z")
     )
 
-    var expectation = Expectation(
+    var expectation = AltitudeExpectation(
         numDataPoints = 2,
         isValid = { input: DataPoint -> input.carpBody?.get("altitude") as Double > 0 },
         dataSource = "location",
         timeframeSeconds = 3600
     )
 
-    var coverage = Coverage(expectation, 0)
+    var coverage = CoverageAnalysis(expectation, 0)
 
     println(coverage.calculateCoverage(dataPoints, Instant.parse("2020-06-30T14:44:01.251Z")))
 

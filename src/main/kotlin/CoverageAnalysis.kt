@@ -1,15 +1,21 @@
+import carp.covanalyser.core.domain.Coverage
+import carp.covanalyser.core.infrastructure.AltitudeExpectation
 import carp.ws.domain.DataPoint
 import kotlinx.datetime.Instant
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 
-class Coverage(
-    var expectation: Expectation,
+class CoverageAnalysis(
+    var expectation: AltitudeExpectation,
     var timeFrameSeconds: Int
 ) {
 
-    fun calculateCoverage(data: List<DataPoint>, startTime: Instant): Double {
+    fun startCoverageAnalysis() {
+        // while loop that requests data from given DataSource in timeFrameSeconds intervals and calculates coverage to export it
+    }
+
+    fun calculateCoverage(data: List<DataPoint>, startTime: Instant): Coverage {
         // obtain number of fulfilled expectations --> based on timestamp
         // split data into timeboxes as defined by expectation
         // Problem: timebox based on when data collection started --> first value could be a missing value
@@ -44,7 +50,7 @@ class Coverage(
 
         println(timeboxes)
 
-        return fulfilledExpectations / timeboxes.size.toDouble()
+        return Coverage(timeboxes, fulfilledExpectations / timeboxes.size.toDouble())
 
 
         // for each timebox, check if the number of valid data points is greater >= than the expectation
