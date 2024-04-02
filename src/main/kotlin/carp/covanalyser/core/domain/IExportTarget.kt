@@ -2,5 +2,5 @@ package carp.covanalyser.core.domain
 
 interface IExportTarget {
 
-    fun exportData(data: Any): Any
+    suspend fun exportCoverage(data: Coverage): String
 }

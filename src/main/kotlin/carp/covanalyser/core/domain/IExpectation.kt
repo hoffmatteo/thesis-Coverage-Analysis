@@ -8,7 +8,7 @@ interface IExpectation {
     var timeframeSeconds: Int
 
 
-    public abstract fun isValid(input: Data): Boolean
+    fun isValid(input: Data): Boolean
 
 
 }
