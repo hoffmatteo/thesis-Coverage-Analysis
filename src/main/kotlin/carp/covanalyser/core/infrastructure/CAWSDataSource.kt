@@ -1,6 +1,6 @@
 package carp.covanalyser.core.infrastructure
 
-import carp.covanalyser.core.domain.IDataSource
+import carp.covanalyser.core.domain.DataSource
 import carp.ws.domain.DataPoint
 import createDataPoints
 import dk.cachet.carp.common.application.UUID
@@ -11,7 +11,7 @@ import kotlinx.datetime.Instant
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class DataSourceCarpWS(override var deploymentId: UUID) : IDataSource {
+class CAWSDataSource(override var deploymentId: UUID) : DataSource {
     override suspend fun obtainData(): List<Measurement<Data>> {
         var dataPoints: List<DataPoint> = createDataPoints(
             100,

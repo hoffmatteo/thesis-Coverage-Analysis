@@ -24,7 +24,7 @@ class CoverageAnalysisService {
             val job = serviceScope.launch {
                 while (isActive) {
                     it.calculateCoverage()
-                    delay(it.expectation.timeframeSeconds * 1000L) // delay is in milliseconds
+                    delay(it.timeFrameSeconds * 1000L) // delay is in milliseconds
                 }
             }
             jobs[id] = job

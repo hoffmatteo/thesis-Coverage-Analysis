@@ -2,7 +2,7 @@ package carp.covanalyser.core.domain
 
 import dk.cachet.carp.common.application.data.Data
 
-interface IExpectation {
+interface Expectation {
     var numDataPoints: Int
     var dataSource: String
     var timeframeSeconds: Int

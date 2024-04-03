@@ -1,10 +1,10 @@
 package carp.covanalyser.core.domain
 
 class CoverageAnalysis(
-    var expectation: IExpectation,
+    var expectation: Expectation,
     var timeFrameSeconds: Int,
-    var dataSource: IDataSource,
-    var exportTarget: IExportTarget
+    var dataSource: DataSource,
+    var exportTarget: ExportTarget
 ) {
     suspend fun calculateCoverage(): Boolean {
         var data = dataSource.obtainData()
