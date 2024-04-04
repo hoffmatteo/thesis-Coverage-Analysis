@@ -1,7 +1,8 @@
-package carp.covanalyser.core.infrastructure
+package carp.covanalyser.core.infrastructure.factories
 
 import carp.covanalyser.core.domain.ExportTarget
-import carp.covanalyser.core.domain.ExportTargetFactory
+import carp.covanalyser.core.domain.factories.ExportTargetFactory
+import carp.covanalyser.core.infrastructure.CSVExportTarget
 
 class DefaultExportTargetFactory : ExportTargetFactory {
 

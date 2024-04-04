@@ -1,7 +1,8 @@
-package carp.covanalyser.core.infrastructure
+package carp.covanalyser.core.infrastructure.factories
 
 import carp.covanalyser.core.domain.Expectation
-import carp.covanalyser.core.domain.ExpectationFactory
+import carp.covanalyser.core.domain.factories.ExpectationFactory
+import carp.covanalyser.core.infrastructure.AltitudeExpectation
 
 class DefaultExpectationFactory : ExpectationFactory {
 

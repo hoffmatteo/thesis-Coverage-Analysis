@@ -1,6 +1,6 @@
 package carp.covanalyser.core.infrastructure
 
-import carp.covanalyser.core.domain.DataSource
+import carp.covanalyser.core.domain.DataStore
 import carp.ws.domain.DataPoint
 import createDataPoints
 import dk.cachet.carp.common.application.UUID
@@ -11,9 +11,9 @@ import kotlinx.datetime.Instant
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class CAWSDataSource(override var deploymentId: UUID) : DataSource {
-    override suspend fun obtainData(): List<Measurement<Data>> {
-        var dataPoints: List<DataPoint> = createDataPoints(
+class CAWSDataStore(override var deploymentId: UUID) : DataStore {
+    override suspend fun obtainData(startTime: Instant, endTime: Instant): List<Measurement<Data>> {
+        val dataPoints: List<DataPoint> = createDataPoints(
             100,
             listOf(10, 20, 30),
             listOf(60.toDuration(DurationUnit.MINUTES), 30.toDuration(DurationUnit.MINUTES)),
@@ -24,7 +24,7 @@ class CAWSDataSource(override var deploymentId: UUID) : DataSource {
     }
 
 
-    fun convertDataPointsToMeasurements(dataPoints: List<DataPoint>): List<Measurement<Data>> {
+    private fun convertDataPointsToMeasurements(dataPoints: List<DataPoint>): List<Measurement<Data>> {
         val measurements = mutableListOf<Measurement<Data>>()
         for (dataPoint in dataPoints) {
             val measurement = Measurement(

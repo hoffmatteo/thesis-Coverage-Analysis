@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
     var dataPoints: List<DataPoint> = createDataPoints(
         100,
         listOf(10, 20, 30),
-        listOf(19.toDuration(DurationUnit.MINUTES), 19.toDuration(DurationUnit.MINUTES)),
+        listOf(35.toDuration(DurationUnit.MINUTES), 35.toDuration(DurationUnit.MINUTES)),
         Instant.parse("2020-06-30T14:44:01.251Z")
     )
 
