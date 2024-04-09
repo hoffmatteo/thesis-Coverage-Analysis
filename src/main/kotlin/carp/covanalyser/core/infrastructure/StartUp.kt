@@ -13,7 +13,7 @@ import kotlinx.datetime.Instant
 
 class StartUp {
 
-    fun startUp() {
+    suspend fun startUp() {
         val defaultExpectationFactory = DefaultExpectationFactory()
         val defaultDataSourceFactory = DefaultDataSourceFactory()
         val defaultExportTargetFactory = DefaultExportTargetFactory()
@@ -22,7 +22,7 @@ class StartUp {
         val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
 
         // test
-        val expectation = defaultExpectationFactory.createExpectation("AltitudeExpectation", 10, "test", 10)
+        val expectation = defaultExpectationFactory.createExpectation("AltitudeExpectation", 2, "test", 36000)
         val dataSource = defaultDataSourceFactory.createDataSource("CAWSDataSource", UUID.randomUUID())
         val exportTarget = defaultExportTargetFactory.createExportTarget("CSVExportTarget")
 
@@ -31,8 +31,13 @@ class StartUp {
             3600,
             dataSource,
             exportTarget,
-            Instant.parse("2020-06-30T14:44:01.251Z"),
-            Instant.parse("2020-06-31T14:44:01.251Z")
+            Instant.parse("2020-06-29T14:44:01.251Z"),
+            Instant.parse("2020-06-30T14:44:01.251Z")
+        )
+
+        coverageAnalysis.calculateCoverage(
+            Instant.parse("2020-06-29T14:44:01.251Z"),
+            Instant.parse("2020-06-30T14:44:01.251Z")
         )
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
