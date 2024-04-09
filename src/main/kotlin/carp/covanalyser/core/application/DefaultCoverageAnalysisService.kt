@@ -12,6 +12,7 @@ import kotlin.time.toDuration
  * Manage coverage analysis
  */
 class DefaultCoverageAnalysisService(var eventBus: EventBus) : CoverageAnalysisService {
+    //TODO how do I model  coverage of a single participant versus of an entire study?
     private val analyses = mutableMapOf<String, CoverageAnalysis>()
     private val jobs = mutableMapOf<String, Job>()
     private val serviceScope = CoroutineScope(Dispatchers.Default)
@@ -21,6 +22,7 @@ class DefaultCoverageAnalysisService(var eventBus: EventBus) : CoverageAnalysisS
         analyses[id] = analysis
     }
 
+    // TODO some analysis is recurring, some not --> e.g. only check over 1 month: survey done? not recurring
     override fun startRecurringAnalysis(id: String) {
         val analysis = analyses[id]
         analysis?.let {

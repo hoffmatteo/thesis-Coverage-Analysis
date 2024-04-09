@@ -1,19 +1,17 @@
 package carp.covanalyser.core.application.events
 
+import kotlin.reflect.KClass
+
 /**
  * The [EventBus] is used to publish and subscribe to events for communication between modules.
  */
 interface EventBus {
-    val subscribers: Map<Class<out Event>, MutableList<(Event) -> Unit>>
 
-    fun <T : Event> subscribe(eventType: Class<T>, listener: (T) -> Unit)
+    fun <T : Event> subscribe(eventType: KClass<T>, listener: (Event) -> Unit)
 
-    fun <T : Event> unsubscribe(eventType: Class<T>, listener: (T) -> Unit)
-
+    fun <T : Event> unsubscribe(eventType: KClass<T>, listener: (Event) -> Unit)
 
     fun <T : Event> publish(event: T)
-
-
 }
 
 
