@@ -1,7 +1,5 @@
 package carp.covanalyser.core.domain
 
-import dk.cachet.carp.common.application.data.Data
-import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -18,67 +16,62 @@ class CoverageAnalysis(
 ) {
     // calculation of single coverage
     suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): Boolean {
+        println("hello")
         var data = dataStore.obtainData(calcStartTime, calcEndTime)
-        val numExpectedExpectations = (calcEndTime.minus(calcStartTime).inWholeSeconds / timeFrameSeconds)
+        val numExpectedExpectations = (calcEndTime.minus(calcStartTime).inWholeSeconds / expectation.timeframeSeconds)
 
-        //TODO important: < calcEndTime, otherwise double count
-        //calc coverage with data and expectation
-        /*
-        val timeBoxes = mutableListOf<TimeBox>()
-        val currTime = calcStartTime
-        while (currTime <= calcEndTime) {
-            timeBoxes.add(
-                TimeBox(
-                    currTime,
-                    currTime.plus(timeFrameSeconds.toDuration(DurationUnit.SECONDS)),
-                    mutableListOf()
-                )
-            )
-            currTime.plus(timeFrameSeconds.toDuration(DurationUnit.SECONDS))
-        }
-        // TODO can assume data is sorted by time?
-        // TODO this is pretty inefficient, for sure a better way exists
-        for (measurement in data) {
-            for (timeBox in timeBoxes) {
-                if (measurement.sensorStartTime >= timeBox.startTime.toEpochMilliseconds() && measurement.sensorEndTime!! <= timeBox.endTime.toEpochMilliseconds()) {
-                    timeBox.measurements.add(measurement)
-                }
-            }
-        }
-
-         */
         var windowStart = calcStartTime
-        var windowEnd = windowStart.plus(timeFrameSeconds.toDuration(DurationUnit.SECONDS))
-        var count = 0
+        var windowEnd = windowStart.plus(expectation.timeframeSeconds.toDuration(DurationUnit.SECONDS))
+        var currCount = 0
+        var totalCountMeasurements = 0
         var fulfilledExpectations = 0
+
+
         for (measurement in data) {
+            // if measurements are outside of calculation window, break
+            if (measurement.sensorStartTime >= calcEndTime.toEpochMilliseconds()) {
+                break
+            } else {
+                // count all fitting measurements for absolute coverage
+                totalCountMeasurements++
+            }
             if (measurement.sensorStartTime >= windowStart.toEpochMilliseconds() && measurement.sensorStartTime < windowEnd.toEpochMilliseconds()) {
                 // count for current window
-                count++
+                currCount++
             } else {
                 // check if expectation was met in last window
-                if (count >= expectation.numDataPoints) {
+                if (currCount >= expectation.numDataPoints) {
                     fulfilledExpectations++
                 }
+                // move window to next measurement
                 while (measurement.sensorStartTime > windowEnd.toEpochMilliseconds()) {
-                    windowStart = windowStart.plus(timeFrameSeconds.toDuration(DurationUnit.SECONDS))
-                    windowEnd = windowEnd.plus(timeFrameSeconds.toDuration(DurationUnit.SECONDS))
+                    windowStart = windowStart.plus(expectation.timeframeSeconds.toDuration(DurationUnit.SECONDS))
+                    windowEnd = windowEnd.plus(expectation.timeframeSeconds.toDuration(DurationUnit.SECONDS))
                 }
-                count = 1
+                // reset count for new window
+                currCount = 1
             }
         }
-        var timeCoverage = (fulfilledExpectations / numExpectedExpectations).toDouble()
-        // time frames are multiple of timeframeseconds?
-        val coverage = Coverage(0.0, timeCoverage, mutableListOf<Int>())
 
-        println("Coverage: ${coverage.timeCoverage}")
+        val timeCoverage = fulfilledExpectations.toDouble() / numExpectedExpectations
+        var absoluteCoverage =
+            totalCountMeasurements.toDouble() / (numExpectedExpectations * expectation.numDataPoints)
+        if (absoluteCoverage > 1.0) {
+            absoluteCoverage = 1.0
+        }
+        // time frames are multiple of timeframeseconds?
+        val coverage = Coverage(absoluteCoverage, timeCoverage, mutableListOf<Int>())
+
+        println("Coverage: ${coverage}")
 
         exportTarget.exportCoverage(coverage)
 
         return true
     }
 
-    data class TimeBox(val startTime: Instant, val endTime: Instant, val measurements: MutableList<Measurement<Data>>)
+    override fun toString(): String {
+        return "CoverageAnalysis(expectation=$expectation, timeFrameSeconds=$timeFrameSeconds, dataStore=$dataStore, exportTarget=$exportTarget, startTime=$startTime, endTime=$endTime)"
+    }
 
 
 }

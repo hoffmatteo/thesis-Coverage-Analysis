@@ -6,9 +6,7 @@ interface CoverageAnalysisService {
 
     fun registerAnalysis(id: String, analysis: CoverageAnalysis)
 
-    fun startRecurringAnalysis(id: String)
-
-    fun startFullAnalysis(id: String)
+    fun startAnalysis(id: String)
 
     fun stopAnalysis(id: String)
 

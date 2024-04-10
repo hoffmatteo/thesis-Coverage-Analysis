@@ -22,7 +22,7 @@ class StartUp {
         val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
 
         // test
-        val expectation = defaultExpectationFactory.createExpectation("AltitudeExpectation", 2, "test", 36000)
+        val expectation = defaultExpectationFactory.createExpectation("AltitudeExpectation", 1, "test", 30)
         val dataSource = defaultDataSourceFactory.createDataSource("CAWSDataSource", UUID.randomUUID())
         val exportTarget = defaultExportTargetFactory.createExportTarget("CSVExportTarget")
 
@@ -32,15 +32,22 @@ class StartUp {
             dataSource,
             exportTarget,
             Instant.parse("2020-06-29T14:44:01.251Z"),
-            Instant.parse("2020-06-30T14:44:01.251Z")
+            Instant.parse("2020-06-29T16:44:01.251Z")
         )
 
-        coverageAnalysis.calculateCoverage(
+        /*coverageAnalysis.calculateCoverage(
             Instant.parse("2020-06-29T14:44:01.251Z"),
-            Instant.parse("2020-06-30T14:44:01.251Z")
+            Instant.parse("2020-06-29T14:46:01.251Z")
         )
+
+         */
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
+
+        while (true) {
+            // do nothing
+
+        }
     }
 
     private fun handleCoverageAnalysisCompletedEvent(event: Event) {

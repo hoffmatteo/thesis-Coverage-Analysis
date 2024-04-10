@@ -10,12 +10,11 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 class CAWSDataStore(override var deploymentId: UUID) : DataStore {
-    //TODO convert this to real returned type from CAWS
     override suspend fun obtainData(startTime: Instant, endTime: Instant): List<Measurement<Data>> {
         val dataPoints: List<Measurement<Data>> = createDataPoints(
-            100,
+            1000,
             listOf(10, 20, 30),
-            listOf(61.toDuration(DurationUnit.MINUTES), 10.toDuration(DurationUnit.MINUTES)),
+            listOf(10.toDuration(DurationUnit.SECONDS), 10.toDuration(DurationUnit.SECONDS)),
             Instant.parse("2020-06-29T14:44:01.251Z")
         )
 
