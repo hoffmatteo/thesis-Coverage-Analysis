@@ -5,26 +5,20 @@ import carp.covanalyser.core.application.events.CoverageAnalysisCompletedEvent
 import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
 import carp.covanalyser.core.application.events.Event
 import carp.covanalyser.core.domain.CoverageAnalysis
-import carp.covanalyser.core.infrastructure.factories.DefaultDataSourceFactory
-import carp.covanalyser.core.infrastructure.factories.DefaultExpectationFactory
-import carp.covanalyser.core.infrastructure.factories.DefaultExportTargetFactory
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
 class StartUp {
 
-    suspend fun startUp() {
-        val defaultExpectationFactory = DefaultExpectationFactory()
-        val defaultDataSourceFactory = DefaultDataSourceFactory()
-        val defaultExportTargetFactory = DefaultExportTargetFactory()
+    fun startUp() {
 
         val eventBus = DefaultEventBus()
         val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
 
         // test
-        val expectation = defaultExpectationFactory.createExpectation("AltitudeExpectation", 1, "test", 30)
-        val dataSource = defaultDataSourceFactory.createDataSource("CAWSDataSource", UUID.randomUUID())
-        val exportTarget = defaultExportTargetFactory.createExportTarget("CSVExportTarget")
+        val expectation = AltitudeExpectation(1, "test", 30)
+        val dataSource = CAWSDataStore(UUID.randomUUID())
+        val exportTarget = CSVExportTarget("test.csv")
 
         val coverageAnalysis = CoverageAnalysis(
             expectation,
@@ -35,12 +29,6 @@ class StartUp {
             Instant.parse("2020-06-29T16:44:01.251Z")
         )
 
-        /*coverageAnalysis.calculateCoverage(
-            Instant.parse("2020-06-29T14:44:01.251Z"),
-            Instant.parse("2020-06-29T14:46:01.251Z")
-        )
-
-         */
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
 

@@ -66,6 +66,7 @@ class DefaultCoverageAnalysisService(private var eventBus: EventBus) : CoverageA
         }
     }
 
+    // TODO call it schedule instead of delay?
     private fun analyze(id: String, hasDelay: Boolean, startTime: Instant, endTime: Instant): Job {
         val analysis = analyses[id] ?: throw Exception("Analysis not found")
         var currTime = startTime

@@ -9,7 +9,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 
-fun main(args: Array<String>) {
+fun main() {
     // when I call endpoint, I receive list of DataPoint objects like this --> use it to analyze
 
     //var data: Data = dataPoint.carpBody as Data

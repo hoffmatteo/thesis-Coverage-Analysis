@@ -6,7 +6,7 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
 
-suspend fun main(args: Array<String>) {
+suspend fun main() {
     // val apiHandler = APIHandler()
     // apiHandler.handleRequest("/coverage-analysis")
     StartUp().startUp()

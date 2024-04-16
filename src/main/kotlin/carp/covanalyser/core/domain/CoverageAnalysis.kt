@@ -15,9 +15,8 @@ class CoverageAnalysis(
     var endTime: Instant
 ) {
     // calculation of single coverage
-    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): Boolean {
-        println("hello")
-        var data = dataStore.obtainData(calcStartTime, calcEndTime)
+    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): Coverage {
+        val data = dataStore.obtainData(calcStartTime, calcEndTime)
         val numExpectedExpectations = (calcEndTime.minus(calcStartTime).inWholeSeconds / expectation.timeframeSeconds)
 
         var windowStart = calcStartTime
@@ -30,6 +29,9 @@ class CoverageAnalysis(
         for (measurement in data) {
             // if measurements are outside of calculation window, break
             if (measurement.sensorStartTime >= calcEndTime.toEpochMilliseconds()) {
+                if (currCount >= expectation.numDataPoints) {
+                    fulfilledExpectations++
+                }
                 break
             } else {
                 // count all fitting measurements for absolute coverage
@@ -41,10 +43,11 @@ class CoverageAnalysis(
             } else {
                 // check if expectation was met in last window
                 if (currCount >= expectation.numDataPoints) {
+                    println("Expectation met in window: $windowStart - $windowEnd")
                     fulfilledExpectations++
                 }
                 // move window to next measurement
-                while (measurement.sensorStartTime > windowEnd.toEpochMilliseconds()) {
+                while (measurement.sensorStartTime >= windowEnd.toEpochMilliseconds()) {
                     windowStart = windowStart.plus(expectation.timeframeSeconds.toDuration(DurationUnit.SECONDS))
                     windowEnd = windowEnd.plus(expectation.timeframeSeconds.toDuration(DurationUnit.SECONDS))
                 }
@@ -59,14 +62,16 @@ class CoverageAnalysis(
         if (absoluteCoverage > 1.0) {
             absoluteCoverage = 1.0
         }
+
+        println(data.size)
         // time frames are multiple of timeframeseconds?
-        val coverage = Coverage(absoluteCoverage, timeCoverage, mutableListOf<Int>())
+        val coverage = Coverage(absoluteCoverage, timeCoverage, calcStartTime, calcEndTime)
 
         println("Coverage: ${coverage}")
 
         exportTarget.exportCoverage(coverage)
 
-        return true
+        return coverage
     }
 
     override fun toString(): String {
