@@ -1,24 +1,32 @@
 package carp.covanalyser.core.domain
 
+import carp.covanalyser.core.application.DefaultCoverageAnalysisService
+import carp.covanalyser.core.application.events.CoverageAnalysisCompletedEvent
+import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
 import carp.covanalyser.core.infrastructure.AltitudeExpectation
+import carp.covanalyser.core.infrastructure.DefaultEventBus
 import dk.cachet.carp.common.application.data.CarpDataTypes
 import dk.cachet.carp.common.application.data.Data
 import dk.cachet.carp.common.application.data.StepCount
 import dk.cachet.carp.data.application.Measurement
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertTimeoutPreemptively
+import kotlin.test.assertEquals
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
+import kotlin.time.toJavaDuration
 
-class CoverageAnalysisTest {
-
+class EndToEndTest {
     private lateinit var coverageAnalysis: CoverageAnalysis
     private val dataStore: DataStore = mockk()
     private val exportTarget: ExportTarget = mockk(relaxed = true)
@@ -26,43 +34,58 @@ class CoverageAnalysisTest {
     private val startTime = "2022-01-01T00:00:00Z".toInstant()
     private val endTime = "2022-01-01T01:00:00Z".toInstant()
 
+
     @BeforeEach
     fun setup() {
         expectation = AltitudeExpectation(10, "test", 1800)
         coverageAnalysis = CoverageAnalysis(expectation, 3600, dataStore, exportTarget, startTime, endTime)
     }
 
+
     @Test
-    fun `calculateCoverage returns correct coverage when all expectations are met`() = runBlocking {
+    fun `end to end test returns correct coverage`() = runBlocking {
+        val eventBus = DefaultEventBus()
+        val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
+
         val data = createDataPoints(40, 10, 2.toDuration(DurationUnit.MINUTES), startTime)
+
+
+        val coverageAnalysis = CoverageAnalysis(
+            expectation,
+            3600,
+            dataStore,
+            exportTarget,
+            startTime,
+            endTime
+        )
+
         coEvery { dataStore.obtainData(any(), any()) } returns data
 
-        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime)
+        val channel = Channel<Unit>()
 
-        assertEquals(1.0, coverage.absCoverage)
-        assertEquals(1.0, coverage.timeCoverage)
-    }
+        val reqEvent = CoverageAnalysisRequestedEvent(coverageAnalysis)
 
-    @Test
-    fun `calculateCoverage returns correct coverage when no expectations are met`() = runBlocking {
-        val data = createDataPoints(8, 10, 2.toDuration(DurationUnit.MINUTES), startTime)
-        coEvery { dataStore.obtainData(any(), any()) } returns data
+        eventBus.publish(reqEvent)
+        eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { event ->
+            runBlocking {
+                channel.send(Unit)
+                assertEquals(reqEvent.id, event.id)
+            }
 
-        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime)
+        }
+        assertTimeoutPreemptively(1.toDuration(DurationUnit.MINUTES).toJavaDuration()) {
+            runBlocking {
+                channel.receive()
+            }
+        }
 
-        assertEquals(0.4, coverage.absCoverage)
-        assertEquals(0.0, coverage.timeCoverage)
-    }
+        val expectedCoverage = Coverage(1.0, 1.0, startTime, endTime)
+        val slot = slot<Coverage>()
+        coVerify { exportTarget.exportCoverage(capture(slot)) }
 
-    @Test
-    fun `calculateCoverage returns correct coverage when some expectations are met`() = runBlocking {
-        val data = createDataPoints(15, 10, 1.toDuration(DurationUnit.MINUTES), startTime)
-        coEvery { dataStore.obtainData(any(), any()) } returns data
+        assertEquals(expectedCoverage, slot.captured)
 
-        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime)
 
-        assertEquals(0.75, coverage.absCoverage)
-        assertEquals(0.5, coverage.timeCoverage)
     }
 
     private fun createDataPoints(
@@ -87,5 +110,6 @@ class CoverageAnalysisTest {
         }
         return dataPoints
     }
+
 
 }

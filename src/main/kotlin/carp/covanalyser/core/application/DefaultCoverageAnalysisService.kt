@@ -1,9 +1,6 @@
 package carp.covanalyser.core.application
 
-import carp.covanalyser.core.application.events.CoverageAnalysisCompletedEvent
-import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
-import carp.covanalyser.core.application.events.Event
-import carp.covanalyser.core.application.events.EventBus
+import carp.covanalyser.core.application.events.*
 import carp.covanalyser.core.domain.CoverageAnalysis
 import dk.cachet.carp.common.application.UUID
 import kotlinx.coroutines.*
@@ -52,7 +49,7 @@ class DefaultCoverageAnalysisService(private var eventBus: EventBus) : CoverageA
         jobs[id] = job
         serviceScope.launch {
             job.join()
-            eventBus.publish(CoverageAnalysisCompletedEvent())
+            eventBus.publish(CoverageAnalysisCompletedEvent(UUID.parse(id)))
         }
     }
 
@@ -72,11 +69,11 @@ class DefaultCoverageAnalysisService(private var eventBus: EventBus) : CoverageA
         var currTime = startTime
         val job = serviceScope.launch {
             while (isActive && currTime < endTime) {
-                println("$currTime")
                 analysis.calculateCoverage(
                     startTime,
                     startTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
                 )
+                eventBus.publish(CoverageCalculatedEvent(UUID.parse(id)))
                 currTime = currTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
                 if (hasDelay)
                     delay(analysis.timeFrameSeconds * 1000L) // delay is in milliseconds
@@ -96,12 +93,11 @@ class DefaultCoverageAnalysisService(private var eventBus: EventBus) : CoverageA
     private fun handleCoverageAnalysisRequested(event: Event) {
         val coverageAnalysisRequestedEvent = event as CoverageAnalysisRequestedEvent
         println("Coverage analysis requested " + coverageAnalysisRequestedEvent.coverageAnalysis)
-        val id = UUID.randomUUID().toString()
         registerAnalysis(
-            id,
+            coverageAnalysisRequestedEvent.id.toString(),
             coverageAnalysisRequestedEvent.coverageAnalysis
         )
-        startAnalysis(id)
+        startAnalysis(coverageAnalysisRequestedEvent.id.toString())
     }
 
 

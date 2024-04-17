@@ -40,6 +40,6 @@ class StartUp {
 
     private fun handleCoverageAnalysisCompletedEvent(event: Event) {
         val coverageAnalysisCompletedEvent = event as CoverageAnalysisCompletedEvent
-        println("Coverage analysis completed " + coverageAnalysisCompletedEvent.test)
+        println("Coverage analysis completed " + coverageAnalysisCompletedEvent)
     }
 }

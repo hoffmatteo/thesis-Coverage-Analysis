@@ -1,4 +1,5 @@
 package carp.covanalyser.core.application.events
 
-class CoverageAnalysisStartedEvent : Event() {
-}
+import dk.cachet.carp.common.application.UUID
+
+class CoverageAnalysisStartedEvent(id: UUID) : Event(id)
