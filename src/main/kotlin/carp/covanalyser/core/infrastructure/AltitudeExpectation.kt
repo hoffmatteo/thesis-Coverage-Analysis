@@ -4,13 +4,13 @@ import carp.covanalyser.core.domain.Expectation
 import dk.cachet.carp.common.application.data.Data
 import dk.cachet.carp.data.application.Measurement
 
-class AltitudeExpectation(
-    override var numDataPoints: Int,
-    override var dataSource: String,
-    override var timeframeSeconds: Int
-) : Expectation {
+class AltitudeExpectation(numDataPoints: Int, dataSource: String, timeframeSeconds: Int) : Expectation(
+    numDataPoints, dataSource,
+    timeframeSeconds
+) {
 
-    override fun asExpected(input: Measurement<Data>): Boolean {
+
+    override fun dataIsConformant(input: Measurement<Data>): Boolean {
         return true
     }
 

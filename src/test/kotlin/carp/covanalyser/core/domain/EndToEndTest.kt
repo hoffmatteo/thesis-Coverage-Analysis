@@ -1,5 +1,6 @@
 package carp.covanalyser.core.domain
 
+import carp.covanalyser.core.application.CoverageCalculator
 import carp.covanalyser.core.application.DefaultCoverageAnalysisService
 import carp.covanalyser.core.application.events.CoverageAnalysisCompletedEvent
 import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
@@ -45,7 +46,9 @@ class EndToEndTest {
     @Test
     fun `end to end test returns correct coverage`() = runBlocking {
         val eventBus = DefaultEventBus()
-        val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
+        val coverageVisitor = CoverageVisitor()
+        val coverageCalculator = CoverageCalculator(coverageVisitor)
+        val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus, coverageCalculator)
 
         val data = createDataPoints(40, 10, 2.toDuration(DurationUnit.MINUTES), startTime)
 

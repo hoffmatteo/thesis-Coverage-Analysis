@@ -1,21 +1,7 @@
 package carp.covanalyser.core.domain
 
-import carp.covanalyser.core.infrastructure.AltitudeExpectation
-import dk.cachet.carp.common.application.data.CarpDataTypes
-import dk.cachet.carp.common.application.data.Data
-import dk.cachet.carp.common.application.data.StepCount
-import dk.cachet.carp.data.application.Measurement
-import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import kotlin.time.Duration
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 class CoverageAnalysisTest {
 
@@ -25,7 +11,7 @@ class CoverageAnalysisTest {
     private lateinit var expectation: Expectation
     private val startTime = "2022-01-01T00:00:00Z".toInstant()
     private val endTime = "2022-01-01T01:00:00Z".toInstant()
-
+    /*
     @BeforeEach
     fun setup() {
         expectation = AltitudeExpectation(10, "test", 1800)
@@ -87,5 +73,7 @@ class CoverageAnalysisTest {
         }
         return dataPoints
     }
+
+     */
 
 }

@@ -67,17 +67,18 @@ class DefaultCoverageAnalysisService(
 
     private fun analyze(id: String, hasWaitTime: Boolean, startTime: Instant, endTime: Instant): Job {
         val analysis = analyses[id] ?: throw Exception("Analysis not found")
-        var currTime = startTime
+        var currStartTime = startTime
         val job = serviceScope.launch {
-            while (isActive && currTime < endTime) {
+            while (isActive && currStartTime < endTime) {
+                var currEndTime = currStartTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
                 val data = analysis.dataStore.obtainData(
-                    startTime,
-                    startTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
+                    currStartTime,
+                    currEndTime
                 )
-                val coverage = coverageCalculator.calculate(analysis.expectation, data)
+                val coverage = coverageCalculator.calculate(analysis.expectation, data, currStartTime, currEndTime)
                 analysis.exportTarget.exportCoverage(coverage)
                 eventBus.publish(CoverageCalculatedEvent(UUID.parse(id)))
-                currTime = currTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
+                currStartTime = currEndTime
                 if (hasWaitTime)
                     delay(analysis.timeFrameSeconds * 1000L) // delay is in milliseconds
             }
