@@ -10,7 +10,7 @@ class AltitudeExpectation(
     override var timeframeSeconds: Int
 ) : Expectation {
 
-    override fun isValid(input: Measurement<Data>): Boolean {
+    override fun asExpected(input: Measurement<Data>): Boolean {
         return true
     }
 

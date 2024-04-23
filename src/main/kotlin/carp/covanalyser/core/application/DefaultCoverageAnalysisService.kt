@@ -12,7 +12,10 @@ import kotlin.time.toDuration
 /**
  * Manage coverage analysis
  */
-class DefaultCoverageAnalysisService(private var eventBus: EventBus) : CoverageAnalysisService {
+class DefaultCoverageAnalysisService(
+    private var eventBus: EventBus,
+    private var coverageCalculator: CoverageCalculator
+) : CoverageAnalysisService {
     //TODO how do I model  coverage of a single participant versus of an entire study?
     private val analyses = mutableMapOf<String, CoverageAnalysis>()
     private val jobs = mutableMapOf<String, Job>()
@@ -22,7 +25,6 @@ class DefaultCoverageAnalysisService(private var eventBus: EventBus) : CoverageA
         eventBus.subscribe(CoverageAnalysisRequestedEvent::class) { handleCoverageAnalysisRequested(it) }
     }
 
-    //TODO listen to events and call functions based on that
     override fun registerAnalysis(id: String, analysis: CoverageAnalysis) {
         analyses[id] = analysis
     }
@@ -63,19 +65,20 @@ class DefaultCoverageAnalysisService(private var eventBus: EventBus) : CoverageA
         }
     }
 
-    // TODO call it schedule instead of delay?
-    private fun analyze(id: String, hasDelay: Boolean, startTime: Instant, endTime: Instant): Job {
+    private fun analyze(id: String, hasWaitTime: Boolean, startTime: Instant, endTime: Instant): Job {
         val analysis = analyses[id] ?: throw Exception("Analysis not found")
         var currTime = startTime
         val job = serviceScope.launch {
             while (isActive && currTime < endTime) {
-                analysis.calculateCoverage(
+                val data = analysis.dataStore.obtainData(
                     startTime,
                     startTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
                 )
+                val coverage = coverageCalculator.calculate(analysis.expectation, data)
+                analysis.exportTarget.exportCoverage(coverage)
                 eventBus.publish(CoverageCalculatedEvent(UUID.parse(id)))
                 currTime = currTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
-                if (hasDelay)
+                if (hasWaitTime)
                     delay(analysis.timeFrameSeconds * 1000L) // delay is in milliseconds
             }
         }

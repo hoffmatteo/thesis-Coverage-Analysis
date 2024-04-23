@@ -10,7 +10,6 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-//TODO problem if I want to have extra parameters in constructor
 class CSVExportTarget(val filepath: String) : ExportTarget {
     init {
         val file = File(filepath)
