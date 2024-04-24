@@ -4,6 +4,6 @@ abstract class AggregateExpectation(numDataPoints: Int, dataSource: String, time
     numDataPoints, dataSource,
     timeframeSeconds
 ) {
-    val expectations: List<Expectation> = ArrayList()
+    open var expectations: List<Expectation> = ArrayList()
 
 }

@@ -4,10 +4,9 @@ import dk.cachet.carp.common.application.data.Data
 import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
 
-//TODO AggregateExpectation --> composite design pattern, calculate it with visitor pattern
 abstract class Expectation(
     var numDataPoints: Int,
-    var dataSource: String,
+    var deviceRoleName: String,
     var timeframeSeconds: Int
 ) {
 

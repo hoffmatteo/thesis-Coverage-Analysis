@@ -17,7 +17,6 @@ class CAWSDataStore(override var deploymentId: UUID) : DataStore {
             listOf(10.toDuration(DurationUnit.SECONDS), 10.toDuration(DurationUnit.SECONDS)),
             Instant.parse("2020-06-29T14:44:01.251Z")
         )
-
         return dataPoints
     }
 }

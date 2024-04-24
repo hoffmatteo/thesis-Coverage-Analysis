@@ -25,6 +25,7 @@ class CoverageCalculator(private val visitor: ExpectationVisitor) {
         startTime: Instant,
         endTime: Instant
     ): Coverage {
+        println("Calculating aggregate expectation")
         return expectation.accept(visitor, dataPoints, startTime, endTime)
     }
 }
