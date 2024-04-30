@@ -14,7 +14,6 @@ import kotlin.time.toDuration
  */
 class DefaultCoverageAnalysisService(
     private var eventBus: EventBus,
-    private var coverageCalculator: CoverageCalculator
 ) : CoverageAnalysisService {
     //TODO how do I model  coverage of a single participant versus of an entire study?
     private val analyses = mutableMapOf<String, CoverageAnalysis>()
@@ -75,8 +74,7 @@ class DefaultCoverageAnalysisService(
                     currStartTime,
                     currEndTime
                 )
-                val coverage = coverageCalculator.calculate(analysis.expectation, data, currStartTime, currEndTime)
-                analysis.exportTarget.exportCoverage(coverage)
+                val coverage = analysis.calculateCoverage(currStartTime, currEndTime)
                 eventBus.publish(CoverageCalculatedEvent(UUID.parse(id)))
                 currStartTime = currEndTime
                 if (hasWaitTime)

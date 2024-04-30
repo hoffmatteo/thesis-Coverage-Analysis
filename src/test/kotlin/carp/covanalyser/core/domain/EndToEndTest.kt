@@ -1,10 +1,8 @@
 package carp.covanalyser.core.domain
 
-import carp.covanalyser.core.application.CoverageCalculator
 import carp.covanalyser.core.application.DefaultCoverageAnalysisService
 import carp.covanalyser.core.application.events.CoverageAnalysisCompletedEvent
 import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
-import carp.covanalyser.core.infrastructure.AltitudeExpectation
 import carp.covanalyser.core.infrastructure.DefaultEventBus
 import dk.cachet.carp.common.application.data.CarpDataTypes
 import dk.cachet.carp.common.application.data.Data
@@ -31,15 +29,15 @@ class EndToEndTest {
     private lateinit var coverageAnalysis: CoverageAnalysis
     private val dataStore: DataStore = mockk()
     private val exportTarget: ExportTarget = mockk(relaxed = true)
-    private lateinit var expectation: Expectation
+    private lateinit var dataStreamExpectation: DataStreamExpectation
     private val startTime = "2022-01-01T00:00:00Z".toInstant()
     private val endTime = "2022-01-01T01:00:00Z".toInstant()
 
 
     @BeforeEach
     fun setup() {
-        expectation = AltitudeExpectation(10, "test", 1800)
-        coverageAnalysis = CoverageAnalysis(expectation, 3600, dataStore, exportTarget, startTime, endTime)
+        dataStreamExpectation = LocationExpectation(10, "test", 1800)
+        coverageAnalysis = CoverageAnalysis(dataStreamExpectation, 3600, dataStore, exportTarget, startTime, endTime)
     }
 
 
@@ -54,7 +52,7 @@ class EndToEndTest {
 
 
         val coverageAnalysis = CoverageAnalysis(
-            expectation,
+            dataStreamExpectation,
             3600,
             dataStore,
             exportTarget,
