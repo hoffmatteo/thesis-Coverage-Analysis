@@ -1,4 +1,4 @@
-import carp.covanalyser.core.infrastructure.*
+import carp.covanalyser.core.infrastructure.StartUp
 import dk.cachet.carp.common.application.data.CarpDataTypes
 import dk.cachet.carp.common.application.data.Data
 import dk.cachet.carp.common.application.data.StepCount
@@ -11,18 +11,6 @@ suspend fun main() {
     // apiHandler.handleRequest("/coverage-analysis")
     StartUp().startUp()
     // two expectations defined for a single data stream for a single deployment
-    val locationExpectation = LocationExpectation(1, "phone", 30)
-    val stepCountExpectation = StepCountExpectation(1, "phone", 30)
-
-
-    val deviceAggregations =
-        AggregationFactory().createDeviceAggregations(listOf(locationExpectation, stepCountExpectation))
-
-    val protocolAggregation = ProtocolAggregation()
-    protocolAggregation.expectations.addAll(deviceAggregations)
-
-    val studyAggregation = StudyAggregation()
-    studyAggregation.expectations.add(protocolAggregation)
 
 
     // second step: aggregate to deployment

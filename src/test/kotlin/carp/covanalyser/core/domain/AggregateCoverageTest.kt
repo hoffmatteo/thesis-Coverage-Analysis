@@ -1,13 +1,6 @@
 package carp.covanalyser.core.domain
 
-import carp.covanalyser.core.application.DefaultCoverageAnalysisService
-import carp.covanalyser.core.application.events.CoverageAnalysisCompletedEvent
-import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
-import carp.covanalyser.core.infrastructure.DefaultEventBus
-import carp.covanalyser.core.infrastructure.aggregation.AggregationFactory
-import carp.covanalyser.core.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.core.infrastructure.aggregation.ProtocolAggregation
-import carp.covanalyser.core.infrastructure.aggregation.StudyAggregation
+import carp.covanalyser.core.infrastructure.aggregation.*
 import carp.covanalyser.core.infrastructure.expectations.LocationExpectation
 import carp.covanalyser.core.infrastructure.expectations.StepCountExpectation
 import dk.cachet.carp.common.application.UUID
@@ -16,97 +9,98 @@ import dk.cachet.carp.common.application.data.Data
 import dk.cachet.carp.common.application.data.StepCount
 import dk.cachet.carp.data.application.Measurement
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.slot
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertTimeoutPreemptively
 import kotlin.test.assertEquals
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
-import kotlin.time.toJavaDuration
 
-class EndToEndTest {
+
+class AggregateCoverageTest {
+
+
+    private lateinit var dataStreamExpectations: List<DataStreamExpectation>
+    private lateinit var deviceAggregations: List<DeviceAggregation>
+    private lateinit var protocolAggregation: ProtocolAggregation
+    private lateinit var studyAggregation: StudyAggregation
+    private lateinit var coverageAnalysis: CoverageAnalysis
     private val dataStore: DataStore = mockk()
     private val exportTarget: ExportTarget = mockk(relaxed = true)
     private val startTime = "2022-01-01T00:00:00Z".toInstant()
     private val endTime = "2022-01-01T01:00:00Z".toInstant()
 
-
     @BeforeEach
     fun setup() {
-    }
-
-    @Test
-    fun `end to end test returns correct coverage`() = runBlocking {
-        val eventBus = DefaultEventBus()
-        val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
-
-        val data = createDataPoints(40, 10, 2.toDuration(DurationUnit.MINUTES), startTime)
-
-        val locationExpectation = LocationExpectation(10, "phone", 30.toDuration(DurationUnit.MINUTES))
+        val locationExpectation = LocationExpectation(1, "phone", 30.toDuration(DurationUnit.MINUTES))
         val stepCountExpectation = StepCountExpectation(10, "phone", 30.toDuration(DurationUnit.MINUTES))
 
         val coverageAggregator = AverageCoverageAggregator()
 
-
-        val deviceAggregations =
+        deviceAggregations =
             AggregationFactory().createDeviceAggregations(
                 listOf(locationExpectation, stepCountExpectation),
                 coverageAggregator
             )
 
-        val protocolAggregation = ProtocolAggregation(coverageAggregator)
+        protocolAggregation = ProtocolAggregation(coverageAggregator)
         protocolAggregation.expectations.addAll(deviceAggregations)
 
-        val studyAggregation = StudyAggregation(coverageAggregator)
+        studyAggregation = StudyAggregation(coverageAggregator)
         studyAggregation.expectations.add(protocolAggregation)
 
+    }
 
-        val coverageAnalysis = CoverageAnalysis(
-            studyAggregation,
+    @Test
+    fun `calculateCoverage returns correct device coverage when all expectations are met`() = runBlocking {
+        coverageAnalysis = CoverageAnalysis(
+            deviceAggregations.first(),
             1.toDuration(DurationUnit.HOURS),
-            listOf(UUID.randomUUID()),
+            listOf(
+                UUID.randomUUID()
+            ),
             exportTarget,
             dataStore,
             startTime,
             endTime
         )
 
+        val data = createDataPoints(40, 10, 2.toDuration(DurationUnit.MINUTES), startTime)
         coEvery { dataStore.obtainData(any(), any(), any()) } returns data
 
-        val channel = Channel<Unit>()
+        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime).first()
 
-        val reqEvent = CoverageAnalysisRequestedEvent(coverageAnalysis)
-
-        eventBus.publish(reqEvent)
-        eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { event ->
-            runBlocking {
-                channel.send(Unit)
-                assertEquals(reqEvent.id, event.id)
-            }
-
-        }
-        assertTimeoutPreemptively(1.toDuration(DurationUnit.MINUTES).toJavaDuration()) {
-            runBlocking {
-                channel.receive()
-            }
-        }
-
-        val expectedCoverage = Coverage(1.0, 1.0, startTime, endTime)
-        val slot = slot<Coverage>()
-        coVerify { exportTarget.exportCoverage(capture(slot)) }
-
-        assertEquals(expectedCoverage, slot.captured)
-
-
+        assertEquals(1.0, coverage.absCoverage)
+        assertEquals(1.0, coverage.timeCoverage)
     }
+
+    @Test
+    fun `calculateCoverage returns correct device coverage when some expectations are met`() = runBlocking {
+        coverageAnalysis = CoverageAnalysis(
+            deviceAggregations.first(),
+            1.toDuration(DurationUnit.HOURS),
+            listOf(
+                UUID.randomUUID()
+            ),
+            exportTarget,
+            dataStore,
+            startTime,
+            endTime
+        )
+
+        val data = createDataPoints(2, 10, 30.toDuration(DurationUnit.MINUTES), startTime)
+        coEvery { dataStore.obtainData(any(), any(), any()) } returns data
+
+        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime).first()
+
+        assertEquals(0.55, coverage.absCoverage)
+        assertEquals(0.5, coverage.timeCoverage)
+    }
+
 
     private fun createDataPoints(
         numberOfObjects: Int,

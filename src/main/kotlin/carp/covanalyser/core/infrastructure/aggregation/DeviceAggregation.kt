@@ -1,4 +1,4 @@
-package carp.covanalyser.core.infrastructure
+package carp.covanalyser.core.infrastructure.aggregation
 
 import carp.covanalyser.core.domain.AggregateExpectation
 import carp.covanalyser.core.domain.Coverage
@@ -7,8 +7,10 @@ import carp.covanalyser.core.domain.DataStreamExpectation
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
-class DeviceAggregation(deviceRoleName: String) : AggregateExpectation<DataStreamExpectation>() {
-    //TODO aggregate different data streams from a single device into a single coverage metric (still per deployment)
+class DeviceAggregation(deviceRoleName: String, private val coverageAggregator: CoverageAggregator) :
+    AggregateExpectation<DataStreamExpectation>(
+        coverageAggregator
+    ) {
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,
@@ -24,10 +26,10 @@ class DeviceAggregation(deviceRoleName: String) : AggregateExpectation<DataStrea
                     expectation.calculateCoverage(startTime, endTime, listOf(deploymentID), dataStore).first()
                 deploymentAverages.add(coverage)
             }
-            //TODO average
-            coverages.add(Coverage(0.0, 0.0, startTime, endTime))
+            coverages.add(coverageAggregator.aggregate(deploymentAverages))
         }
         //coverage for a device per deployment
+        println("DeviceAggregation: $coverages")
         return coverages
     }
 }

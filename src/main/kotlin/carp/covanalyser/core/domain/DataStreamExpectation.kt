@@ -3,16 +3,16 @@ package carp.covanalyser.core.domain
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.Data
 import dk.cachet.carp.common.application.data.DataType
+import dk.cachet.carp.data.application.DataStreamId
 import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.Duration
 
 abstract class DataStreamExpectation(
-    var numDataPoints: Int,
-    var dataType: DataType,
+    private var numDataPoints: Int,
+    private var dataType: DataType,
     var deviceName: String,
-    var timeframeSeconds: Int
+    private var duration: Duration
 ) : Expectation {
 
     abstract fun isConformant(input: Measurement<Data>): Boolean
@@ -23,15 +23,15 @@ abstract class DataStreamExpectation(
         deploymentIDs: List<UUID>,
         dataStore: DataStore
     ): List<Coverage> {
-        var coverages = mutableListOf<Coverage>()
+        val coverages = mutableListOf<Coverage>()
         for (deploymentID in deploymentIDs) {
-            // TODO use dataStream and deploymentId - but only first?
-            val data = dataStore.obtainData(startTime, endTime)
+            var dataStreamId = DataStreamId(deploymentID, deviceName, dataType)
+            val data = dataStore.obtainData(startTime, endTime, dataStreamId)
 
-            val numExpectedExpectations = (endTime.minus(startTime).inWholeSeconds / timeframeSeconds)
+            val numExpectedExpectations = (endTime.minus(startTime).inWholeSeconds / duration.inWholeSeconds)
 
             var windowStart = startTime
-            var windowEnd = windowStart.plus(timeframeSeconds.toDuration(DurationUnit.SECONDS))
+            var windowEnd = windowStart.plus(duration)
             var currCount = 0
             var totalCountMeasurements = 0
             var fulfilledExpectations = 0
@@ -73,7 +73,7 @@ abstract class DataStreamExpectation(
 
             val coverage = Coverage(absoluteCoverage, timeCoverage, startTime, endTime)
 
-            println("Coverage: ${coverage}")
+            println("Coverage Data Stream: ${coverage}")
 
             coverages.add(coverage)
         }
@@ -88,8 +88,8 @@ abstract class DataStreamExpectation(
         var windowEnd1 = windowEnd
         var windowStart1 = windowStart
         while (measurement.sensorStartTime >= windowEnd1.toEpochMilliseconds()) {
-            windowStart1 = windowStart1.plus(timeframeSeconds.toDuration(DurationUnit.SECONDS))
-            windowEnd1 = windowEnd1.plus(timeframeSeconds.toDuration(DurationUnit.SECONDS))
+            windowStart1 = windowStart1.plus(duration)
+            windowEnd1 = windowEnd1.plus(duration)
         }
         return Pair(windowEnd1, windowStart1)
     }

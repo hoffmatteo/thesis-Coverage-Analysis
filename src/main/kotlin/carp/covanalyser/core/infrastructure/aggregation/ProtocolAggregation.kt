@@ -1,4 +1,4 @@
-package carp.covanalyser.core.infrastructure
+package carp.covanalyser.core.infrastructure.aggregation
 
 import carp.covanalyser.core.domain.AggregateExpectation
 import carp.covanalyser.core.domain.Coverage
@@ -6,7 +6,9 @@ import carp.covanalyser.core.domain.DataStore
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
-class ProtocolAggregation : AggregateExpectation<DeviceAggregation>() {
+class ProtocolAggregation(private val coverageAggregator: CoverageAggregator) : AggregateExpectation<DeviceAggregation>(
+    coverageAggregator
+) {
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,
@@ -22,10 +24,10 @@ class ProtocolAggregation : AggregateExpectation<DeviceAggregation>() {
                     expectation.calculateCoverage(startTime, endTime, listOf(deploymentID), dataStore).first()
                 deploymentAverages.add(coverage)
             }
-            //TODO average
-            coverages.add(Coverage(0.0, 0.0, startTime, endTime))
+            coverages.add(coverageAggregator.aggregate(deploymentAverages))
         }
         //coverage per deployment of protocol
+        println("ProtocolAggregation: $coverages")
         return coverages
     }
 }

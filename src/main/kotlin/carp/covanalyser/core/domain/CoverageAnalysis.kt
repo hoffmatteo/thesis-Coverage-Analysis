@@ -2,10 +2,11 @@ package carp.covanalyser.core.domain
 
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
+import kotlin.time.Duration
 
 class CoverageAnalysis(
     var expectation: Expectation,
-    var timeFrameSeconds: Int,
+    var timeBetweenCalculations: Duration,
     var deploymentIds: List<UUID>,
     var exportTarget: ExportTarget,
     var dataStore: DataStore,
@@ -13,9 +14,9 @@ class CoverageAnalysis(
     //TODO endTime could be left open? Or make it mandatory?
     var endTime: Instant
 ) {
-    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): Coverage {
+    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): List<Coverage> {
         val coverage = expectation.calculateCoverage(calcStartTime, calcEndTime, deploymentIds, dataStore)
-        exportTarget.exportCoverage(coverage)
+        exportTarget.exportCoverage(coverage.first())
         return coverage
     }
 }

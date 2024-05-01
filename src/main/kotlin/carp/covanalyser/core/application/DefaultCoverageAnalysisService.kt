@@ -6,8 +6,7 @@ import dk.cachet.carp.common.application.UUID
 import kotlinx.coroutines.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import kotlin.time.ExperimentalTime
 
 /**
  * Manage coverage analysis
@@ -64,21 +63,18 @@ class DefaultCoverageAnalysisService(
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun analyze(id: String, hasWaitTime: Boolean, startTime: Instant, endTime: Instant): Job {
         val analysis = analyses[id] ?: throw Exception("Analysis not found")
         var currStartTime = startTime
         val job = serviceScope.launch {
             while (isActive && currStartTime < endTime) {
-                var currEndTime = currStartTime.plus(analysis.timeFrameSeconds.toDuration(DurationUnit.SECONDS))
-                val data = analysis.dataStore.obtainData(
-                    currStartTime,
-                    currEndTime
-                )
+                var currEndTime = currStartTime.plus(analysis.timeBetweenCalculations)
                 val coverage = analysis.calculateCoverage(currStartTime, currEndTime)
                 eventBus.publish(CoverageCalculatedEvent(UUID.parse(id)))
                 currStartTime = currEndTime
                 if (hasWaitTime)
-                    delay(analysis.timeFrameSeconds * 1000L) // delay is in milliseconds
+                    delay(analysis.timeBetweenCalculations) // delay is in milliseconds
             }
         }
         return job

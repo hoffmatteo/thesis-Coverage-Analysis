@@ -1,6 +1,8 @@
 package carp.covanalyser.core.domain
 
-abstract class AggregateExpectation<T : Expectation> : Expectation {
+import carp.covanalyser.core.infrastructure.aggregation.CoverageAggregator
+
+abstract class AggregateExpectation<T : Expectation>(coverageAggregator: CoverageAggregator) : Expectation {
     open var expectations: MutableList<T> = mutableListOf()
 
 }
