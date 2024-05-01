@@ -1,52 +1,28 @@
 import carp.covanalyser.core.infrastructure.*
-import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.CarpDataTypes
 import dk.cachet.carp.common.application.data.Data
 import dk.cachet.carp.common.application.data.StepCount
-import dk.cachet.carp.data.application.DataStreamId
 import dk.cachet.carp.data.application.Measurement
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 suspend fun main() {
     // val apiHandler = APIHandler()
     // apiHandler.handleRequest("/coverage-analysis")
     StartUp().startUp()
     // two expectations defined for a single data stream for a single deployment
-    val locationExpectation = LocationExpectation(
-        numDataPoints = 10,
-        dataStreamId = DataStreamId(UUID.randomUUID(), "phone", CarpDataTypes.GEOLOCATION.type),
-        dataStore = CAWSDataStore(UUID.randomUUID()),
-        timeframeSeconds = 10
-    )
-    val stepCountExpectation = StepCountExpectation(
-        numDataPoints = 10,
-        dataStreamId = DataStreamId(UUID.randomUUID(), "phone", CarpDataTypes.STEP_COUNT.type),
-        dataStore = CAWSDataStore(UUID.randomUUID()),
-        timeframeSeconds = 10
-    )
+    val locationExpectation = LocationExpectation(1, "phone", 30)
+    val stepCountExpectation = StepCountExpectation(1, "phone", 30)
 
-    println(
-        locationExpectation.calculateCoverage(
-            Clock.System.now(),
-            Clock.System.now().plus(100.toDuration(DurationUnit.SECONDS))
-        )
-    )
-    println(
-        stepCountExpectation.calculateCoverage(
-            Clock.System.now(),
-            Clock.System.now().plus(100.toDuration(DurationUnit.SECONDS))
-        )
-    )
 
-    // first step: aggregate to device
+    val deviceAggregations =
+        AggregationFactory().createDeviceAggregations(listOf(locationExpectation, stepCountExpectation))
 
-    val deviceAggregation: DeviceAggregation = DeviceAggregation("phone")
-    deviceAggregation.expectations.add(locationExpectation)
-    deviceAggregation.expectations.add(stepCountExpectation)
+    val protocolAggregation = ProtocolAggregation()
+    protocolAggregation.expectations.addAll(deviceAggregations)
+
+    val studyAggregation = StudyAggregation()
+    studyAggregation.expectations.add(protocolAggregation)
 
 
     // second step: aggregate to deployment

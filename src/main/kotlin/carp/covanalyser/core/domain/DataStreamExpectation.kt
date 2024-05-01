@@ -22,59 +22,62 @@ abstract class DataStreamExpectation(
         endTime: Instant,
         deploymentIDs: List<UUID>,
         dataStore: DataStore
-    ): Coverage {
-        // TODO use dataStream and deploymentId - but only first?
-        val data = dataStore.obtainData(startTime, endTime)
+    ): List<Coverage> {
+        var coverages = mutableListOf<Coverage>()
+        for (deploymentID in deploymentIDs) {
+            // TODO use dataStream and deploymentId - but only first?
+            val data = dataStore.obtainData(startTime, endTime)
 
-        val numExpectedExpectations = (endTime.minus(startTime).inWholeSeconds / timeframeSeconds)
+            val numExpectedExpectations = (endTime.minus(startTime).inWholeSeconds / timeframeSeconds)
 
-        var windowStart = startTime
-        var windowEnd = windowStart.plus(timeframeSeconds.toDuration(DurationUnit.SECONDS))
-        var currCount = 0
-        var totalCountMeasurements = 0
-        var fulfilledExpectations = 0
+            var windowStart = startTime
+            var windowEnd = windowStart.plus(timeframeSeconds.toDuration(DurationUnit.SECONDS))
+            var currCount = 0
+            var totalCountMeasurements = 0
+            var fulfilledExpectations = 0
 
-        for (measurement in data) {
-            // if measurements are outside of calculation window, break
-            if (measurement.sensorStartTime >= endTime.toEpochMilliseconds()) {
-                break
+            for (measurement in data) {
+                // if measurements are outside of calculation window, break
+                if (measurement.sensorStartTime >= endTime.toEpochMilliseconds()) {
+                    break
+                }
+                // count all fitting measurements for absolute coverage
+                totalCountMeasurements++
+
+                // if measurement is inside of current window
+                if (measurement.sensorStartTime >= windowStart.toEpochMilliseconds() && measurement.sensorStartTime < windowEnd.toEpochMilliseconds()) {
+                    // count for current window
+                    currCount++
+                } else {
+                    // check if expectation was met in last window
+                    fulfilledExpectations =
+                        checkExpectation(currCount, windowStart, windowEnd, fulfilledExpectations)
+                    // move window to next measurement
+                    val window = moveWindow(measurement, windowEnd, windowStart)
+                    windowEnd = window.first
+                    windowStart = window.second
+                    // reset count for new window
+                    currCount = 1
+                }
             }
-            // count all fitting measurements for absolute coverage
-            totalCountMeasurements++
+            fulfilledExpectations =
+                checkExpectation(currCount, windowStart, windowEnd, fulfilledExpectations)
 
-            // if measurement is inside of current window
-            if (measurement.sensorStartTime >= windowStart.toEpochMilliseconds() && measurement.sensorStartTime < windowEnd.toEpochMilliseconds()) {
-                // count for current window
-                currCount++
-            } else {
-                // check if expectation was met in last window
-                fulfilledExpectations =
-                    checkExpectation(currCount, windowStart, windowEnd, fulfilledExpectations)
-                // move window to next measurement
-                val window = moveWindow(measurement, windowEnd, windowStart)
-                windowEnd = window.first
-                windowStart = window.second
-                // reset count for new window
-                currCount = 1
-            }
+
+            val timeCoverage = fulfilledExpectations.toDouble() / numExpectedExpectations
+
+            val absoluteCoverage =
+                (totalCountMeasurements.toDouble() / (numExpectedExpectations * numDataPoints)).coerceAtMost(
+                    1.0
+                )
+
+            val coverage = Coverage(absoluteCoverage, timeCoverage, startTime, endTime)
+
+            println("Coverage: ${coverage}")
+
+            coverages.add(coverage)
         }
-        fulfilledExpectations =
-            checkExpectation(currCount, windowStart, windowEnd, fulfilledExpectations)
-
-
-        val timeCoverage = fulfilledExpectations.toDouble() / numExpectedExpectations
-
-        val absoluteCoverage =
-            (totalCountMeasurements.toDouble() / (numExpectedExpectations * numDataPoints)).coerceAtMost(
-                1.0
-            )
-
-        val coverage = Coverage(absoluteCoverage, timeCoverage, startTime, endTime)
-
-        println("Coverage: ${coverage}")
-
-        return coverage
-
+        return coverages
     }
 
     private fun moveWindow(

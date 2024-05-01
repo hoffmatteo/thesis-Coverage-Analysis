@@ -10,6 +10,6 @@ interface Expectation {
         endTime: Instant,
         deploymentIDs: List<UUID>,
         dataStore: DataStore
-    ): Coverage
+    ): List<Coverage>
 
 }
