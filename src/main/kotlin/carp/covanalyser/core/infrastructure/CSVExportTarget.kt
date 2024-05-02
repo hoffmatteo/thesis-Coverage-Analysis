@@ -22,7 +22,7 @@ class CSVExportTarget(val filepath: String) : ExportTarget {
         }
     }
 
-    override suspend fun exportCoverage(data: Coverage): String {
+    override suspend fun exportCoverage(data: List<Coverage>): String {
         println("Exporting coverage data to CSV file")
         val file = File(filepath)
         var printer: CSVPrinter? = null
@@ -32,14 +32,16 @@ class CSVExportTarget(val filepath: String) : ExportTarget {
                 FileWriter(file, true)
             } // Open in append mode
             printer = CSVFormat.DEFAULT.print(writer)
+            for (coverage in data) {
 
-            // Append the new row of coverage data
-            printer.printRecord(
-                data.startTime,
-                data.endTime,
-                data.absCoverage,
-                data.timeCoverage
-            )
+                // Append the new row of coverage data
+                printer.printRecord(
+                    coverage.startTime,
+                    coverage.endTime,
+                    coverage.absCoverage,
+                    coverage.timeCoverage
+                )
+            }
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {

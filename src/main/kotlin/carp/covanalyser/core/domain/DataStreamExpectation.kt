@@ -27,8 +27,8 @@ abstract class DataStreamExpectation(
         for (deploymentID in deploymentIDs) {
             var dataStreamId = DataStreamId(deploymentID, deviceName, dataType)
             val data = dataStore.obtainData(startTime, endTime, dataStreamId)
-
-            val numExpectedExpectations = (endTime.minus(startTime).inWholeSeconds / duration.inWholeSeconds)
+            //TODO ensure duration of expectation is <= duration of data!
+            val numExpectedExpectations = (endTime.minus(startTime) / duration).toInt()
 
             var windowStart = startTime
             var windowEnd = windowStart.plus(duration)
@@ -37,7 +37,8 @@ abstract class DataStreamExpectation(
             var fulfilledExpectations = 0
 
             for (measurement in data) {
-                // if measurements are outside of calculation window, break
+                //TODO USE SYNC POINT!
+                // milli seconds versus microseconds
                 if (measurement.sensorStartTime >= endTime.toEpochMilliseconds()) {
                     break
                 }
@@ -64,7 +65,7 @@ abstract class DataStreamExpectation(
                 checkExpectation(currCount, windowStart, windowEnd, fulfilledExpectations)
 
 
-            val timeCoverage = fulfilledExpectations.toDouble() / numExpectedExpectations
+            val timeCoverage = (fulfilledExpectations.toDouble() / numExpectedExpectations).coerceAtMost(1.0)
 
             val absoluteCoverage =
                 (totalCountMeasurements.toDouble() / (numExpectedExpectations * numDataPoints)).coerceAtMost(

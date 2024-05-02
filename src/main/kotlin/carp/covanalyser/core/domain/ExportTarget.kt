@@ -2,5 +2,5 @@ package carp.covanalyser.core.domain
 
 interface ExportTarget {
     //TODO metadata, version of code (git commit), ..., time period, analysis id
-    suspend fun exportCoverage(data: Coverage): String
+    suspend fun exportCoverage(data: List<Coverage>): String
 }

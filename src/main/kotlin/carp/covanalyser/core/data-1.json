@@ -1,0 +1,789 @@
+[
+  {
+    "dataStream": {
+      "studyDeploymentId": "7e33ff2c-47f4-4545-92fa-286b4e3719fe",
+      "deviceRoleName": "Primary Phone",
+      "dataType": "dk.cachet.carp.triggeredtask"
+    },
+    "firstSequenceId": 3,
+    "measurements": [
+      {
+        "sensorStartTime": 1710674245686678,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #13",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245691975,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #15",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245692688,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #19",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245693184,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 11,
+          "taskName": "Task #21",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245706238,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #13",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245707496,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #15",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245708151,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #19",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245713893,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #13",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245714466,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #15",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245714992,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 5,
+          "taskName": "Task #19",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      },
+      {
+        "sensorStartTime": 1710674245721169,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 6,
+          "taskName": "Task #14",
+          "destinationDeviceRoleName": "Primary Phone",
+          "control": "Start"
+        }
+      }
+    ],
+    "triggerIds": [
+      5,
+      11,
+      6
+    ]
+  },
+  {
+    "dataStream": {
+      "studyDeploymentId": "7e33ff2c-47f4-4545-92fa-286b4e3719fe",
+      "deviceRoleName": "Location Service",
+      "dataType": "dk.cachet.carp.triggeredtask"
+    },
+    "firstSequenceId": 1,
+    "measurements": [
+      {
+        "sensorStartTime": 1710674243539699,
+        "data": {
+          "__type": "dk.cachet.carp.triggeredtask",
+          "triggerId": 7,
+          "taskName": "Task #16",
+          "destinationDeviceRoleName": "Location Service",
+          "control": "Start"
+        }
+      }
+    ],
+    "triggerIds": [
+      7
+    ]
+  },
+  {
+    "dataStream": {
+      "studyDeploymentId": "7e33ff2c-47f4-4545-92fa-286b4e3719fe",
+      "deviceRoleName": "Primary Phone",
+      "dataType": "dk.cachet.carp.stepcount"
+    },
+    "firstSequenceId": 1,
+    "measurements": [
+      {
+        "sensorStartTime": 1710674245730010,
+        "data": {
+          "__type": "dk.cachet.carp.stepcount",
+          "steps": 7386
+        }
+      }
+    ],
+    "triggerIds": [
+      5
+    ]
+  },
+  {
+    "dataStream": {
+      "studyDeploymentId": "7e33ff2c-47f4-4545-92fa-286b4e3719fe",
+      "deviceRoleName": "Primary Phone",
+      "dataType": "dk.cachet.carp.activity"
+    },
+    "firstSequenceId": 1,
+    "measurements": [
+      {
+        "sensorStartTime": 1710674245951364,
+        "data": {
+          "__type": "dk.cachet.carp.activity",
+          "confidence": 100,
+          "type": "STILL"
+        }
+      }
+    ],
+    "triggerIds": [
+      5
+    ]
+  },
+  {
+    "dataStream": {
+      "studyDeploymentId": "7e33ff2c-47f4-4545-92fa-286b4e3719fe",
+      "deviceRoleName": "Primary Phone",
+      "dataType": "dk.cachet.carp.deviceinformation"
+    },
+    "firstSequenceId": 1,
+    "measurements": [
+      {
+        "sensorStartTime": 1710674245722985,
+        "data": {
+          "__type": "dk.cachet.carp.deviceinformation",
+          "platform": "Android",
+          "deviceId": "SP1A.210812.016",
+          "hardware": "exynos9820",
+          "deviceName": "beyond0",
+          "deviceManufacturer": "samsung",
+          "deviceModel": "SM-G970F",
+          "operatingSystem": "REL",
+          "deviceData": {
+            "product": "beyond0lteeea",
+            "supportedAbis": [
+              "arm64-v8a",
+              "armeabi-v7a",
+              "armeabi"
+            ],
+            "serialNumber": "unknown",
+            "displayMetrics": {
+              "xDpi": 442.45098876953125,
+              "widthPx": 1080.0,
+              "heightPx": 2280.0,
+              "yDpi": 438.72698974609375
+            },
+            "supported32BitAbis": [
+              "armeabi-v7a",
+              "armeabi"
+            ],
+            "display": "SP1A.210812.016.G970FXXSGHWC1",
+            "type": "user",
+            "isPhysicalDevice": true,
+            "version": {
+              "baseOS": "samsung/beyond0lteeea/beyond0:12/SP1A.210812.016/G970FXXUGHVJ5:user/release-keys",
+              "securityPatch": "2023-03-01",
+              "sdkInt": 31,
+              "release": "12",
+              "codename": "REL",
+              "previewSdkInt": 0,
+              "incremental": "G970FXXSGHWC1"
+            },
+            "systemFeatures": [
+              "android.hardware.sensor.proximity",
+              "com.samsung.android.sdk.camera.processor",
+              "com.samsung.feature.aodservice_v09",
+              "com.sec.feature.motionrecognition_service",
+              "com.sec.feature.cover.sview",
+              "android.hardware.telephony.ims.singlereg",
+              "android.hardware.sensor.accelerometer",
+              "android.software.controls",
+              "android.hardware.faketouch",
+              "android.hardware.usb.accessory",
+              "android.software.backup",
+              "android.hardware.touchscreen",
+              "android.hardware.touchscreen.multitouch",
+              "android.software.print",
+              "android.software.activities_on_secondary_displays",
+              "com.sec.feature.nfc_authentication_cover",
+              "com.samsung.feature.SAMSUNG_EXPERIENCE",
+              "com.sec.feature.nfc_authentication",
+              "android.software.voice_recognizers",
+              "android.software.picture_in_picture",
+              "android.hardware.fingerprint",
+              "com.samsung.android.knox.knoxsdk",
+              "android.hardware.sensor.gyroscope",
+              "android.hardware.audio.low_latency",
+              "android.software.vulkan.deqp.level",
+              "android.software.cant_save_state",
+              "android.hardware.security.model.compatible",
+              "com.samsung.feature.device_category_phone",
+              "com.samsung.android.authfw.tahal",
+              "android.hardware.opengles.aep",
+              "com.sec.feature.sensorhub",
+              "android.hardware.bluetooth",
+              "android.hardware.camera.autofocus",
+              "android.hardware.telephony.gsm",
+              "android.hardware.telephony.ims",
+              "com.sec.feature.cocktailpanel",
+              "com.samsung.android.bio.face",
+              "android.software.sip.voip",
+              "android.hardware.se.omapi.ese",
+              "android.software.opengles.deqp.level",
+              "com.sec.feature.saccessorymanager",
+              "com.samsung.feature.samsung_experience_mobile",
+              "com.samsung.android.camerasdkservice",
+              "android.hardware.camera.concurrent",
+              "android.hardware.usb.host",
+              "android.hardware.audio.output",
+              "android.software.verified_boot",
+              "android.hardware.camera.flash",
+              "android.hardware.camera.front",
+              "android.hardware.sensor.hifi_sensors",
+              "android.hardware.se.omapi.uicc",
+              "android.hardware.screen.portrait",
+              "com.google.android.feature.DPS",
+              "android.hardware.nfc",
+              "com.google.android.feature.TURBO_PRELOAD",
+              "com.samsung.feature.ipsgeofence",
+              "com.nxp.mifare",
+              "com.sec.feature.cover.clearcover",
+              "android.hardware.sensor.stepdetector",
+              "android.software.home_screen",
+              "com.sec.feature.cover.ledbackcover",
+              "android.hardware.microphone",
+              "com.samsung.feature.aremoji.v2",
+              "android.software.autofill",
+              "com.samsung.android.sdk.camera.processor.effect",
+              "android.software.securely_removes_users",
+              "android.hardware.bluetooth_le",
+              "android.hardware.sensor.compass",
+              "android.hardware.touchscreen.multitouch.jazzhand",
+              "android.hardware.sensor.barometer",
+              "android.software.app_widgets",
+              "android.software.input_methods",
+              "android.hardware.sensor.light",
+              "android.hardware.vulkan.version",
+              "android.software.companion_device_setup",
+              "com.samsung.feature.galaxyfinder_v7",
+              "com.sec.feature.wirelesscharger_authentication",
+              "android.software.device_admin",
+              "android.hardware.keystore.limited_use_key",
+              "android.hardware.wifi.passpoint",
+              "android.hardware.camera",
+              "android.hardware.screen.landscape",
+              "android.hardware.ram.normal",
+              "com.samsung.feature.samsungpositioning.snlp",
+              "com.samsung.android.authfw",
+              "com.samsung.android.api.version.2402",
+              "com.samsung.android.api.version.2403",
+              "com.samsung.android.api.version.2501",
+              "com.samsung.android.api.version.2502",
+              "com.samsung.android.api.version.2601",
+              "com.samsung.android.api.version.2701",
+              "com.samsung.android.api.version.2801",
+              "com.samsung.android.api.version.2802",
+              "com.samsung.android.api.version.2803",
+              "com.samsung.android.api.version.2901",
+              "com.samsung.android.api.version.2902",
+              "com.samsung.android.api.version.2903",
+              "com.samsung.android.api.version.3001",
+              "com.samsung.android.api.version.3002",
+              "com.samsung.android.api.version.3101",
+              "com.sec.feature.cover",
+              "android.software.managed_users",
+              "com.sec.feature.nsflp",
+              "android.software.webview",
+              "android.hardware.sensor.stepcounter",
+              "android.hardware.camera.capability.manual_post_processing",
+              "android.hardware.camera.any",
+              "android.hardware.camera.capability.raw",
+              "android.hardware.vulkan.compute",
+              "android.software.connectionservice",
+              "android.hardware.touchscreen.multitouch.distinct",
+              "android.hardware.location.network",
+              "android.hardware.camera.ar",
+              "com.sec.android.secimaging",
+              "android.software.cts",
+              "android.software.sip",
+              "android.hardware.camera.capability.manual_sensor",
+              "android.software.app_enumeration",
+              "android.hardware.camera.level.full",
+              "com.sec.feature.usb_authentication",
+              "com.google.android.feature.EEA_DEVICE",
+              "android.hardware.wifi.direct",
+              "android.software.live_wallpaper",
+              "com.sec.feature.pocketmode",
+              "android.software.ipsec_tunnels",
+              "com.google.android.paid.chrome",
+              "android.software.freeform_window_management",
+              "android.hardware.audio.pro",
+              "android.hardware.nfc.hcef",
+              "android.hardware.nfc.uicc",
+              "android.hardware.location.gps",
+              "android.software.midi",
+              "com.samsung.feature.samsungpositioning",
+              "android.hardware.nfc.any",
+              "android.hardware.nfc.ese",
+              "android.hardware.nfc.hce",
+              "android.hardware.wifi",
+              "android.hardware.location",
+              "com.google.android.paid.search",
+              "android.hardware.vulkan.level",
+              "com.sec.feature.cover.flip",
+              "com.samsung.android.cameraxservice",
+              "com.samsung.android.knox.knoxsdk.api.level.33",
+              "com.samsung.android.knox.knoxsdk.api.level.34",
+              "com.samsung.android.knox.knoxsdk.api.level.35",
+              "android.hardware.wifi.aware",
+              "android.software.secure_lock_screen",
+              "com.sec.feature.cover.nfcledcover",
+              "android.hardware.telephony",
+              "com.sec.android.smartface.smart_stay",
+              "android.software.file_based_encryption"
+            ],
+            "manufacturer": "samsung",
+            "tags": "release-keys",
+            "supported64BitAbis": [
+              "arm64-v8a"
+            ],
+            "bootloader": "G970FXXSGHWC1",
+            "fingerprint": "samsung/beyond0lteeea/beyond0:12/SP1A.210812.016/G970FXXSGHWC1:user/release-keys",
+            "host": "21DKG923",
+            "model": "SM-G970F",
+            "id": "SP1A.210812.016",
+            "brand": "samsung",
+            "device": "beyond0",
+            "board": "exynos9820",
+            "hardware": "exynos9820"
+          }
+        }
+      }
+    ],
+    "triggerIds": [
+      6
+    ]
+  },
+  {
+    "dataStream": {
+      "studyDeploymentId": "7e33ff2c-47f4-4545-92fa-286b4e3719fe",
+      "deviceRoleName": "Location Service",
+      "dataType": "dk.cachet.carp.location"
+    },
+    "firstSequenceId": 1,
+    "measurements": [
+      {
+        "sensorStartTime": 1710674244963680,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7944111,
+          "longitude": 12.4462262,
+          "altitude": 78.30000305175781,
+          "accuracy": 20.0,
+          "verticalAccuracy": 0.8627140522003174,
+          "speed": 0.0,
+          "speedAccuracy": 1.5,
+          "heading": 0.0,
+          "headingAccuracy": 45.0,
+          "time": "2024-03-17T12:17:24.867",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864828411000000.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674251944592,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7944111,
+          "longitude": 12.4462262,
+          "altitude": 78.30000305175781,
+          "accuracy": 20.0,
+          "verticalAccuracy": 0.8609095811843872,
+          "speed": 0.0,
+          "speedAccuracy": 1.5,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:17:31.867",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864835411000000.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674254886074,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943169,
+          "longitude": 12.4463052,
+          "altitude": 35.3,
+          "accuracy": 14.522000312805176,
+          "verticalAccuracy": 0.8918018937110901,
+          "speed": 0.24259701371192932,
+          "speedAccuracy": 1.5,
+          "heading": 262.33331298828125,
+          "headingAccuracy": 45.0,
+          "time": "2024-03-17T12:17:34.742",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864838285230245.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674257374714,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943884,
+          "longitude": 12.446241,
+          "altitude": 23.8,
+          "accuracy": 13.621000289916992,
+          "verticalAccuracy": 0.8605806827545166,
+          "speed": 2.6877939701080322,
+          "speedAccuracy": 1.5,
+          "heading": 332.1838684082031,
+          "headingAccuracy": 45.0,
+          "time": "2024-03-17T12:17:37.249",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864840793210781.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674260370679,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7942946,
+          "longitude": 12.446319,
+          "altitude": 21.8,
+          "accuracy": 12.09000015258789,
+          "verticalAccuracy": 0.8945404291152954,
+          "speed": 2.6412765979766846,
+          "speedAccuracy": 0.19105751812458038,
+          "heading": 155.22323608398438,
+          "headingAccuracy": 45.0,
+          "time": "2024-03-17T12:17:40.246",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864843790879664.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674263384774,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943007,
+          "longitude": 12.4463088,
+          "altitude": 22.7,
+          "accuracy": 8.729000091552734,
+          "verticalAccuracy": 0.8725324273109436,
+          "speed": 0.05256587639451027,
+          "speedAccuracy": 0.18954326212406158,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:17:43.255",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864846798888123.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674266392284,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943017,
+          "longitude": 12.4462991,
+          "altitude": 22.1,
+          "accuracy": 8.184000015258789,
+          "verticalAccuracy": 0.9028674364089966,
+          "speed": 0.0835169106721878,
+          "speedAccuracy": 0.21396443247795105,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:17:46.265",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864849809675390.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674269387453,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943044,
+          "longitude": 12.4462929,
+          "altitude": 21.9,
+          "accuracy": 8.189000129699707,
+          "verticalAccuracy": 0.8896200656890869,
+          "speed": 0.10702384263277054,
+          "speedAccuracy": 0.19074827432632446,
+          "heading": 307.3295593261719,
+          "headingAccuracy": 45.0,
+          "time": "2024-03-17T12:17:49.262",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864852806870734.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674272066814,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943042,
+          "longitude": 12.446289,
+          "altitude": 22.8,
+          "accuracy": 8.312000274658203,
+          "verticalAccuracy": 0.8725066781044006,
+          "speed": 0.04754534736275673,
+          "speedAccuracy": 1.5,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:17:51.959",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864855503000000.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674274376702,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943076,
+          "longitude": 12.4462794,
+          "altitude": 24.6,
+          "accuracy": 8.149999618530273,
+          "verticalAccuracy": 0.903969943523407,
+          "speed": 0.22320085763931274,
+          "speedAccuracy": 0.21912182867527008,
+          "heading": 301.2662048339844,
+          "headingAccuracy": 45.0,
+          "time": "2024-03-17T12:17:54.256",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864857800512923.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674277034553,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462797,
+          "altitude": 26.5,
+          "accuracy": 8.177000045776367,
+          "verticalAccuracy": 0.8769406676292419,
+          "speed": 0.013660969212651253,
+          "speedAccuracy": 1.5,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:17:56.971",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864860514000000.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674279430751,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 28.9,
+          "accuracy": 8.177000045776367,
+          "verticalAccuracy": 0.9031326770782471,
+          "speed": 0.00015977730799932033,
+          "speedAccuracy": 0.19716332852840424,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:17:59.309",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864862853147073.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674282096984,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 29.7,
+          "accuracy": 8.166999816894531,
+          "verticalAccuracy": 0.8820186853408813,
+          "speed": 0.00005419010267360136,
+          "speedAccuracy": 1.5,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:18:01.988",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864865532000000.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674284449686,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 31.5,
+          "accuracy": 8.166999816894531,
+          "verticalAccuracy": 0.9016672372817993,
+          "speed": 0.000004591493052430451,
+          "speedAccuracy": 0.2459973841905594,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:18:04.315",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864867858720454.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674287180902,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 32.5,
+          "accuracy": 8.197999954223633,
+          "verticalAccuracy": 0.8885462880134583,
+          "speed": 6.681615616344061e-8,
+          "speedAccuracy": 1.5,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:18:07.104",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864870648000000.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674290447684,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 33.9,
+          "accuracy": 8.197999954223633,
+          "verticalAccuracy": 0.9231695532798767,
+          "speed": 7.693855330614952e-9,
+          "speedAccuracy": 0.19999030232429504,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:18:10.325",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864873869820450.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674293434794,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 34.1,
+          "accuracy": 8.151000022888184,
+          "verticalAccuracy": 0.9013606309890747,
+          "speed": 4.134188824611584e-11,
+          "speedAccuracy": 0.20529308915138245,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:18:13.310",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864876854431179.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674296452005,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 34.4,
+          "accuracy": 7.176000118255615,
+          "verticalAccuracy": 0.9261872172355652,
+          "speed": 7.841176492828783e-12,
+          "speedAccuracy": 0.20320124924182892,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:18:16.327",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864879870137869.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      },
+      {
+        "sensorStartTime": 1710674299451360,
+        "data": {
+          "__type": "dk.cachet.carp.location",
+          "latitude": 55.7943075,
+          "longitude": 12.4462798,
+          "altitude": 34.8,
+          "accuracy": 6.178999900817871,
+          "verticalAccuracy": 0.9035539627075195,
+          "speed": 1.9663948475166088e-13,
+          "speedAccuracy": 0.20598769187927246,
+          "heading": 0.0,
+          "headingAccuracy": 0.0,
+          "time": "2024-03-17T12:18:19.319",
+          "isMock": false,
+          "elapsedRealtimeNanos": 864882863332867.0,
+          "elapsedRealtimeUncertaintyNanos": 0.0
+        }
+      }
+    ],
+    "triggerIds": [
+      7
+    ]
+  }
+]

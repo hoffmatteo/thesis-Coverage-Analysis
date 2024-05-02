@@ -16,7 +16,7 @@ class CoverageAnalysis(
 ) {
     suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): List<Coverage> {
         val coverage = expectation.calculateCoverage(calcStartTime, calcEndTime, deploymentIds, dataStore)
-        exportTarget.exportCoverage(coverage.first())
+        exportTarget.exportCoverage(coverage)
         return coverage
     }
 }

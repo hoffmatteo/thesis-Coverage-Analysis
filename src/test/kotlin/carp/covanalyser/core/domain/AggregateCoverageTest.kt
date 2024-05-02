@@ -24,7 +24,6 @@ import kotlin.time.toDuration
 class AggregateCoverageTest {
 
 
-    private lateinit var dataStreamExpectations: List<DataStreamExpectation>
     private lateinit var deviceAggregations: List<DeviceAggregation>
     private lateinit var protocolAggregation: ProtocolAggregation
     private lateinit var studyAggregation: StudyAggregation
