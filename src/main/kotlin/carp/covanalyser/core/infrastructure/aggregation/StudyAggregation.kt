@@ -7,9 +7,10 @@ import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
 //TODO it should only have one sub-expectation
-class StudyAggregation(private val coverageAggregator: CoverageAggregator) : AggregateExpectation<ProtocolAggregation>(
-    coverageAggregator
-) {
+class StudyAggregation(private val coverageAggregator: CoverageAggregator) :
+    AggregateExpectation<ParticipantGroupAggregation>(
+        coverageAggregator
+    ) {
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,

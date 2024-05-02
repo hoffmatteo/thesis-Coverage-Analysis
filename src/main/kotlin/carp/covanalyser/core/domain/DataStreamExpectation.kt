@@ -105,6 +105,8 @@ abstract class DataStreamExpectation(
         if (currCount >= numDataPoints) {
             println("Expectation met in window: $windowStart - $windowEnd")
             fulfilledExpectations1++
+        } else {
+            println("Expectation not met in window: $windowStart - $windowEnd")
         }
         return fulfilledExpectations1
     }

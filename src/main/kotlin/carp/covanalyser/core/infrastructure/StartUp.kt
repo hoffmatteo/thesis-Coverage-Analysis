@@ -24,7 +24,7 @@ class StartUp {
         // data type dk.cachet.carp.location
         // device role name Location Service
 
-        val locationExpectation = LocationExpectation(2, "Location Service", 30.toDuration(DurationUnit.SECONDS))
+        val locationExpectation = LocationExpectation(1, "Location Service", 2.toDuration(DurationUnit.SECONDS))
         //val coverageAggregator = AverageCoverageAggregator()
         var coverage = locationExpectation.calculateCoverage(
             Instant.fromEpochMilliseconds(1710674244963680L / 1000),

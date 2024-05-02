@@ -6,9 +6,10 @@ import carp.covanalyser.core.domain.DataStore
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
-class ProtocolAggregation(private val coverageAggregator: CoverageAggregator) : AggregateExpectation<DeviceAggregation>(
-    coverageAggregator
-) {
+class ParticipantGroupAggregation(private val coverageAggregator: CoverageAggregator) :
+    AggregateExpectation<DeviceAggregation>(
+        coverageAggregator
+    ) {
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,

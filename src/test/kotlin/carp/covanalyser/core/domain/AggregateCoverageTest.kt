@@ -25,7 +25,7 @@ class AggregateCoverageTest {
 
 
     private lateinit var deviceAggregations: List<DeviceAggregation>
-    private lateinit var protocolAggregation: ProtocolAggregation
+    private lateinit var participantGroupAggregation: ParticipantGroupAggregation
     private lateinit var studyAggregation: StudyAggregation
     private lateinit var coverageAnalysis: CoverageAnalysis
     private val dataStore: DataStore = mockk()
@@ -46,11 +46,11 @@ class AggregateCoverageTest {
                 coverageAggregator
             )
 
-        protocolAggregation = ProtocolAggregation(coverageAggregator)
-        protocolAggregation.expectations.addAll(deviceAggregations)
+        participantGroupAggregation = ParticipantGroupAggregation(coverageAggregator)
+        participantGroupAggregation.expectations.addAll(deviceAggregations)
 
         studyAggregation = StudyAggregation(coverageAggregator)
-        studyAggregation.expectations.add(protocolAggregation)
+        studyAggregation.expectations.add(participantGroupAggregation)
 
     }
 

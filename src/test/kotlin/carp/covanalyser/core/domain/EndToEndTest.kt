@@ -6,7 +6,7 @@ import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
 import carp.covanalyser.core.infrastructure.DefaultEventBus
 import carp.covanalyser.core.infrastructure.aggregation.AggregationFactory
 import carp.covanalyser.core.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.core.infrastructure.aggregation.ProtocolAggregation
+import carp.covanalyser.core.infrastructure.aggregation.ParticipantGroupAggregation
 import carp.covanalyser.core.infrastructure.aggregation.StudyAggregation
 import carp.covanalyser.core.infrastructure.expectations.LocationExpectation
 import carp.covanalyser.core.infrastructure.expectations.StepCountExpectation
@@ -62,11 +62,11 @@ class EndToEndTest {
                 coverageAggregator
             )
 
-        val protocolAggregation = ProtocolAggregation(coverageAggregator)
-        protocolAggregation.expectations.addAll(deviceAggregations)
+        val participantGroupAggregation = ParticipantGroupAggregation(coverageAggregator)
+        participantGroupAggregation.expectations.addAll(deviceAggregations)
 
         val studyAggregation = StudyAggregation(coverageAggregator)
-        studyAggregation.expectations.add(protocolAggregation)
+        studyAggregation.expectations.add(participantGroupAggregation)
 
 
         val coverageAnalysis = CoverageAnalysis(
