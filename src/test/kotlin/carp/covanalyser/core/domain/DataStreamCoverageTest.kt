@@ -1,6 +1,6 @@
-package carp.covanalyser.core.domain
+package carp.covanalyser.domain
 
-import carp.covanalyser.core.infrastructure.expectations.LocationExpectation
+import carp.covanalyser.infrastructure.expectations.LocationExpectation
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.CarpDataTypes
 import dk.cachet.carp.common.application.data.Data

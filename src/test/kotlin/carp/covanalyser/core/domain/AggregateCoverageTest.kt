@@ -1,8 +1,11 @@
 package carp.covanalyser.core.domain
 
-import carp.covanalyser.core.infrastructure.aggregation.*
-import carp.covanalyser.core.infrastructure.expectations.LocationExpectation
-import carp.covanalyser.core.infrastructure.expectations.StepCountExpectation
+import carp.covanalyser.domain.CoverageAnalysis
+import carp.covanalyser.domain.DataStore
+import carp.covanalyser.domain.ExportTarget
+import carp.covanalyser.infrastructure.aggregation.*
+import carp.covanalyser.infrastructure.expectations.LocationExpectation
+import carp.covanalyser.infrastructure.expectations.StepCountExpectation
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.CarpDataTypes
 import dk.cachet.carp.common.application.data.Data

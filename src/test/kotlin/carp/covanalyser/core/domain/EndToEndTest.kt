@@ -1,15 +1,15 @@
-package carp.covanalyser.core.domain
+package carp.covanalyser.domain
 
-import carp.covanalyser.core.application.DefaultCoverageAnalysisService
-import carp.covanalyser.core.application.events.CoverageAnalysisCompletedEvent
-import carp.covanalyser.core.application.events.CoverageAnalysisRequestedEvent
-import carp.covanalyser.core.infrastructure.DefaultEventBus
-import carp.covanalyser.core.infrastructure.aggregation.AggregationFactory
-import carp.covanalyser.core.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.core.infrastructure.aggregation.ParticipantGroupAggregation
-import carp.covanalyser.core.infrastructure.aggregation.StudyAggregation
-import carp.covanalyser.core.infrastructure.expectations.LocationExpectation
-import carp.covanalyser.core.infrastructure.expectations.StepCountExpectation
+import carp.covanalyser.application.DefaultCoverageAnalysisService
+import carp.covanalyser.application.events.CoverageAnalysisCompletedEvent
+import carp.covanalyser.application.events.CoverageAnalysisRequestedEvent
+import carp.covanalyser.infrastructure.DefaultEventBus
+import carp.covanalyser.infrastructure.aggregation.AggregationFactory
+import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
+import carp.covanalyser.infrastructure.aggregation.ParticipantGroupAggregation
+import carp.covanalyser.infrastructure.aggregation.StudyAggregation
+import carp.covanalyser.infrastructure.expectations.LocationExpectation
+import carp.covanalyser.infrastructure.expectations.StepCountExpectation
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.CarpDataTypes
 import dk.cachet.carp.common.application.data.Data
@@ -53,17 +53,19 @@ class EndToEndTest {
         val locationExpectation = LocationExpectation(10, "phone", 30.toDuration(DurationUnit.MINUTES))
         val stepCountExpectation = StepCountExpectation(10, "phone", 30.toDuration(DurationUnit.MINUTES))
 
+        val dataStreams = listOf(locationExpectation, stepCountExpectation)
+
         val coverageAggregator = AverageCoverageAggregator()
 
 
         val deviceAggregations =
             AggregationFactory().createDeviceAggregations(
-                listOf(locationExpectation, stepCountExpectation),
+                dataStreams,
                 coverageAggregator
             )
 
         val participantGroupAggregation = ParticipantGroupAggregation(coverageAggregator)
-        participantGroupAggregation.expectations.addAll(deviceAggregations)
+        participantGroupAggregation.expectations.addAll(dataStreams)
 
         val studyAggregation = StudyAggregation(coverageAggregator)
         studyAggregation.expectations.add(participantGroupAggregation)
@@ -100,10 +102,10 @@ class EndToEndTest {
         }
 
         val expectedCoverage = Coverage(1.0, 1.0, startTime, endTime)
-        val slot = slot<Coverage>()
+        val slot = slot<List<Coverage>>()
         coVerify { exportTarget.exportCoverage(capture(slot)) }
 
-        assertEquals(expectedCoverage, slot.captured)
+        assertEquals(expectedCoverage, slot.captured.first())
 
 
     }
