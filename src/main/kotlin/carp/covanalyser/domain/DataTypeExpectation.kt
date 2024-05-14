@@ -104,10 +104,10 @@ abstract class DataTypeExpectation(
     ): Int {
         var fulfilledExpectations1 = fulfilledExpectations
         if (currCount >= numDataPoints) {
-            println("Expectation met in window: $windowStart - $windowEnd")
+            //println("Expectation met in window: $windowStart - $windowEnd")
             fulfilledExpectations1++
         } else {
-            println("Expectation not met in window: $windowStart - $windowEnd")
+            //println("Expectation not met in window: $windowStart - $windowEnd")
         }
         return fulfilledExpectations1
     }

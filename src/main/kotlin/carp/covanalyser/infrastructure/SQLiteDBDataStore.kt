@@ -11,12 +11,9 @@ import kotlinx.datetime.Instant
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
-import java.sql.Statement
 
-class SqliteDBDataStore : DataStore {
+class SQLiteDBDataStore(dbName: String, private val tableName: String) : DataStore {
     private var connection: Connection? = null
-    private var dbName: String = "carp-data.db"
-    private var tableName: String = "measurements"
 
     init {
         Class.forName("org.sqlite.JDBC")
@@ -30,12 +27,13 @@ class SqliteDBDataStore : DataStore {
         dataStreamId: DataStreamId
     ): List<Measurement<Data>> {
         val json = createDefaultJSON(STUBS_SERIAL_MODULE)
-        val statement: Statement = connection!!.createStatement()
-        val resultSet: ResultSet =
-            statement.executeQuery(
-                "SELECT measurement FROM $tableName WHERE deployment_id='${dataStreamId.studyDeploymentId}'" +
-                        "AND device_rolename='${dataStreamId.deviceRoleName}' AND data_type='${dataStreamId.dataType}'"
-            )
+
+        val sql = "SELECT measurement FROM $tableName WHERE deployment_id=? AND device_rolename=? AND data_type=?"
+        val preparedStatement = connection!!.prepareStatement(sql)
+        preparedStatement.setString(1, dataStreamId.studyDeploymentId.toString())
+        preparedStatement.setString(2, dataStreamId.deviceRoleName)
+        preparedStatement.setString(3, dataStreamId.dataType.toString())
+        val resultSet: ResultSet = preparedStatement.executeQuery()
         val measurements = mutableListOf<Measurement<Data>>()
 
         while (resultSet.next()) {
@@ -44,8 +42,8 @@ class SqliteDBDataStore : DataStore {
             measurements.add(measurement)
         }
 
-        statement.close()
-        
+        preparedStatement.close()
+
         measurements.filter { it.sensorStartTime in startTime.toEpochMilliseconds()..endTime.toEpochMilliseconds() }
 
         val modifiedDataPoints = measurements.map { measurement ->
@@ -57,7 +55,6 @@ class SqliteDBDataStore : DataStore {
                 data = measurement.data
             )
         }
-        print(modifiedDataPoints)
         return modifiedDataPoints
     }
 }

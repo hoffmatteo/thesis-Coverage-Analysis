@@ -69,6 +69,7 @@ class DefaultCoverageAnalysisService(
         var currStartTime = startTime
         val job = serviceScope.launch {
             while (isActive && currStartTime < endTime) {
+                //TODO what if endTime is not a multiple of timeBetweenCalculations?
                 var currEndTime = currStartTime.plus(analysis.timeBetweenCalculations)
                 val coverage = analysis.calculateCoverage(currStartTime, currEndTime)
                 eventBus.publish(CoverageCalculatedEvent(UUID.parse(id)))

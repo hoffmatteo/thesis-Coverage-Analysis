@@ -5,7 +5,7 @@ import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
 //TODO device group, e.g. all smart watches
-class DeviDeviceAggregation(deviceRoleName: String, private val coverageAggregator: CoverageAggregator) :
+class DeviceAggregation(deviceRoleName: String, private val coverageAggregator: CoverageAggregator) :
     AggregateExpectation<DataTypeExpectation>(
         coverageAggregator
     ) {

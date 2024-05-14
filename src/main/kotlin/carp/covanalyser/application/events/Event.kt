@@ -7,4 +7,10 @@ import kotlinx.datetime.Instant
 abstract class Event(val id: UUID = UUID.randomUUID()) {
 
     val createdAt: Instant = Clock.System.now()
+    
+    override fun toString(): String {
+        return "Event(id=$id, createdAt=$createdAt)"
+    }
+
+
 }
