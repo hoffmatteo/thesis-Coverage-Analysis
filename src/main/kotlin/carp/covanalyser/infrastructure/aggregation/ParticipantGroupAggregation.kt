@@ -6,7 +6,7 @@ import kotlinx.datetime.Instant
 
 //TODO just keep it to data streams
 class ParticipantGroupAggregation(private val coverageAggregator: CoverageAggregator) :
-    AggregateExpectation<DataStreamExpectation>(
+    AggregateExpectation<DataTypeExpectation>(
         coverageAggregator
     ) {
     override suspend fun calculateCoverage(

@@ -25,6 +25,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
     implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0')
     implementation 'org.apache.commons:commons-csv:1.5'
+    implementation 'org.xerial:sqlite-jdbc:3.45.3.0'
 
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test'

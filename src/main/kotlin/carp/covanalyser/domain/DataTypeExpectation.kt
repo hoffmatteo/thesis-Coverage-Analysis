@@ -8,7 +8,7 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
 
-abstract class DataStreamExpectation(
+abstract class DataTypeExpectation(
     private var numDataPoints: Int,
     private var dataType: DataType,
     var deviceName: String,
@@ -64,7 +64,7 @@ abstract class DataStreamExpectation(
             }
             fulfilledExpectations =
                 checkExpectation(currCount, windowStart, windowEnd, fulfilledExpectations)
-            
+
             //TODO remove coerce at most
             val timeCoverage = (fulfilledExpectations.toDouble() / numExpectedExpectations).coerceAtMost(1.0)
 

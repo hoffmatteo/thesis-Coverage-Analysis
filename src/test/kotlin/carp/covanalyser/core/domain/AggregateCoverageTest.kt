@@ -50,7 +50,9 @@ class AggregateCoverageTest {
             )
 
         participantGroupAggregation = ParticipantGroupAggregation(coverageAggregator)
-        participantGroupAggregation.expectations.addAll(deviceAggregations)
+        participantGroupAggregation.expectations.addAll(
+            listOf(locationExpectation, stepCountExpectation),
+        )
 
         studyAggregation = StudyAggregation(coverageAggregator)
         studyAggregation.expectations.add(participantGroupAggregation)

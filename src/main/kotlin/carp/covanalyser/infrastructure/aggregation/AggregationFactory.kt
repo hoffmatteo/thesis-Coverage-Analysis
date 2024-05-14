@@ -1,17 +1,17 @@
 package carp.covanalyser.infrastructure.aggregation
 
 import carp.covanalyser.domain.CoverageAggregator
-import carp.covanalyser.domain.DataStreamExpectation
+import carp.covanalyser.domain.DataTypeExpectation
 
 class AggregationFactory {
 
     fun createDeviceAggregations(
-        dataStreamExpectations: List<DataStreamExpectation>, coverageAggregator: CoverageAggregator
+        dataTypeExpectations: List<DataTypeExpectation>, coverageAggregator: CoverageAggregator
     ): List<DeviceAggregation> {
         val deviceAggregations = mutableListOf<DeviceAggregation>()
 
         // Group DataStreamExpectations by deviceName
-        val groupedExpectations = dataStreamExpectations.groupBy { it.deviceName }
+        val groupedExpectations = dataTypeExpectations.groupBy { it.deviceName }
 
         // Create a DeviceAggregation for each group
         for ((deviceName, expectations) in groupedExpectations) {

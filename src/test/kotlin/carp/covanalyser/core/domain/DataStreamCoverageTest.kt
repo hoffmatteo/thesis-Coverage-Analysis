@@ -22,7 +22,7 @@ import kotlin.time.toDuration
 class DataStreamCoverageTest {
 
 
-    private lateinit var dataStreamExpectation: DataStreamExpectation
+    private lateinit var dataTypeExpectation: DataTypeExpectation
     private lateinit var coverageAnalysis: CoverageAnalysis
     private val dataStore: DataStore = mockk()
     private val exportTarget: ExportTarget = mockk(relaxed = true)
@@ -31,9 +31,9 @@ class DataStreamCoverageTest {
 
     @BeforeEach
     fun setup() {
-        dataStreamExpectation = LocationExpectation(10, "test", 30.toDuration(DurationUnit.MINUTES))
+        dataTypeExpectation = LocationExpectation(10, "test", 30.toDuration(DurationUnit.MINUTES))
         coverageAnalysis = CoverageAnalysis(
-            dataStreamExpectation,
+            dataTypeExpectation,
             1.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.randomUUID()

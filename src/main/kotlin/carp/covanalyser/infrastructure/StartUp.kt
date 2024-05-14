@@ -1,23 +1,34 @@
 package carp.covanalyser.infrastructure
 
-import carp.covanalyser.application.DefaultCoverageAnalysisService
 import carp.covanalyser.application.events.CoverageAnalysisCompletedEvent
 import carp.covanalyser.application.events.Event
-import carp.covanalyser.infrastructure.expectations.LocationExpectation
 import dk.cachet.carp.common.application.UUID
+import dk.cachet.carp.common.application.data.DataType
+import dk.cachet.carp.data.application.DataStreamId
 import kotlinx.datetime.Instant
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 class StartUp {
 
     suspend fun startUp() {
+        var test = SqliteDBDataStore()
+        test.obtainData(
+            Instant.fromEpochMilliseconds(1702908535926457 / 1000),
+            Instant.fromEpochMilliseconds(1702967584950834 / 1000),
+            DataStreamId(
+                UUID.parse("a030c0a7-279a-4054-bfce-197cca7a7f94"),
+                "Primary Phone",
+                DataType("dk.cachet.carp", "stepcount")
+            )
+        )
+
+
+        /*
 
         val eventBus = DefaultEventBus()
         val coverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
 
         // test
-        val dataSource = CAWSDataStore()
+        val dataSource = JSONDataStore()
         val exportTarget = CSVExportTarget("test.csv")
 
         val locationExpectation = LocationExpectation(1, "Location Service", 4.toDuration(DurationUnit.SECONDS))
@@ -29,6 +40,9 @@ class StartUp {
             dataSource
         ).first()
         println("Coverage Result: " + coverage)
+
+
+
 
         /*
         val locationExpectation = LocationExpectation(1, "phone", 30)
@@ -70,6 +84,8 @@ class StartUp {
             // do nothing
 
         }
+
+         */
     }
 
     private fun handleCoverageAnalysisCompletedEvent(event: Event) {

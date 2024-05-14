@@ -11,13 +11,13 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
 import java.io.File
 
-class CAWSDataStore : DataStore {
+class JSONDataStore : DataStore {
     // batch is collection of non-overlapping data stream sequences --> always same deploymentID?
     private lateinit var streamBatch: DataStreamBatch
 
     init {
         val json = createDefaultJSON(STUBS_SERIAL_MODULE)
-        val file = File("src/main/kotlin/carp/covanalyser/core/data-1.json").readText()
+        val file = File("data-1.json").readText()
         streamBatch = json.decodeFromString(DataStreamBatchSerializer, file)
     }
 
@@ -47,6 +47,7 @@ class CAWSDataStore : DataStore {
                 data = measurement.data
             )
         }
+
         return modifiedDataPoints
     }
 }
