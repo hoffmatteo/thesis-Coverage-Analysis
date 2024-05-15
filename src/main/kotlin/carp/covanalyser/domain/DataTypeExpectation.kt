@@ -73,7 +73,8 @@ abstract class DataTypeExpectation(
                     1.0
                 )
 
-            val coverage = Coverage(absoluteCoverage, timeCoverage, startTime, endTime)
+            val coverage =
+                Coverage(absoluteCoverage, timeCoverage, startTime, endTime, dataStreamId.dataType.toString())
 
             println("Coverage Data Stream: ${coverage}")
 

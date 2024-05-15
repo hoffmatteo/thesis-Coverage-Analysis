@@ -4,6 +4,9 @@ import carp.covanalyser.domain.Coverage
 import carp.covanalyser.domain.ExportTarget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVPrinter
 import java.io.File
@@ -12,14 +15,17 @@ import java.io.IOException
 
 class CSVExportTarget(val filepath: String) : ExportTarget {
     init {
+        //TODO change
         val file = File(filepath)
-        if (!file.exists()) {
-            file.createNewFile()
-            val writer = FileWriter(file)
-            val printer = CSVFormat.DEFAULT.print(writer)
-            printer.printRecord("Start Time", "End Time", "Absolute Coverage", "Time Coverage")
-            printer.close()
+        if (file.exists()) {
+            file.delete()
         }
+        file.createNewFile()
+        val writer = FileWriter(file)
+        val printer = CSVFormat.DEFAULT.print(writer)
+        printer.printRecord("Start Time", "End Time", "Absolute Coverage", "Time Coverage", "Data Type")
+        printer.close()
+
     }
 
     override suspend fun exportCoverage(data: List<Coverage>): String {
@@ -36,10 +42,11 @@ class CSVExportTarget(val filepath: String) : ExportTarget {
 
                 // Append the new row of coverage data
                 printer.printRecord(
-                    coverage.startTime,
-                    coverage.endTime,
+                    toReadableString(coverage.startTime),
+                    toReadableString(coverage.endTime),
                     coverage.absCoverage,
-                    coverage.timeCoverage
+                    coverage.timeCoverage,
+                    coverage.dataStreamId
                 )
             }
         } catch (e: IOException) {
@@ -53,6 +60,12 @@ class CSVExportTarget(val filepath: String) : ExportTarget {
             }
         }
         return filepath
+    }
+
+    private fun toReadableString(instant: Instant): String {
+        val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+        return localDateTime.toString()
+
     }
 }
 

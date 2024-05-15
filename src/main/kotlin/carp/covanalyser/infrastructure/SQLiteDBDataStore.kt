@@ -34,7 +34,7 @@ class SQLiteDBDataStore(dbName: String, private val tableName: String) : DataSto
         preparedStatement.setString(2, dataStreamId.deviceRoleName)
         preparedStatement.setString(3, dataStreamId.dataType.toString())
         val resultSet: ResultSet = preparedStatement.executeQuery()
-        val measurements = mutableListOf<Measurement<Data>>()
+        var measurements = mutableListOf<Measurement<Data>>()
 
         while (resultSet.next()) {
             val measurementJson = resultSet.getString("measurement")
@@ -44,7 +44,6 @@ class SQLiteDBDataStore(dbName: String, private val tableName: String) : DataSto
 
         preparedStatement.close()
 
-        measurements.filter { it.sensorStartTime in startTime.toEpochMilliseconds()..endTime.toEpochMilliseconds() }
 
         val modifiedDataPoints = measurements.map { measurement ->
             val modifiedStartTime = measurement.sensorStartTime / 1000
@@ -55,6 +54,7 @@ class SQLiteDBDataStore(dbName: String, private val tableName: String) : DataSto
                 data = measurement.data
             )
         }
-        return modifiedDataPoints
+        return modifiedDataPoints.filter { it.sensorStartTime in startTime.toEpochMilliseconds()..endTime.toEpochMilliseconds() }
+
     }
 }

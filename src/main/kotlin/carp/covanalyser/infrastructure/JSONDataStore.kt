@@ -35,7 +35,6 @@ class JSONDataStore : DataStore {
         )
          */
         val dataStreamPoints = streamBatch.getDataStreamPoints(dataStreamId).toList()
-        dataStreamPoints.filter { it.measurement.sensorStartTime in startTime.toEpochMilliseconds()..endTime.toEpochMilliseconds() }
         val dataPoints = dataStreamPoints.map { it.measurement }
 
         val modifiedDataPoints = dataPoints.map { measurement ->
@@ -47,7 +46,6 @@ class JSONDataStore : DataStore {
                 data = measurement.data
             )
         }
-
-        return modifiedDataPoints
+        return modifiedDataPoints.filter { it.sensorStartTime in startTime.toEpochMilliseconds()..endTime.toEpochMilliseconds() }
     }
 }
