@@ -1,4 +1,4 @@
-package carp.covanalyser.infrastructure
+package carp.covanalyser.infrastructure.expectations
 
 import carp.covanalyser.domain.DataTypeExpectation
 import dk.cachet.carp.common.application.data.Data
@@ -6,7 +6,7 @@ import dk.cachet.carp.common.application.data.DataType
 import dk.cachet.carp.data.application.Measurement
 import kotlin.time.Duration
 
-class DefaultDataTypeExpectation(
+class GenericDataTypeExpectation(
     numDataPoints: Int,
     dataType: DataType,
     deviceName: String,

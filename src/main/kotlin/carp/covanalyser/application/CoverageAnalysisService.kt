@@ -1,15 +1,16 @@
 package carp.covanalyser.application
 
 import carp.covanalyser.domain.CoverageAnalysis
+import dk.cachet.carp.common.application.UUID
 
 interface CoverageAnalysisService {
 
-    fun registerAnalysis(id: String, analysis: CoverageAnalysis)
+    suspend fun registerAnalysis(analysis: CoverageAnalysis)
 
-    fun startAnalysis(id: String)
+    suspend fun startAnalysis(id: UUID)
 
-    fun stopAnalysis(id: String)
+    suspend fun stopAnalysis(id: UUID)
 
-    fun stopAllAnalyses()
+    suspend fun stopAllAnalyses()
 
 }

@@ -9,10 +9,10 @@ import kotlinx.datetime.Instant
 import kotlin.time.Duration
 
 abstract class DataTypeExpectation(
-    private var numDataPoints: Int,
-    private var dataType: DataType,
+    var numDataPoints: Int,
+    var dataType: DataType,
     var deviceName: String,
-    private var duration: Duration
+    var duration: Duration
 ) : Expectation {
 
     abstract fun isValid(input: Measurement<Data>): Boolean
@@ -23,10 +23,9 @@ abstract class DataTypeExpectation(
         deploymentIDs: List<UUID>,
         dataStore: DataStore
     ): List<Coverage> {
-        //TODO different types of calculating coverage
         val coverages = mutableListOf<Coverage>()
         for (deploymentID in deploymentIDs) {
-            var dataStreamId = DataStreamId(deploymentID, deviceName, dataType)
+            val dataStreamId = DataStreamId(deploymentID, deviceName, dataType)
             val data = dataStore.obtainData(startTime, endTime, dataStreamId)
             //TODO ensure duration of expectation is <= duration of data!
             val numExpectedExpectations = (endTime.minus(startTime) / duration).toInt()
@@ -38,7 +37,7 @@ abstract class DataTypeExpectation(
             var fulfilledExpectations = 0
 
             for (measurement in data) {
-                //TODO USE SYNC POINT!
+                //TODO USE SYNC POINT?
                 // milli seconds versus microseconds
                 if (measurement.sensorStartTime >= endTime.toEpochMilliseconds()) {
                     break
@@ -65,16 +64,13 @@ abstract class DataTypeExpectation(
             fulfilledExpectations =
                 checkExpectation(currCount, windowStart, windowEnd, fulfilledExpectations)
 
-            //TODO remove coerce at most
-            val timeCoverage = (fulfilledExpectations.toDouble() / numExpectedExpectations).coerceAtMost(1.0)
+            val timeCoverage = (fulfilledExpectations.toDouble() / numExpectedExpectations)
 
             val absoluteCoverage =
-                (totalCountMeasurements.toDouble() / (numExpectedExpectations * numDataPoints)).coerceAtMost(
-                    1.0
-                )
+                (totalCountMeasurements.toDouble() / (numExpectedExpectations * numDataPoints))
 
             val coverage =
-                Coverage(absoluteCoverage, timeCoverage, startTime, endTime, dataStreamId.dataType.toString())
+                Coverage(absoluteCoverage, timeCoverage, startTime, endTime)
 
             println("Coverage Data Stream: ${coverage}")
 

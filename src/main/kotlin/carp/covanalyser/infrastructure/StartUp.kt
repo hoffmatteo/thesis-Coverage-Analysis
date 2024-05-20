@@ -7,10 +7,9 @@ import carp.covanalyser.application.events.CoverageAnalysisRequestedEvent
 import carp.covanalyser.application.events.Event
 import carp.covanalyser.application.events.EventBus
 import carp.covanalyser.domain.CoverageAnalysis
-import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.infrastructure.aggregation.MultiCoverageAggregation
+import carp.covanalyser.infrastructure.aggregation.MultiCoverageExpectation
+import carp.covanalyser.infrastructure.expectations.GenericDataTypeExpectation
 import carp.covanalyser.infrastructure.expectations.LocationExpectation
-import carp.covanalyser.infrastructure.expectations.StepCountExpectation
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.DataType
 import kotlinx.datetime.Instant
@@ -19,7 +18,9 @@ import kotlin.time.toDuration
 
 class StartUp {
     private var eventBus: EventBus = DefaultEventBus()
-    private var coverageAnalysisService: CoverageAnalysisService = DefaultCoverageAnalysisService(eventBus)
+    private val inMemoryCoverageAnalysisRepository = InMemoryCoverageAnalysisRepository()
+    private var coverageAnalysisService: CoverageAnalysisService =
+        DefaultCoverageAnalysisService(eventBus, inMemoryCoverageAnalysisRepository)
 
 
     suspend fun startUp() {
@@ -36,8 +37,6 @@ class StartUp {
     private suspend fun testDBData() {
         val dataStore = SQLiteDBDataStore("carp-data.db", "measurements")
         val exportTarget = CSVExportTarget("test_db.csv")
-
-        val stepCountExpectation = StepCountExpectation(1, "Primary Phone", 1.toDuration(DurationUnit.HOURS))
 
         val measures = mapOf(
             "heartbeat" to 60,
@@ -65,19 +64,34 @@ class StartUp {
         )
 
         val expectations = measures.map { (measure, frequency) ->
-            DefaultDataTypeExpectation(
+            GenericDataTypeExpectation(
                 frequency,
                 DataType("dk.cachet.carp", measure),
                 "Primary Phone",
                 1.toDuration(DurationUnit.HOURS)
             ) { true }
-        }
+        }.toMutableList()
 
-        val multiCoverageAggregation = MultiCoverageAggregation(AverageCoverageAggregator())
-        multiCoverageAggregation.expectations.addAll(expectations)
+        expectations.add(
+            GenericDataTypeExpectation(
+                3600, DataType("dk.cachet.carp.polar", "hr"), "Primary Phone",
+                1.toDuration(DurationUnit.HOURS)
+            ) { true }
+        )
+
+        expectations.add(
+            GenericDataTypeExpectation(
+                3600, DataType("dk.cachet.carp.polar", "ppg"), "Primary Phone",
+                1.toDuration(DurationUnit.HOURS)
+            ) { true }
+        )
+
+        val multiCoverageExpectation = MultiCoverageExpectation()
+        multiCoverageExpectation.expectations.addAll(expectations)
 
         val coverageAnalysis = CoverageAnalysis(
-            multiCoverageAggregation,
+            UUID.randomUUID(),
+            multiCoverageExpectation,
             1.toDuration(DurationUnit.HOURS),
             listOf(UUID.parse("a030c0a7-279a-4054-bfce-197cca7a7f94")),
             exportTarget,
@@ -96,6 +110,7 @@ class StartUp {
         val locationExpectation = LocationExpectation(1, "Location Service", 4.toDuration(DurationUnit.SECONDS))
 
         val coverageAnalysis = CoverageAnalysis(
+            UUID.randomUUID(),
             locationExpectation,
             60.toDuration(DurationUnit.SECONDS),
             listOf(UUID.parse("7e33ff2c-47f4-4545-92fa-286b4e3719fe")),

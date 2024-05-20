@@ -2,29 +2,35 @@ package carp.covanalyser.application
 
 import carp.covanalyser.application.events.*
 import carp.covanalyser.domain.CoverageAnalysis
+import carp.covanalyser.domain.CoverageAnalysisRepository
 import dk.cachet.carp.common.application.UUID
 import kotlinx.coroutines.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.time.ExperimentalTime
 
 /**
  * Manage coverage analysis
  */
+//TODO should this be in application layer? Should I create repository classes to abstract storage of analyses and/or jobs away?
 class DefaultCoverageAnalysisService(
     private var eventBus: EventBus,
+    private var coverageAnalysisRepository: CoverageAnalysisRepository
 ) : CoverageAnalysisService {
-    //TODO how do I model  coverage of a single participant versus of an entire study?
-    private val analyses = mutableMapOf<String, CoverageAnalysis>()
-    private val jobs = mutableMapOf<String, Job>()
-    private val serviceScope = CoroutineScope(Dispatchers.Default)
+    private val jobs = mutableMapOf<UUID, Job>()
+    private val analysisScope = CoroutineScope(Dispatchers.Default)
 
     init {
-        eventBus.subscribe(CoverageAnalysisRequestedEvent::class) { handleCoverageAnalysisRequested(it) }
+        eventBus.subscribe(CoverageAnalysisRequestedEvent::class) {
+            analysisScope.launch {
+                handleCoverageAnalysisRequested(
+                    it
+                )
+            }
+        }
     }
 
-    override fun registerAnalysis(id: String, analysis: CoverageAnalysis) {
-        analyses[id] = analysis
+    override suspend fun registerAnalysis(analysis: CoverageAnalysis) {
+        coverageAnalysisRepository.add(analysis)
     }
 
     /**
@@ -33,8 +39,8 @@ class DefaultCoverageAnalysisService(
      * If system clock is > than startTime but < than endTime --> full analysis until system clock, then recurring analysis?
      */
 
-    override fun startAnalysis(id: String) {
-        val analysis = analyses[id] ?: throw Exception("Analysis not found")
+    override suspend fun startAnalysis(id: UUID) {
+        val analysis = coverageAnalysisRepository.getBy(id) ?: throw Exception("Analysis not found")
 
         val currentTime = Clock.System.now()
         val job: Job = when {
@@ -47,15 +53,15 @@ class DefaultCoverageAnalysisService(
             else -> analyzePartially(id)
         }
         jobs[id] = job
-        serviceScope.launch {
+        analysisScope.launch {
             job.join()
-            eventBus.publish(CoverageAnalysisCompletedEvent(UUID.parse(id)))
+            eventBus.publish(CoverageAnalysisCompletedEvent(id))
         }
     }
 
-    private fun analyzePartially(id: String): Job {
-        val analysis = analyses[id] ?: throw Exception("Analysis not found")
-        return serviceScope.launch {
+    private suspend fun analyzePartially(id: UUID): Job {
+        val analysis = coverageAnalysisRepository.getBy(id) ?: throw Exception("Analysis not found")
+        return analysisScope.launch {
             val firstJob = analyze(id, false, analysis.startTime, Clock.System.now())
             firstJob.join()
             val secondJob = analyze(id, true, Clock.System.now(), analysis.endTime)
@@ -63,16 +69,15 @@ class DefaultCoverageAnalysisService(
         }
     }
 
-    @OptIn(ExperimentalTime::class)
-    private fun analyze(id: String, hasWaitTime: Boolean, startTime: Instant, endTime: Instant): Job {
-        val analysis = analyses[id] ?: throw Exception("Analysis not found")
+    private suspend fun analyze(id: UUID, hasWaitTime: Boolean, startTime: Instant, endTime: Instant): Job {
+        val analysis = coverageAnalysisRepository.getBy(id) ?: throw Exception("Analysis not found")
         var currStartTime = startTime
-        val job = serviceScope.launch {
+        val job = analysisScope.launch {
             while (isActive && currStartTime < endTime) {
                 //TODO what if endTime is not a multiple of timeBetweenCalculations?
                 var currEndTime = currStartTime.plus(analysis.timeBetweenCalculations)
-                val coverage = analysis.calculateCoverage(currStartTime, currEndTime)
-                eventBus.publish(CoverageCalculatedEvent(UUID.parse(id)))
+                analysis.calculateCoverage(currStartTime, currEndTime)
+                eventBus.publish(CoverageCalculatedEvent(id))
                 currStartTime = currEndTime
                 if (hasWaitTime)
                     delay(analysis.timeBetweenCalculations) // delay is in milliseconds
@@ -81,22 +86,21 @@ class DefaultCoverageAnalysisService(
         return job
     }
 
-    override fun stopAnalysis(id: String) {
+    override suspend fun stopAnalysis(id: UUID) {
         jobs[id]?.cancel()
     }
 
-    override fun stopAllAnalyses() {
-        serviceScope.cancel()
+    override suspend fun stopAllAnalyses() {
+        analysisScope.cancel()
     }
 
-    private fun handleCoverageAnalysisRequested(event: Event) {
+    private suspend fun handleCoverageAnalysisRequested(event: Event) {
         val coverageAnalysisRequestedEvent = event as CoverageAnalysisRequestedEvent
         println("Coverage analysis requested " + coverageAnalysisRequestedEvent.coverageAnalysis)
         registerAnalysis(
-            coverageAnalysisRequestedEvent.id.toString(),
             coverageAnalysisRequestedEvent.coverageAnalysis
         )
-        startAnalysis(coverageAnalysisRequestedEvent.id.toString())
+        startAnalysis(coverageAnalysisRequestedEvent.id)
     }
 
 

@@ -1,7 +1,6 @@
 package carp.covanalyser.infrastructure
 
-import carp.covanalyser.domain.Coverage
-import carp.covanalyser.domain.ExportTarget
+import carp.covanalyser.domain.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
@@ -13,7 +12,7 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-class CSVExportTarget(val filepath: String) : ExportTarget {
+class CSVExportTarget(private val filepath: String) : ExportTarget {
     init {
         //TODO change
         val file = File(filepath)
@@ -23,12 +22,19 @@ class CSVExportTarget(val filepath: String) : ExportTarget {
         file.createNewFile()
         val writer = FileWriter(file)
         val printer = CSVFormat.DEFAULT.print(writer)
-        printer.printRecord("Start Time", "End Time", "Absolute Coverage", "Time Coverage", "Data Type")
+        printer.printRecord(
+            "Start Time",
+            "End Time",
+            "Absolute Coverage",
+            "Time Coverage",
+            "Data Type",
+            "Deployment IDs"
+        )
         printer.close()
 
     }
 
-    override suspend fun exportCoverage(data: List<Coverage>): String {
+    override suspend fun exportCoverage(data: List<Coverage>, coverageAnalysis: CoverageAnalysis): String {
         println("Exporting coverage data to CSV file")
         val file = File(filepath)
         var printer: CSVPrinter? = null
@@ -39,6 +45,20 @@ class CSVExportTarget(val filepath: String) : ExportTarget {
             } // Open in append mode
             printer = CSVFormat.DEFAULT.print(writer)
             for (coverage in data) {
+                val identifier: String = when (coverageAnalysis.expectation) {
+                    //TODO should this be part of the business logic? e.g. expectations define identifier?
+                    is DataTypeExpectation -> {
+                        coverageAnalysis.expectation.dataType.toString()
+                    }
+
+                    is CompositeExpectation<*> -> {
+                        coverageAnalysis.expectation.expectations.joinToString { it.toString() }
+                    }
+
+                    else -> {
+                        "Unknown"
+                    }
+                }
 
                 // Append the new row of coverage data
                 printer.printRecord(
@@ -46,7 +66,8 @@ class CSVExportTarget(val filepath: String) : ExportTarget {
                     toReadableString(coverage.endTime),
                     coverage.absCoverage,
                     coverage.timeCoverage,
-                    coverage.dataStreamId
+                    identifier,
+                    coverageAnalysis.deploymentIds.joinToString { it.toString() }
                 )
             }
         } catch (e: IOException) {
