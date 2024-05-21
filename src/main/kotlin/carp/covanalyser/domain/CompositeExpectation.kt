@@ -10,12 +10,16 @@ open class CompositeExpectation<T : Expectation> : Expectation {
         endTime: Instant,
         deploymentIDs: List<UUID>,
         dataStore: DataStore
-    ): List<Coverage> {
-        val coverages = mutableListOf<Coverage>()
+    ): List<CoverageWithMetadata> {
+        val coverages = mutableListOf<CoverageWithMetadata>()
         for (expectation in expectations) {
             val coverage = expectation.calculateCoverage(startTime, endTime, deploymentIDs, dataStore)
             coverages.addAll(coverage)
         }
         return coverages
+    }
+
+    override fun getDescription(): String {
+        return "CompositeExpectation: " + expectations.joinToString("\n") { it.getDescription() }
     }
 }

@@ -1,14 +1,14 @@
 package carp.covanalyser.infrastructure.report
 
-import carp.covanalyser.domain.Coverage
 import carp.covanalyser.domain.CoverageAnalysis
+import carp.covanalyser.domain.CoverageWithMetadata
 import carp.covanalyser.domain.ExportTarget
 import carp.covanalyser.infrastructure.CSVExportTarget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ReportExportTarget(val csvName: String) : ExportTarget {
-    override suspend fun exportCoverage(data: List<Coverage>, coverageAnalysis: CoverageAnalysis): String {
+    override suspend fun exportCoverage(data: List<CoverageWithMetadata>, coverageAnalysis: CoverageAnalysis): Boolean {
         CSVExportTarget(csvName).exportCoverage(data, coverageAnalysis)
 
         val processBuilder =
@@ -20,6 +20,6 @@ class ReportExportTarget(val csvName: String) : ExportTarget {
         withContext(Dispatchers.IO) {
             process.waitFor()
         }
-        return ""
+        return false
     }
 }

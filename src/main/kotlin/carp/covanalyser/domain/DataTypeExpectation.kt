@@ -17,17 +17,21 @@ abstract class DataTypeExpectation(
 
     abstract fun isValid(input: Measurement<Data>): Boolean
 
+    override fun getDescription(): String {
+        return "Expectation for $deviceName: $numDataPoints data points of type $dataType in $duration"
+    }
+
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,
         deploymentIDs: List<UUID>,
         dataStore: DataStore
-    ): List<Coverage> {
-        val coverages = mutableListOf<Coverage>()
+    ): List<CoverageWithMetadata> {
+        val coverages = mutableListOf<CoverageWithMetadata>()
         for (deploymentID in deploymentIDs) {
             val dataStreamId = DataStreamId(deploymentID, deviceName, dataType)
             val data = dataStore.obtainData(startTime, endTime, dataStreamId)
-            //TODO ensure duration of expectation is <= duration of data!
+            //TODO ensure duration of expectation is <= duration of data! throw execption if not
             val numExpectedExpectations = (endTime.minus(startTime) / duration).toInt()
 
             var windowStart = startTime
@@ -69,12 +73,16 @@ abstract class DataTypeExpectation(
             val absoluteCoverage =
                 (totalCountMeasurements.toDouble() / (numExpectedExpectations * numDataPoints))
 
+
             val coverage =
                 Coverage(absoluteCoverage, timeCoverage, startTime, endTime)
 
-            println("Coverage Data Stream: ${coverage}")
+            val metadata = CoverageWithMetadata(coverage, deploymentIDs, getDescription())
 
-            coverages.add(coverage)
+
+            println("Coverage Data Stream: ${metadata}")
+
+            coverages.add(metadata)
         }
         return coverages
     }

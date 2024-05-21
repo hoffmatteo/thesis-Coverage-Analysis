@@ -11,7 +11,6 @@ import kotlinx.datetime.Instant
 /**
  * Manage coverage analysis
  */
-//TODO should this be in application layer? Should I create repository classes to abstract storage of analyses and/or jobs away?
 class DefaultCoverageAnalysisService(
     private var eventBus: EventBus,
     private var coverageAnalysisRepository: CoverageAnalysisRepository
@@ -100,7 +99,7 @@ class DefaultCoverageAnalysisService(
         registerAnalysis(
             coverageAnalysisRequestedEvent.coverageAnalysis
         )
-        startAnalysis(coverageAnalysisRequestedEvent.id)
+        startAnalysis(coverageAnalysisRequestedEvent.coverageAnalysis.id)
     }
 
 

@@ -14,17 +14,18 @@ class ParticipantGroupAggregation(private val coverageAggregator: CoverageAggreg
         endTime: Instant,
         deploymentIDs: List<UUID>,
         dataStore: DataStore
-    ): List<Coverage> {
-        val coverages = mutableListOf<Coverage>()
+    ): List<CoverageWithMetadata> {
+        val coverages = mutableListOf<CoverageWithMetadata>()
         for (deploymentID in deploymentIDs) {
-            val deploymentAverages = mutableListOf<Coverage>()
+            val deploymentAverages = mutableListOf<CoverageWithMetadata>()
             for (expectation in expectations) {
                 // this is coverage for a single expectation for a single deployment
                 val coverage =
                     expectation.calculateCoverage(startTime, endTime, listOf(deploymentID), dataStore).first()
                 deploymentAverages.add(coverage)
             }
-            coverages.add(coverageAggregator.aggregate(deploymentAverages))
+            val coverageAverage = coverageAggregator.aggregate(deploymentAverages.map { it.coverage })
+            coverages.add(CoverageWithMetadata(coverageAverage, deploymentIDs, getDescription()))
         }
         //coverage per deployment of protocol
         println("ProtocolAggregation: $coverages")

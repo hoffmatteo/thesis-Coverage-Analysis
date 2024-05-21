@@ -15,7 +15,7 @@ class CoverageAnalysis(
     //TODO endTime could be left open? Or make it mandatory?
     var endTime: Instant
 ) {
-    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): List<Coverage> {
+    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): List<CoverageWithMetadata> {
         val coverage = expectation.calculateCoverage(calcStartTime, calcEndTime, deploymentIds, dataStore)
         exportTarget.exportCoverage(coverage, this)
         return coverage

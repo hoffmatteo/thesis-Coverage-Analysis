@@ -1,6 +1,8 @@
 package carp.covanalyser.infrastructure
 
-import carp.covanalyser.domain.*
+import carp.covanalyser.domain.CoverageAnalysis
+import carp.covanalyser.domain.CoverageWithMetadata
+import carp.covanalyser.domain.ExportTarget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
@@ -27,14 +29,14 @@ class CSVExportTarget(private val filepath: String) : ExportTarget {
             "End Time",
             "Absolute Coverage",
             "Time Coverage",
-            "Data Type",
-            "Deployment IDs"
+            "Deployment IDs",
+            "Description"
         )
         printer.close()
 
     }
 
-    override suspend fun exportCoverage(data: List<Coverage>, coverageAnalysis: CoverageAnalysis): String {
+    override suspend fun exportCoverage(data: List<CoverageWithMetadata>, coverageAnalysis: CoverageAnalysis): Boolean {
         println("Exporting coverage data to CSV file")
         val file = File(filepath)
         var printer: CSVPrinter? = null
@@ -44,30 +46,15 @@ class CSVExportTarget(private val filepath: String) : ExportTarget {
                 FileWriter(file, true)
             } // Open in append mode
             printer = CSVFormat.DEFAULT.print(writer)
-            for (coverage in data) {
-                val identifier: String = when (coverageAnalysis.expectation) {
-                    //TODO should this be part of the business logic? e.g. expectations define identifier?
-                    is DataTypeExpectation -> {
-                        coverageAnalysis.expectation.dataType.toString()
-                    }
-
-                    is CompositeExpectation<*> -> {
-                        coverageAnalysis.expectation.expectations.joinToString { it.toString() }
-                    }
-
-                    else -> {
-                        "Unknown"
-                    }
-                }
-
+            for (coverageWithMetadata in data) {
                 // Append the new row of coverage data
                 printer.printRecord(
-                    toReadableString(coverage.startTime),
-                    toReadableString(coverage.endTime),
-                    coverage.absCoverage,
-                    coverage.timeCoverage,
-                    identifier,
-                    coverageAnalysis.deploymentIds.joinToString { it.toString() }
+                    toReadableString(coverageWithMetadata.coverage.startTime),
+                    toReadableString(coverageWithMetadata.coverage.endTime),
+                    coverageWithMetadata.coverage.absCoverage,
+                    coverageWithMetadata.coverage.timeCoverage,
+                    coverageWithMetadata.deploymentIds.joinToString { it.toString() },
+                    coverageWithMetadata.description
                 )
             }
         } catch (e: IOException) {
@@ -80,7 +67,7 @@ class CSVExportTarget(private val filepath: String) : ExportTarget {
                 e.printStackTrace()
             }
         }
-        return filepath
+        return true
     }
 
     private fun toReadableString(instant: Instant): String {

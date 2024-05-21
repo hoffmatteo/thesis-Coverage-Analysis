@@ -11,5 +11,9 @@ abstract class AggregateExpectation<T : Expectation>(coverageAggregator: Coverag
         endTime: Instant,
         deploymentIDs: List<UUID>,
         dataStore: DataStore
-    ): List<Coverage>
+    ): List<CoverageWithMetadata>
+
+    override fun getDescription(): String {
+        return "AggregateExpectation: " + expectations.joinToString("\n") { it.getDescription() }
+    }
 }

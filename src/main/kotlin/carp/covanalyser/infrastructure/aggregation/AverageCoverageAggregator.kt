@@ -11,9 +11,9 @@ class AverageCoverageAggregator : CoverageAggregator {
         val averageTotalCoverage = totalCoverageSum / coverageList.size
         val averageTimeCoverage = timeCoverageSum / coverageList.size
 
+        //TODO what if the start and end times are different?
         val startTime = coverageList.first().startTime
         val endTime = coverageList.first().endTime
-
         return Coverage(averageTotalCoverage, averageTimeCoverage, startTime, endTime)
     }
 }

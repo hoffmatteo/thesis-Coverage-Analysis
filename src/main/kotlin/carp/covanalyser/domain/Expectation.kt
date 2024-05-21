@@ -10,6 +10,9 @@ interface Expectation {
         endTime: Instant,
         deploymentIDs: List<UUID>,
         dataStore: DataStore
-    ): List<Coverage>
+    ): List<CoverageWithMetadata>
+
+
+    fun getDescription(): String
 
 }
