@@ -3,10 +3,13 @@ package carp.covanalyser.domain
 import kotlinx.datetime.Instant
 
 /**
- * Represents this project's definition of coverage. Absolute coverage is the total number of available data points divided by the expected number of data points.
- * The time coverage wis the coverage on a time scale, it splits the data points into timeboxes based on the expectation, and compares the number of fulfilled timeboxes with the total number of timeboxes.
+ * Represents a coverage value.
+ *
+ * @param absCoverage The absolute coverage value, defined solely by the number of measurements.
+ * @param timeCoverage The time based coverage value, which takes timeboxing into account.
+ * @param startTime The start time of the coverage interval.
+ * @param endTime The end time of the coverage interval.
  */
-
 data class Coverage(
     val absCoverage: Double,
     val timeCoverage: Double,

@@ -102,11 +102,11 @@ class StartUp {
             Instant.fromEpochMilliseconds(1702990800000),
         )
 
-        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
     }
 
     private suspend fun testJsonData() {
-        val dataSource = MultiJSONDataStore()
+        val dataSource = JSONDataStore("test_data\\combined_data_streams.json")
         var exportTarget = CSVExportTarget("test_deployments.csv")
 
         val locationExpectation = LocationExpectation(1, "Location Service", 1.toDuration(DurationUnit.HOURS))
@@ -144,7 +144,7 @@ class StartUp {
             Instant.fromEpochMilliseconds(1704239999000),
         )
 
-        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
 
 
         exportTarget = CSVExportTarget("test_devices.csv")
@@ -176,7 +176,7 @@ class StartUp {
             Instant.fromEpochMilliseconds(1704239999000),
         )
 
-        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
 
         exportTarget = CSVExportTarget("test_participant_group.csv")
 
@@ -207,7 +207,7 @@ class StartUp {
             Instant.fromEpochMilliseconds(1704239999000),
         )
 
-        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
 
         exportTarget = CSVExportTarget("test_study.csv")
 
@@ -236,7 +236,7 @@ class StartUp {
             Instant.fromEpochMilliseconds(1704239999000),
         )
 
-        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
 
 
     }

@@ -3,6 +3,11 @@ package carp.covanalyser.domain
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
+/**
+ * Represents an expectation that is composed of other [expectations].
+ * Calculates a coverage value for each [Expectation] in [expectations] and returns a list of them.
+ * @param T The type of [Expectation] this composite expectation is composed of.
+ */
 open class CompositeExpectation<T : Expectation> :
     Expectation {
     val expectations: MutableList<T> = mutableListOf()

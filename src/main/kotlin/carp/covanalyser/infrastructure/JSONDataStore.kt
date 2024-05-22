@@ -11,13 +11,12 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
 import java.io.File
 
-class JSONDataStore : DataStore {
-    // batch is collection of non-overlapping data stream sequences --> always same deploymentID?
-    private lateinit var streamBatch: DataStreamBatch
+class JSONDataStore(val filePath: String) : DataStore {
+    private var streamBatch: DataStreamBatch
 
     init {
         val json = createDefaultJSON(STUBS_SERIAL_MODULE)
-        val file = File("data-1.json").readText()
+        val file = File(filePath).readText()
         streamBatch = json.decodeFromString(DataStreamBatchSerializer, file)
     }
 
@@ -26,14 +25,6 @@ class JSONDataStore : DataStore {
         endTime: Instant,
         dataStreamId: DataStreamId
     ): List<Measurement<Data>> {
-        /*
-        val dataPoints: List<Measurement<Data>> = createDataPoints(
-            1000,
-            listOf(10, 20, 30),
-            listOf(10.toDuration(DurationUnit.SECONDS), 10.toDuration(DurationUnit.SECONDS)),
-            Instant.parse("2020-06-29T14:44:01.251Z")
-        )
-         */
         val dataStreamPoints = streamBatch.getDataStreamPoints(dataStreamId).toList()
         val dataPoints = dataStreamPoints.map { it.measurement }
 
