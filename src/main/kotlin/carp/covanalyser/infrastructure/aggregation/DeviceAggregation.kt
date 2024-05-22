@@ -4,11 +4,8 @@ import carp.covanalyser.domain.*
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
-//TODO device group, e.g. all smart watches
 class DeviceAggregation(val deviceRoleName: String, private val coverageAggregator: CoverageAggregator) :
-    AggregateExpectation<DataTypeExpectation>(
-        coverageAggregator
-    ) {
+    CompositeExpectation<DataTypeExpectation>() {
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,

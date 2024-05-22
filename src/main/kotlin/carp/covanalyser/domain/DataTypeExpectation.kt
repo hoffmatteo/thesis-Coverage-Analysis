@@ -31,7 +31,9 @@ abstract class DataTypeExpectation(
         for (deploymentID in deploymentIDs) {
             val dataStreamId = DataStreamId(deploymentID, deviceName, dataType)
             val data = dataStore.obtainData(startTime, endTime, dataStreamId)
-            //TODO ensure duration of expectation is <= duration of data! throw execption if not
+            if (duration > endTime.minus(startTime)) {
+                throw IllegalArgumentException("Duration of expectation is longer than duration of data")
+            }
             val numExpectedExpectations = (endTime.minus(startTime) / duration).toInt()
 
             var windowStart = startTime
@@ -41,8 +43,6 @@ abstract class DataTypeExpectation(
             var fulfilledExpectations = 0
 
             for (measurement in data) {
-                //TODO USE SYNC POINT?
-                // milli seconds versus microseconds
                 if (measurement.sensorStartTime >= endTime.toEpochMilliseconds()) {
                     break
                 }

@@ -1,0 +1,4 @@
+Start Time,End Time,Absolute Coverage,Time Coverage,Deployment IDs,Description
+2024-01-01T01:00,2024-01-03T01:00,0.7213425925925926,0.7213425925925926,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"StudyAggregation: ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"

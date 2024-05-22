@@ -4,11 +4,8 @@ import carp.covanalyser.domain.*
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
-//TODO just keep it to data streams
 class ParticipantGroupAggregation(private val coverageAggregator: CoverageAggregator) :
-    AggregateExpectation<DataTypeExpectation>(
-        coverageAggregator
-    ) {
+    CompositeExpectation<DataTypeExpectation>() {
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,
@@ -25,10 +22,14 @@ class ParticipantGroupAggregation(private val coverageAggregator: CoverageAggreg
                 deploymentAverages.add(coverage)
             }
             val coverageAverage = coverageAggregator.aggregate(deploymentAverages.map { it.coverage })
-            coverages.add(CoverageWithMetadata(coverageAverage, deploymentIDs, getDescription()))
+            coverages.add(CoverageWithMetadata(coverageAverage, listOf(deploymentID), getDescription()))
         }
         //coverage per deployment of protocol
         println("ProtocolAggregation: $coverages")
         return coverages
+    }
+
+    override fun getDescription(): String {
+        return "ParticipantGroupAggregation: " + expectations.joinToString("\n") { it.getDescription() }
     }
 }

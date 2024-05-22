@@ -1,6 +1,6 @@
 package carp.covanalyser.infrastructure.aggregation
 
-import carp.covanalyser.domain.AggregateExpectation
+import carp.covanalyser.domain.CompositeExpectation
 import carp.covanalyser.domain.CoverageAggregator
 import carp.covanalyser.domain.CoverageWithMetadata
 import carp.covanalyser.domain.DataStore
@@ -8,9 +8,7 @@ import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
 class StudyAggregation(private val coverageAggregator: CoverageAggregator) :
-    AggregateExpectation<ParticipantGroupAggregation>(
-        coverageAggregator
-    ) {
+    CompositeExpectation<ParticipantGroupAggregation>() {
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,
@@ -26,5 +24,9 @@ class StudyAggregation(private val coverageAggregator: CoverageAggregator) :
                 getDescription()
             )
         )
+    }
+
+    override fun getDescription(): String {
+        return "StudyAggregation: " + expectations.joinToString("\n") { it.getDescription() }
     }
 }

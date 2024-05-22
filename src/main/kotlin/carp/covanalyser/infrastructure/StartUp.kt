@@ -6,11 +6,10 @@ import carp.covanalyser.application.events.CoverageAnalysisCompletedEvent
 import carp.covanalyser.application.events.CoverageAnalysisRequestedEvent
 import carp.covanalyser.application.events.Event
 import carp.covanalyser.application.events.EventBus
+import carp.covanalyser.domain.CompositeExpectation
 import carp.covanalyser.domain.CoverageAnalysis
-import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.infrastructure.aggregation.DataTypeAggregation
-import carp.covanalyser.infrastructure.aggregation.DeviceAggregation
-import carp.covanalyser.infrastructure.aggregation.MultiCoverageExpectation
+import carp.covanalyser.domain.Expectation
+import carp.covanalyser.infrastructure.aggregation.*
 import carp.covanalyser.infrastructure.expectations.GenericDataTypeExpectation
 import carp.covanalyser.infrastructure.expectations.LocationExpectation
 import carp.covanalyser.infrastructure.expectations.StepCountExpectation
@@ -30,7 +29,6 @@ class StartUp {
     suspend fun startUp() {
         testJsonData()
         //testDBData()
-
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
 
         while (true) {
@@ -90,7 +88,7 @@ class StartUp {
             ) { true }
         )
 
-        val multiCoverageExpectation = MultiCoverageExpectation()
+        val multiCoverageExpectation = CompositeExpectation<Expectation>()
         multiCoverageExpectation.expectations.addAll(expectations)
 
         var coverageAnalysis = CoverageAnalysis(
@@ -121,7 +119,7 @@ class StartUp {
             ) { true }
         val stepCountExpectation = StepCountExpectation(1, "Primary Phone", 4.toDuration(DurationUnit.HOURS))
 
-        val dataTypeAggregation = DataTypeAggregation(AverageCoverageAggregator())
+        val dataTypeAggregation = DeploymentAggregation(AverageCoverageAggregator())
         dataTypeAggregation.expectations.add(locationExpectation)
 
         var coverageAnalysis = CoverageAnalysis(
@@ -178,7 +176,65 @@ class StartUp {
             Instant.fromEpochMilliseconds(1704239999000),
         )
 
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
 
+        exportTarget = CSVExportTarget("test_participant_group.csv")
+
+        val participantGroupAggregation = ParticipantGroupAggregation(AverageCoverageAggregator())
+        participantGroupAggregation.expectations.add(locationExpectation)
+        participantGroupAggregation.expectations.add(polarExpectation)
+        participantGroupAggregation.expectations.add(stepCountExpectation)
+
+        coverageAnalysis = CoverageAnalysis(
+            UUID.randomUUID(),
+            participantGroupAggregation,
+            2.toDuration(DurationUnit.DAYS),
+            listOf(
+                UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
+                UUID.parse("301d0cb4-0482-411d-b58e-f347586dae84"),
+                UUID.parse("09824317-e14c-4b48-9ddf-122d7aadaa87"),
+                UUID.parse("521dd33b-cd9a-4991-b0d3-04c781c0704c"),
+                UUID.parse("714468bc-97e6-4781-88e9-20a426f8c8ad"),
+                UUID.parse("4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a"),
+                UUID.parse("4cdec469-5b5b-495f-8a3c-242c877b190d"),
+                UUID.parse("f63bc945-7113-4974-a4ea-81a197d30697"),
+                UUID.parse("04ddc67c-4e2d-4468-919b-9ca06e3451db"),
+                UUID.parse("3ffb09b9-271a-418e-b15d-0975ebec943d")
+            ),
+            exportTarget,
+            dataSource,
+            Instant.fromEpochMilliseconds(1704067200000),
+            Instant.fromEpochMilliseconds(1704239999000),
+        )
+
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
+
+        exportTarget = CSVExportTarget("test_study.csv")
+
+        val studyAggregation = StudyAggregation(AverageCoverageAggregator())
+        studyAggregation.expectations.add(participantGroupAggregation)
+
+        coverageAnalysis = CoverageAnalysis(
+            UUID.randomUUID(),
+            studyAggregation,
+            2.toDuration(DurationUnit.DAYS),
+            listOf(
+                UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
+                UUID.parse("301d0cb4-0482-411d-b58e-f347586dae84"),
+                UUID.parse("09824317-e14c-4b48-9ddf-122d7aadaa87"),
+                UUID.parse("521dd33b-cd9a-4991-b0d3-04c781c0704c"),
+                UUID.parse("714468bc-97e6-4781-88e9-20a426f8c8ad"),
+                UUID.parse("4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a"),
+                UUID.parse("4cdec469-5b5b-495f-8a3c-242c877b190d"),
+                UUID.parse("f63bc945-7113-4974-a4ea-81a197d30697"),
+                UUID.parse("04ddc67c-4e2d-4468-919b-9ca06e3451db"),
+                UUID.parse("3ffb09b9-271a-418e-b15d-0975ebec943d")
+            ),
+            exportTarget,
+            dataSource,
+            Instant.fromEpochMilliseconds(1704067200000),
+            Instant.fromEpochMilliseconds(1704239999000),
+        )
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis))
 
