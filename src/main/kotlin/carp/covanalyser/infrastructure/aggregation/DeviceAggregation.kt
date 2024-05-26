@@ -4,8 +4,19 @@ import carp.covanalyser.domain.*
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
+/**
+ * Aggregates a list of [DataTypeExpectation]s of the same device to a single expectation.
+ */
 class DeviceAggregation(val deviceRoleName: String, private val coverageAggregator: CoverageAggregator) :
     CompositeExpectation<DataTypeExpectation>() {
+    /**
+     * Calculate the average coverage over all [DataTypeExpectation]s for each deployment.
+     * @param startTime The start time of the coverage calculation.
+     * @param endTime The end time of the coverage calculation.
+     * @param deploymentIDs The unique identifiers of the deployments to calculate coverage for.
+     * @param dataStore The [DataStore] to use for retrieving data.
+     * @return A list of [CoverageWithMetadata] objects, each containing the aggregated coverage for each deployment.
+     */
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,

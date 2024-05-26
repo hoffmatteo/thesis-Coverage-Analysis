@@ -5,6 +5,9 @@ import carp.covanalyser.application.events.EventBus
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
+/**
+ * Default implementation of [EventBus] which uses a simple in-memory map to store subscribers.
+ */
 class DefaultEventBus : EventBus {
     private val subscribers: MutableMap<KClass<out Event>, MutableList<(Event) -> Unit>> = ConcurrentHashMap()
 
@@ -12,6 +15,7 @@ class DefaultEventBus : EventBus {
         subscribers.getOrPut(eventType) { mutableListOf() }.add(listener)
     }
 
+    //TODO test this!!
     override fun <T : Event> unsubscribe(eventType: KClass<T>, listener: (Event) -> Unit) {
         subscribers[eventType]?.remove(listener)
     }

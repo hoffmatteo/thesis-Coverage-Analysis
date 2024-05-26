@@ -4,9 +4,20 @@ import carp.covanalyser.domain.*
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
-// aggregates each expectation over the given deployments
+/**
+ * Aggregates each [Expectation] over the given deployments and returns an aggregated coverage per [Expectation].
+ * @param coverageAggregator The [CoverageAggregator] to use for aggregating the coverage of each [Expectation].
+ */
 class DeploymentAggregation(private val coverageAggregator: CoverageAggregator) : CompositeExpectation<Expectation>() {
 
+    /**
+     * Calculate the average coverage over all [deploymentIDs] for each [Expectation].
+     * @param startTime The start time of the coverage calculation.
+     * @param endTime The end time of the coverage calculation.
+     * @param deploymentIDs The unique identifiers of the deployments to calculate coverage for.
+     * @param dataStore The [DataStore] to use for retrieving data.
+     * @return A list of [CoverageWithMetadata] objects, each containing the aggregated coverage for each [Expectation].
+     */
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,

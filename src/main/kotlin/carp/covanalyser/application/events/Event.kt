@@ -4,6 +4,9 @@ import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
+/**
+ * Represents an event that occurred in the system.
+ */
 abstract class Event(val id: UUID = UUID.randomUUID()) {
 
     val createdAt: Instant = Clock.System.now()

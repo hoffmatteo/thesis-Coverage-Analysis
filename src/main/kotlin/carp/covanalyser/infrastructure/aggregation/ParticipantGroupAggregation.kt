@@ -4,8 +4,14 @@ import carp.covanalyser.domain.*
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
+/**
+ * Aggregates a list of [DataTypeExpectation]s of the same participant group to a single expectation.
+ */
 class ParticipantGroupAggregation(private val coverageAggregator: CoverageAggregator) :
     CompositeExpectation<DataTypeExpectation>() {
+    /**
+     * Calculate the average coverage over all [DataTypeExpectation]s for each deployment.
+     */
     override suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,

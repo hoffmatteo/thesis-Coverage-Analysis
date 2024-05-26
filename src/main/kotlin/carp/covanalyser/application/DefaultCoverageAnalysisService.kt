@@ -9,7 +9,11 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 /**
- * Manage coverage analysis
+ * Default implementation of [CoverageAnalysisService]. Uses [EventBus] and [CoverageAnalysisRepository].
+ * @param eventBus The [EventBus] to publish and subscribe to events.
+ * @param coverageAnalysisRepository The [CoverageAnalysisRepository] to manage [CoverageAnalysis] objects.
+ * @property analysisScope The [CoroutineScope] that the analysis are run in.
+ * @property jobs The [Job]s of the running analyses.
  */
 class DefaultCoverageAnalysisService(
     private var eventBus: EventBus,
@@ -32,16 +36,17 @@ class DefaultCoverageAnalysisService(
         coverageAnalysisRepository.add(analysis)
     }
 
-    /**
-     * If system clock is > than endTime --> full analysis
-     * If system clock is < than startTime --> recurring analysis and wait for startTime
-     * If system clock is > than startTime but < than endTime --> full analysis until system clock, then recurring analysis?
-     */
 
     override suspend fun startAnalysis(id: UUID) {
         val analysis = coverageAnalysisRepository.getBy(id) ?: throw Exception("Analysis not found")
 
         val currentTime = Clock.System.now()
+
+        /**
+         * If system clock is > than endTime --> full analysis
+         * If system clock is < than startTime --> recurring analysis and wait for startTime
+         * If system clock is > than startTime but < than endTime --> full analysis until system clock, then recurring analysis
+         */
         val job: Job = when {
             currentTime > analysis.endTime ->
                 analyze(id, false, analysis.startTime, analysis.endTime)
@@ -58,6 +63,11 @@ class DefaultCoverageAnalysisService(
         }
     }
 
+    /**
+     * Analyzes the [CoverageAnalysis] partially until the current time, after which it starts a recurring analysis.
+     * @param id The unique identifier of the [CoverageAnalysis].
+     * @return The [Job] of the analysis.
+     */
     private suspend fun analyzePartially(id: UUID): Job {
         val analysis = coverageAnalysisRepository.getBy(id) ?: throw Exception("Analysis not found")
         return analysisScope.launch {
@@ -68,6 +78,14 @@ class DefaultCoverageAnalysisService(
         }
     }
 
+    /**
+     * Analyzes the [CoverageAnalysis] from [startTime] to [endTime] with a delay of [timeBetweenCalculations] between each calculation.
+     * @param id The unique identifier of the [CoverageAnalysis].
+     * @param hasWaitTime Whether to wait between each calculation.
+     * @param startTime The start time of the analysis.
+     * @param endTime The end time of the analysis.
+     * @return The [Job] of the analysis.
+     */
     private suspend fun analyze(id: UUID, hasWaitTime: Boolean, startTime: Instant, endTime: Instant): Job {
         val analysis = coverageAnalysisRepository.getBy(id) ?: throw Exception("Analysis not found")
         var currStartTime = startTime
@@ -93,6 +111,10 @@ class DefaultCoverageAnalysisService(
         analysisScope.cancel()
     }
 
+    /**
+     * Handles the [CoverageAnalysisRequestedEvent] by registering and starting the [CoverageAnalysis].
+     * @param event The [Event] to handle.
+     */
     private suspend fun handleCoverageAnalysisRequested(event: Event) {
         val coverageAnalysisRequestedEvent = event as CoverageAnalysisRequestedEvent
         println("Coverage analysis requested " + coverageAnalysisRequestedEvent.coverageAnalysis)
