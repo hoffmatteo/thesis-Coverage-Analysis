@@ -14,11 +14,21 @@ class ReportExportTarget(val csvName: String) : ExportTarget {
         val processBuilder =
             ProcessBuilder("node", "src/main/kotlin/carp/covanalyser/infrastructure/report/ExportToPDF.js")
         processBuilder.inheritIO()
-        val process = withContext(Dispatchers.IO) {
-            processBuilder.start()
-        }
-        withContext(Dispatchers.IO) {
-            process.waitFor()
+
+        try {
+            val process = withContext(Dispatchers.IO) {
+                processBuilder.start()
+            }
+            val exitCode = withContext(Dispatchers.IO) {
+                process.waitFor()
+            }
+            if (exitCode == 0) {
+                println("PDF generated successfully.")
+            } else {
+                println("Error generating PDF. Exit code: $exitCode")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         return false
     }

@@ -1,31 +1,181 @@
 Start Time,End Time,Absolute Coverage,Time Coverage,Deployment IDs,Description
-2024-01-01T01:00,2024-01-03T01:00,0.7748842592592592,0.7748842592592592,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.45625,0.45625,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.918287037037037,0.918287037037037,301d0cb4-0482-411d-b58e-f347586dae84,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.45486111111111116,0.45486111111111116,301d0cb4-0482-411d-b58e-f347586dae84,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.8070601851851852,0.8070601851851852,09824317-e14c-4b48-9ddf-122d7aadaa87,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.6597222222222222,0.6597222222222222,09824317-e14c-4b48-9ddf-122d7aadaa87,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.8129629629629629,0.8129629629629629,521dd33b-cd9a-4991-b0d3-04c781c0704c,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.2347222222222222,0.2347222222222222,521dd33b-cd9a-4991-b0d3-04c781c0704c,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.6408564814814816,0.6408564814814816,714468bc-97e6-4781-88e9-20a426f8c8ad,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.35486111111111107,0.35486111111111107,714468bc-97e6-4781-88e9-20a426f8c8ad,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.5868055555555557,0.5868055555555557,4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.2826388888888889,0.2826388888888889,4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.6443287037037037,0.6443287037037037,4cdec469-5b5b-495f-8a3c-242c877b190d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.5027777777777778,0.5027777777777778,4cdec469-5b5b-495f-8a3c-242c877b190d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.601851851851852,0.601851851851852,f63bc945-7113-4974-a4ea-81a197d30697,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.3958333333333333,0.3958333333333333,f63bc945-7113-4974-a4ea-81a197d30697,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.700925925925926,0.700925925925926,04ddc67c-4e2d-4468-919b-9ca06e3451db,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.6034722222222223,0.6034722222222223,04ddc67c-4e2d-4468-919b-9ca06e3451db,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
-2024-01-01T01:00,2024-01-03T01:00,0.725462962962963,0.725462962962963,3ffb09b9-271a-418e-b15d-0975ebec943d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+2024-01-01T01:00,2024-01-01T09:00,0.22152777777777777,0.22152777777777777,3ffb09b9-271a-418e-b15d-0975ebec943d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.33055555555555555,0.33055555555555555,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.2034722222222222,0.2034722222222222,301d0cb4-0482-411d-b58e-f347586dae84,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.04513888888888889,0.04513888888888889,09824317-e14c-4b48-9ddf-122d7aadaa87,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.6881944444444444,0.6881944444444444,521dd33b-cd9a-4991-b0d3-04c781c0704c,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.34722222222222227,0.34722222222222227,714468bc-97e6-4781-88e9-20a426f8c8ad,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.6277777777777778,0.6277777777777778,4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.29305555555555557,0.29305555555555557,4cdec469-5b5b-495f-8a3c-242c877b190d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.7791666666666667,0.7791666666666667,f63bc945-7113-4974-a4ea-81a197d30697,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.22777777777777777,0.22777777777777777,04ddc67c-4e2d-4468-919b-9ca06e3451db,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T09:00,2024-01-01T17:00,0.5916666666666667,0.5916666666666667,3ffb09b9-271a-418e-b15d-0975ebec943d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.5277777777777778,0.5277777777777778,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.5652777777777778,0.5652777777777778,301d0cb4-0482-411d-b58e-f347586dae84,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.6423611111111112,0.6423611111111112,09824317-e14c-4b48-9ddf-122d7aadaa87,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.3111111111111111,0.3111111111111111,521dd33b-cd9a-4991-b0d3-04c781c0704c,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.44722222222222224,0.44722222222222224,714468bc-97e6-4781-88e9-20a426f8c8ad,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.3347222222222222,0.3347222222222222,4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.5,0.5,4cdec469-5b5b-495f-8a3c-242c877b190d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.39652777777777776,0.39652777777777776,f63bc945-7113-4974-a4ea-81a197d30697,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.7270833333333333,0.7270833333333333,04ddc67c-4e2d-4468-919b-9ca06e3451db,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-01T17:00,2024-01-02T01:00,0.6069444444444444,0.6069444444444444,3ffb09b9-271a-418e-b15d-0975ebec943d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.45902777777777776,0.45902777777777776,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.5340277777777778,0.5340277777777778,301d0cb4-0482-411d-b58e-f347586dae84,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.5826388888888889,0.5826388888888889,09824317-e14c-4b48-9ddf-122d7aadaa87,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.41180555555555554,0.41180555555555554,521dd33b-cd9a-4991-b0d3-04c781c0704c,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.16805555555555554,0.16805555555555554,714468bc-97e6-4781-88e9-20a426f8c8ad,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.3833333333333333,0.3833333333333333,4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.5576388888888889,0.5576388888888889,4cdec469-5b5b-495f-8a3c-242c877b190d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.22013888888888888,0.22013888888888888,f63bc945-7113-4974-a4ea-81a197d30697,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.6520833333333333,0.6520833333333333,04ddc67c-4e2d-4468-919b-9ca06e3451db,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T01:00,2024-01-02T09:00,0.4270833333333333,0.4270833333333333,3ffb09b9-271a-418e-b15d-0975ebec943d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.2125,0.2125,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.3666666666666667,0.3666666666666667,301d0cb4-0482-411d-b58e-f347586dae84,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.7076388888888889,0.7076388888888889,09824317-e14c-4b48-9ddf-122d7aadaa87,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.30277777777777776,0.30277777777777776,521dd33b-cd9a-4991-b0d3-04c781c0704c,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.47222222222222227,0.47222222222222227,714468bc-97e6-4781-88e9-20a426f8c8ad,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.18194444444444444,0.18194444444444444,4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.4673611111111111,0.4673611111111111,4cdec469-5b5b-495f-8a3c-242c877b190d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.2625,0.2625,f63bc945-7113-4974-a4ea-81a197d30697,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.20833333333333334,0.20833333333333334,04ddc67c-4e2d-4468-919b-9ca06e3451db,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T09:00,2024-01-02T17:00,0.6666666666666666,0.6666666666666666,3ffb09b9-271a-418e-b15d-0975ebec943d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.9222222222222222,0.9222222222222222,7a46a288-7f8e-4242-bedf-ebc80bc9e693,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.9430555555555555,0.9430555555555555,301d0cb4-0482-411d-b58e-f347586dae84,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.8263888888888888,0.8263888888888888,09824317-e14c-4b48-9ddf-122d7aadaa87,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.7729166666666667,0.7729166666666667,521dd33b-cd9a-4991-b0d3-04c781c0704c,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.41041666666666665,0.41041666666666665,714468bc-97e6-4781-88e9-20a426f8c8ad,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.6888888888888888,0.6888888888888888,4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.6722222222222222,0.6722222222222222,4cdec469-5b5b-495f-8a3c-242c877b190d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.5652777777777778,0.5652777777777778,f63bc945-7113-4974-a4ea-81a197d30697,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.7312500000000001,0.7312500000000001,04ddc67c-4e2d-4468-919b-9ca06e3451db,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
+Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"
+2024-01-02T17:00,2024-01-03T01:00,0.8555555555555555,0.8555555555555555,3ffb09b9-271a-418e-b15d-0975ebec943d,"ParticipantGroupAggregation: Expectation for Location Service: 1 data points of type dk.cachet.carp.location in 1h
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.polar.hr in 1m
 Expectation for Primary Phone: 1 data points of type dk.cachet.carp.stepcount in 4h"

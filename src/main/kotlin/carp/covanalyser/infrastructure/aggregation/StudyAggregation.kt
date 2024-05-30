@@ -31,7 +31,7 @@ class StudyAggregation(private val coverageAggregator: CoverageAggregator) :
         return listOf(
             CoverageWithMetadata(
                 coverageAggregator.aggregate(coverage.map { it.coverage }),
-                coverage.first().deploymentIds,
+                deploymentIDs,
                 getDescription()
             )
         )

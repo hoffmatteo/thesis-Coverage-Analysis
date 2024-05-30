@@ -9,7 +9,11 @@ import carp.covanalyser.application.events.EventBus
 import carp.covanalyser.domain.CompositeExpectation
 import carp.covanalyser.domain.CoverageAnalysis
 import carp.covanalyser.domain.Expectation
-import carp.covanalyser.infrastructure.aggregation.*
+import carp.covanalyser.domain.ExportTarget
+import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
+import carp.covanalyser.infrastructure.aggregation.DeploymentAggregation
+import carp.covanalyser.infrastructure.aggregation.ParticipantGroupAggregation
+import carp.covanalyser.infrastructure.aggregation.StudyAggregation
 import carp.covanalyser.infrastructure.expectations.GenericDataTypeExpectation
 import carp.covanalyser.infrastructure.expectations.LocationExpectation
 import carp.covanalyser.infrastructure.expectations.StepCountExpectation
@@ -107,7 +111,8 @@ class StartUp {
 
     private suspend fun testJsonData() {
         val dataSource = JSONDataStore("test_data\\combined_data_streams.json")
-        var exportTarget = CSVExportTarget("test_deployments.csv")
+        var exportTarget: ExportTarget =
+            CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_datastreams.csv")
 
         val locationExpectation = LocationExpectation(1, "Location Service", 1.toDuration(DurationUnit.HOURS))
         val polarExpectation =
@@ -119,13 +124,15 @@ class StartUp {
             ) { true }
         val stepCountExpectation = StepCountExpectation(1, "Primary Phone", 4.toDuration(DurationUnit.HOURS))
 
-        val dataTypeAggregation = DeploymentAggregation(AverageCoverageAggregator())
-        dataTypeAggregation.expectations.add(locationExpectation)
+        val compositeExpectation = CompositeExpectation<Expectation>()
+        compositeExpectation.expectations.add(locationExpectation)
+        compositeExpectation.expectations.add(polarExpectation)
+        compositeExpectation.expectations.add(stepCountExpectation)
 
         var coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            dataTypeAggregation,
-            2.toDuration(DurationUnit.DAYS),
+            compositeExpectation,
+            8.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
                 UUID.parse("301d0cb4-0482-411d-b58e-f347586dae84"),
@@ -147,6 +154,38 @@ class StartUp {
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
 
 
+        exportTarget =
+            CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_deployments.csv")
+        val deploymentAggregation = DeploymentAggregation(AverageCoverageAggregator())
+        deploymentAggregation.expectations.add(locationExpectation)
+        deploymentAggregation.expectations.add(polarExpectation)
+        deploymentAggregation.expectations.add(stepCountExpectation)
+
+        coverageAnalysis = CoverageAnalysis(
+            UUID.randomUUID(),
+            deploymentAggregation,
+            8.toDuration(DurationUnit.HOURS),
+            listOf(
+                UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
+                UUID.parse("301d0cb4-0482-411d-b58e-f347586dae84"),
+                UUID.parse("09824317-e14c-4b48-9ddf-122d7aadaa87"),
+                UUID.parse("521dd33b-cd9a-4991-b0d3-04c781c0704c"),
+                UUID.parse("714468bc-97e6-4781-88e9-20a426f8c8ad"),
+                UUID.parse("4f5d07ef-2ce8-4b10-9cd7-15f34c90c06a"),
+                UUID.parse("4cdec469-5b5b-495f-8a3c-242c877b190d"),
+                UUID.parse("f63bc945-7113-4974-a4ea-81a197d30697"),
+                UUID.parse("04ddc67c-4e2d-4468-919b-9ca06e3451db"),
+                UUID.parse("3ffb09b9-271a-418e-b15d-0975ebec943d")
+            ),
+            exportTarget,
+            dataSource,
+            Instant.fromEpochMilliseconds(1704067200000),
+            Instant.fromEpochMilliseconds(1704239999000),
+        )
+
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
+
+        /*
         exportTarget = CSVExportTarget("test_devices.csv")
 
 
@@ -157,7 +196,7 @@ class StartUp {
         coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
             deviceAggregation,
-            2.toDuration(DurationUnit.DAYS),
+            12.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
                 UUID.parse("301d0cb4-0482-411d-b58e-f347586dae84"),
@@ -177,8 +216,9 @@ class StartUp {
         )
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
-
+*/
         exportTarget = CSVExportTarget("test_participant_group.csv")
+
 
         val participantGroupAggregation = ParticipantGroupAggregation(AverageCoverageAggregator())
         participantGroupAggregation.expectations.add(locationExpectation)
@@ -188,7 +228,7 @@ class StartUp {
         coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
             participantGroupAggregation,
-            2.toDuration(DurationUnit.DAYS),
+            8.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
                 UUID.parse("301d0cb4-0482-411d-b58e-f347586dae84"),
@@ -209,7 +249,10 @@ class StartUp {
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
 
-        exportTarget = CSVExportTarget("test_study.csv")
+
+
+        exportTarget =
+            CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_study.csv")
 
         val studyAggregation = StudyAggregation(AverageCoverageAggregator())
         studyAggregation.expectations.add(participantGroupAggregation)
@@ -217,7 +260,7 @@ class StartUp {
         coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
             studyAggregation,
-            2.toDuration(DurationUnit.DAYS),
+            8.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
                 UUID.parse("301d0cb4-0482-411d-b58e-f347586dae84"),
