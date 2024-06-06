@@ -33,7 +33,14 @@ class DeviceAggregation(val deviceRoleName: String, private val coverageAggregat
                 deploymentAverages.add(coverage)
             }
             val coverageAverage = coverageAggregator.aggregate(deploymentAverages.map { it.coverage })
-            coverages.add(CoverageWithMetadata(coverageAverage, listOf(deploymentID), getDescription()))
+            coverages.add(
+                CoverageWithMetadata(
+                    coverageAverage,
+                    listOf(deploymentID),
+                    getDescription(),
+                    deploymentAverages
+                )
+            )
         }
         //coverage for a device per deployment
         println("DeviceAggregation: $coverages")

@@ -17,6 +17,7 @@ import carp.covanalyser.infrastructure.aggregation.StudyAggregation
 import carp.covanalyser.infrastructure.expectations.GenericDataTypeExpectation
 import carp.covanalyser.infrastructure.expectations.LocationExpectation
 import carp.covanalyser.infrastructure.expectations.StepCountExpectation
+import carp.covanalyser.infrastructure.expectations.WHO5Expectation
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.DataType
 import kotlinx.datetime.Instant
@@ -31,7 +32,8 @@ class StartUp {
 
 
     suspend fun startUp() {
-        testJsonData()
+        testSurveyData()
+        //testJsonData()
         //testDBData()
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
 
@@ -107,6 +109,39 @@ class StartUp {
         )
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
+    }
+
+    private suspend fun testSurveyData() {
+        val dataSource = JSONDataStore("test_data\\survey_test.json")
+        var exportTarget: ExportTarget =
+            CSVExportTarget("test_survey.csv")
+
+        var who5Expectation = WHO5Expectation(1, 14.toDuration(DurationUnit.DAYS))
+        var coverageAnalysis = CoverageAnalysis(
+            UUID.randomUUID(),
+            who5Expectation,
+            14.toDuration(DurationUnit.DAYS),
+            listOf(
+                UUID.parse("669fcecb-0071-4404-8b47-0debd2c2e2b5"),
+                UUID.parse("daac0d12-f9ef-4444-8154-22e8cc1f2cb6"),
+                UUID.parse("0b15f421-5107-4201-98be-1473a85532ea"),
+                UUID.parse("052a3bca-358d-4df6-acb7-34b6794e7e44"),
+                UUID.parse("fdf7000d-3962-4f37-899f-f9725adf7812"),
+                UUID.parse("a9aa0c37-4b92-422d-bffe-b6a292f9ab7f"),
+                UUID.parse("e6c61354-537b-4ef6-b430-d3001db8eeaf"),
+                UUID.parse("412df3a4-6b3e-4db7-adeb-d218cc2227b1"),
+                UUID.parse("64bedad1-e28c-4c53-81a5-5a27b549adda"),
+                UUID.parse("8fb3b01f-c641-4580-831f-7959c88531b8")
+            ),
+            exportTarget,
+            dataSource,
+            Instant.parse("2023-01-01T15:00:00Z"),
+            Instant.parse("2023-07-01T15:00:00Z"),
+        )
+
+        eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
+
+
     }
 
     private suspend fun testJsonData() {

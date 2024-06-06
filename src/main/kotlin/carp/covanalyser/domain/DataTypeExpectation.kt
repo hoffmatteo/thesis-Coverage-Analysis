@@ -103,6 +103,8 @@ abstract class DataTypeExpectation(
             // measurement is part of coverage time frame
             totalCountMeasurements++
 
+            if (!isValid(measurement)) continue
+
             // if inside of current expectation window, count it
             if (isInCurrentWindow(measurement, windowStart, windowEnd)) {
                 currCount++

@@ -31,7 +31,8 @@ class DeploymentAggregation(private val coverageAggregator: CoverageAggregator) 
                 CoverageWithMetadata(
                     coverageAggregator.aggregate(coverage.map { it.coverage }),
                     deploymentIDs,
-                    expectation.getDescription()
+                    expectation.getDescription(),
+                    coverage
                 )
             )
         }

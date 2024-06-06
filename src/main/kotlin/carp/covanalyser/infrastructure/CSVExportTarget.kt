@@ -37,7 +37,7 @@ class CSVExportTarget(private val filepath: String) : ExportTarget {
     }
 
     override suspend fun exportCoverage(data: List<CoverageWithMetadata>, coverageAnalysis: CoverageAnalysis): Boolean {
-        println("Exporting coverage data to CSV file")
+        println("Exporting coverage data to CSV file for $coverageAnalysis")
         val file = File(filepath)
         var printer: CSVPrinter? = null
 

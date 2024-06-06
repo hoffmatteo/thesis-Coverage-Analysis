@@ -26,13 +26,14 @@ class StudyAggregation(private val coverageAggregator: CoverageAggregator) :
         deploymentIDs: List<UUID>,
         dataStore: DataStore
     ): List<CoverageWithMetadata> {
-        val coverage = expectations.first().calculateCoverage(startTime, endTime, deploymentIDs, dataStore)
-        println("StudyAggregation: $coverage")
+        val coverages = expectations.first().calculateCoverage(startTime, endTime, deploymentIDs, dataStore)
+        println("StudyAggregation: $coverages")
         return listOf(
             CoverageWithMetadata(
-                coverageAggregator.aggregate(coverage.map { it.coverage }),
+                coverageAggregator.aggregate(coverages.map { it.coverage }),
                 deploymentIDs,
-                getDescription()
+                getDescription(),
+                coverages
             )
         )
     }
