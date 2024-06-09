@@ -14,10 +14,7 @@ import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
 import carp.covanalyser.infrastructure.aggregation.DeploymentAggregation
 import carp.covanalyser.infrastructure.aggregation.ParticipantGroupAggregation
 import carp.covanalyser.infrastructure.aggregation.StudyAggregation
-import carp.covanalyser.infrastructure.expectations.GenericDataTypeExpectation
-import carp.covanalyser.infrastructure.expectations.LocationExpectation
-import carp.covanalyser.infrastructure.expectations.StepCountExpectation
-import carp.covanalyser.infrastructure.expectations.WHO5Expectation
+import carp.covanalyser.infrastructure.expectations.*
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.DataType
 import kotlinx.datetime.Instant
@@ -113,14 +110,18 @@ class StartUp {
 
     private suspend fun testSurveyData() {
         val dataSource = JSONDataStore("test_data\\survey_test.json")
-        var exportTarget: ExportTarget =
+        val exportTarget: ExportTarget =
             CSVExportTarget("test_survey.csv")
 
-        var who5Expectation = WHO5Expectation(1, 14.toDuration(DurationUnit.DAYS))
-        var coverageAnalysis = CoverageAnalysis(
+        val who5Expectation = WHO5Expectation(1, 7.toDuration(DurationUnit.DAYS))
+        val hadsExpectation = HADSExpectation(1, 14.toDuration(DurationUnit.DAYS))
+        val compositeExpectation = CompositeExpectation<Expectation>()
+        compositeExpectation.expectations.add(who5Expectation)
+        compositeExpectation.expectations.add(hadsExpectation)
+        val coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            who5Expectation,
-            14.toDuration(DurationUnit.DAYS),
+            compositeExpectation,
+            28.toDuration(DurationUnit.DAYS),
             listOf(
                 UUID.parse("669fcecb-0071-4404-8b47-0debd2c2e2b5"),
                 UUID.parse("daac0d12-f9ef-4444-8154-22e8cc1f2cb6"),

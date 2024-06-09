@@ -39,6 +39,12 @@ abstract class DataTypeExpectation(
         deploymentIDs: List<UUID>,
         dataStore: DataStore
     ): List<CoverageWithMetadata> {
+        // validate expectation duration is not longer than duration of data
+        validateDuration(startTime, endTime)
+        
+        // calculate number of expected expectations
+        val numExpectedExpectations = calculateNumExpectedExpectations(startTime, endTime)
+
         val coverages = mutableListOf<CoverageWithMetadata>()
 
         for (deploymentID in deploymentIDs) {
@@ -47,12 +53,6 @@ abstract class DataTypeExpectation(
 
             //obtain data from data store using dataStreamId
             val data = dataStore.obtainData(startTime, endTime, dataStreamId)
-
-            // validate duration is not longer than duration of data
-            validateDuration(startTime, endTime)
-
-            // calculate number of expected expectations
-            val numExpectedExpectations = calculateNumExpectedExpectations(startTime, endTime)
 
             val coverageResult = calculateCoverageInWindows(data, startTime, endTime, numExpectedExpectations)
 

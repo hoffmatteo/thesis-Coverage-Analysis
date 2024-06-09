@@ -9,9 +9,9 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration
 
-class WHO5Expectation(numDataPoints: Int, duration: Duration) :
+class HADSExpectation(numDataPoints: Int, duration: Duration) :
     DataTypeExpectation(
-        numDataPoints, DataType("dk.cachet.carp", "who"),
+        numDataPoints, DataType("dk.cachet.carp", "hads"),
         //TODO maybe change this
         "Survey Service",
         duration
@@ -23,12 +23,10 @@ class WHO5Expectation(numDataPoints: Int, duration: Duration) :
         for ((step, result) in data.surveyResult.results) {
             val answer = result.results.answer
 
-            if (answer !in 0..5) {
+            if (answer !in 0..3) {
                 return false
             }
         }
         return true
     }
 }
-
-

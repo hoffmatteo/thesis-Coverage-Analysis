@@ -23,6 +23,7 @@ class DefaultCoverageAnalysisService(
     private val analysisScope = CoroutineScope(Dispatchers.Default)
 
     init {
+        //TODO other events
         eventBus.subscribe(CoverageAnalysisRequestedEvent::class) {
             analysisScope.launch {
                 handleCoverageAnalysisRequested(
