@@ -14,12 +14,9 @@ interface EventBus {
     fun <T : Event> subscribe(eventType: KClass<T>, listener: (Event) -> Unit)
 
     /**
-     * Unsubscribe from events of a specific type by removing the listener.
-     * @param eventType The type of event to unsubscribe from.
-     * @param listener The listener to remove.
+     * Publish an event to all subscribers.
+     * @param event The event to publish.
      */
-    fun <T : Event> unsubscribe(eventType: KClass<T>, listener: (Event) -> Unit)
-
     fun <T : Event> publish(event: T)
 }
 

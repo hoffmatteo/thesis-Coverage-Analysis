@@ -17,7 +17,7 @@ import kotlin.time.Duration
  */
 class CoverageAnalysis(
     val id: UUID = UUID.randomUUID(),
-    val expectation: Expectation,
+    val expectations: List<Expectation>,
     val timeBetweenCalculations: Duration,
     val deploymentIds: List<UUID>,
     val exportTarget: ExportTarget,
@@ -32,9 +32,10 @@ class CoverageAnalysis(
      * @param calcStartTime The start time of the coverage calculation.
      * @param calcEndTime The end time of the coverage calculation.
      */
-    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant): List<CoverageWithMetadata> {
-        val coverage = expectation.calculateCoverage(calcStartTime, calcEndTime, deploymentIds, dataStore)
-        exportTarget.exportCoverage(coverage, this)
-        return coverage
+    suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant) {
+        for (expectation in expectations) {
+            val coverage = expectation.calculateCoverage(calcStartTime, calcEndTime, deploymentIds, dataStore)
+            exportTarget.exportCoverage(coverage, this)
+        }
     }
 }

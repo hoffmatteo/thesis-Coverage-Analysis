@@ -16,7 +16,6 @@ class SQLiteDBDataStore(dbName: String, private val tableName: String) : DataSto
     private var connection: Connection? = null
 
     init {
-        Class.forName("org.sqlite.JDBC")
         connection = DriverManager.getConnection("jdbc:sqlite:$dbName")
     }
 
@@ -46,10 +45,18 @@ class SQLiteDBDataStore(dbName: String, private val tableName: String) : DataSto
 
 
         val modifiedDataPoints = measurements.map { measurement ->
-            val modifiedStartTime = measurement.sensorStartTime / 1000
+            val modifiedStartTime =
+                if (measurement.sensorStartTime > 9999999999999) measurement.sensorStartTime / 1000 else measurement.sensorStartTime
+            val modifiedEndTime =
+                if (measurement.sensorEndTime != null) {
+                    if (measurement.sensorEndTime!! > 9999999999999) measurement.sensorEndTime!! / 1000 else measurement.sensorEndTime
+                } else {
+                    null
+                }
+
             Measurement(
                 sensorStartTime = modifiedStartTime,
-                sensorEndTime = measurement.sensorEndTime,
+                sensorEndTime = modifiedEndTime,
                 dataType = measurement.dataType,
                 data = measurement.data
             )

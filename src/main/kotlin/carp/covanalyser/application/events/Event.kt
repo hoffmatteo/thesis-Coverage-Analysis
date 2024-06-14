@@ -14,6 +14,4 @@ abstract class Event(val id: UUID = UUID.randomUUID()) {
     override fun toString(): String {
         return "Event(id=$id, createdAt=$createdAt)"
     }
-
-
 }

@@ -8,7 +8,10 @@ import kotlinx.datetime.Instant
  * Calculates a coverage value for each [Expectation] in [expectations] and returns a list of them.
  * @param T The type of [Expectation] this composite expectation is composed of.
  */
-open class CompositeExpectation<T : Expectation> :
+open class AggregateExpectation<T : Expectation>(
+    val coverageAggregator: CoverageAggregator,
+    private val expectationAggregator: ExpectationAggregator
+) :
     Expectation {
     val expectations: MutableList<T> = mutableListOf()
 
@@ -18,14 +21,10 @@ open class CompositeExpectation<T : Expectation> :
         deploymentIDs: List<UUID>,
         dataStore: DataStore
     ): List<CoverageWithMetadata> {
-        val coverageList = mutableListOf<CoverageWithMetadata>()
-        for (expectation in expectations) {
-            coverageList.addAll(expectation.calculateCoverage(startTime, endTime, deploymentIDs, dataStore))
-        }
-        return coverageList
+        return expectationAggregator.aggregate(this, startTime, endTime, deploymentIDs, dataStore)
     }
 
     override fun getDescription(): String {
-        return "CompositeExpectation: " + expectations.joinToString("\n") { it.getDescription() }
+        return "AggregateExpectation: " + expectations.joinToString("\n") { it.getDescription() }
     }
 }

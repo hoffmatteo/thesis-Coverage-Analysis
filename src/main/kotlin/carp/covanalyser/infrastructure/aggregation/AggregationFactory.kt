@@ -15,7 +15,7 @@ class AggregationFactory {
 
         // Create a DeviceAggregation for each group
         for ((deviceName, expectations) in groupedExpectations) {
-            val deviceAggregation = DeviceAggregation(deviceName, coverageAggregator)
+            val deviceAggregation = DeviceAggregation(coverageAggregator)
             expectations.forEach { deviceAggregation.expectations.add(it) }
             deviceAggregations.add(deviceAggregation)
         }

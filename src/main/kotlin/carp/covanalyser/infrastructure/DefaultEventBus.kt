@@ -15,11 +15,6 @@ class DefaultEventBus : EventBus {
         subscribers.getOrPut(eventType) { mutableListOf() }.add(listener)
     }
 
-    //TODO test this!!
-    override fun <T : Event> unsubscribe(eventType: KClass<T>, listener: (Event) -> Unit) {
-        subscribers[eventType]?.remove(listener)
-    }
-
     override fun <T : Event> publish(event: T) {
         subscribers[event::class]?.forEach { it(event) }
     }

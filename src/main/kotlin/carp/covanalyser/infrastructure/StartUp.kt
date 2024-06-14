@@ -6,14 +6,13 @@ import carp.covanalyser.application.events.CoverageAnalysisCompletedEvent
 import carp.covanalyser.application.events.CoverageAnalysisRequestedEvent
 import carp.covanalyser.application.events.Event
 import carp.covanalyser.application.events.EventBus
-import carp.covanalyser.domain.CompositeExpectation
+import carp.covanalyser.domain.AggregateExpectation
 import carp.covanalyser.domain.CoverageAnalysis
 import carp.covanalyser.domain.Expectation
 import carp.covanalyser.domain.ExportTarget
 import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.infrastructure.aggregation.DeploymentAggregation
+import carp.covanalyser.infrastructure.aggregation.DeploymentExpectationAggregator
 import carp.covanalyser.infrastructure.aggregation.ParticipantGroupAggregation
-import carp.covanalyser.infrastructure.aggregation.StudyAggregation
 import carp.covanalyser.infrastructure.expectations.*
 import dk.cachet.carp.common.application.UUID
 import dk.cachet.carp.common.application.data.DataType
@@ -29,8 +28,8 @@ class StartUp {
 
 
     suspend fun startUp() {
-        testSurveyData()
-        //testJsonData()
+        //testSurveyData()
+        testJsonData()
         //testDBData()
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
 
@@ -91,12 +90,10 @@ class StartUp {
             ) { true }
         )
 
-        val multiCoverageExpectation = CompositeExpectation<Expectation>()
-        multiCoverageExpectation.expectations.addAll(expectations)
 
-        var coverageAnalysis = CoverageAnalysis(
+        val coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            multiCoverageExpectation,
+            expectations,
             1.toDuration(DurationUnit.HOURS),
             listOf(UUID.parse("a030c0a7-279a-4054-bfce-197cca7a7f94")),
             exportTarget,
@@ -115,12 +112,9 @@ class StartUp {
 
         val who5Expectation = WHO5Expectation(1, 7.toDuration(DurationUnit.DAYS))
         val hadsExpectation = HADSExpectation(1, 14.toDuration(DurationUnit.DAYS))
-        val compositeExpectation = CompositeExpectation<Expectation>()
-        compositeExpectation.expectations.add(who5Expectation)
-        compositeExpectation.expectations.add(hadsExpectation)
         val coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            compositeExpectation,
+            listOf(who5Expectation, hadsExpectation),
             28.toDuration(DurationUnit.DAYS),
             listOf(
                 UUID.parse("669fcecb-0071-4404-8b47-0debd2c2e2b5"),
@@ -146,7 +140,7 @@ class StartUp {
     }
 
     private suspend fun testJsonData() {
-        val dataSource = JSONDataStore("test_data\\combined_data_streams.json")
+        val dataSource = JSONDataStore("test_data\\sensor_test.json")
         var exportTarget: ExportTarget =
             CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_datastreams.csv")
 
@@ -160,14 +154,10 @@ class StartUp {
             ) { true }
         val stepCountExpectation = StepCountExpectation(1, "Primary Phone", 4.toDuration(DurationUnit.HOURS))
 
-        val compositeExpectation = CompositeExpectation<Expectation>()
-        compositeExpectation.expectations.add(locationExpectation)
-        compositeExpectation.expectations.add(polarExpectation)
-        compositeExpectation.expectations.add(stepCountExpectation)
 
         var coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            compositeExpectation,
+            listOf(locationExpectation, polarExpectation, stepCountExpectation),
             8.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
@@ -188,18 +178,22 @@ class StartUp {
         )
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
-
 
         exportTarget =
             CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_deployments.csv")
-        val deploymentAggregation = DeploymentAggregation(AverageCoverageAggregator())
-        deploymentAggregation.expectations.add(locationExpectation)
-        deploymentAggregation.expectations.add(polarExpectation)
-        deploymentAggregation.expectations.add(stepCountExpectation)
+        val deploymentLocation =
+            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentExpectationAggregator())
+        deploymentLocation.expectations.add(locationExpectation)
+        val deploymentPolar =
+            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentExpectationAggregator())
+        deploymentPolar.expectations.add(polarExpectation)
+        val deploymentStepCount =
+            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentExpectationAggregator())
+        deploymentStepCount.expectations.add(stepCountExpectation)
 
         coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            deploymentAggregation,
+            listOf(deploymentPolar, deploymentLocation, deploymentStepCount),
             8.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
@@ -220,6 +214,7 @@ class StartUp {
         )
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
+
 
         /*
         exportTarget = CSVExportTarget("test_devices.csv")
@@ -260,10 +255,11 @@ class StartUp {
         participantGroupAggregation.expectations.add(locationExpectation)
         participantGroupAggregation.expectations.add(polarExpectation)
         participantGroupAggregation.expectations.add(stepCountExpectation)
+        /*
 
         coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            participantGroupAggregation,
+            listOf(participantGroupAggregation),
             8.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
@@ -284,6 +280,8 @@ class StartUp {
         )
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
+
+
 
 
 
@@ -293,9 +291,9 @@ class StartUp {
         val studyAggregation = StudyAggregation(AverageCoverageAggregator())
         studyAggregation.expectations.add(participantGroupAggregation)
 
-        coverageAnalysis = CoverageAnalysis(
+        var coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            studyAggregation,
+            listOf(studyAggregation),
             8.toDuration(DurationUnit.HOURS),
             listOf(
                 UUID.parse("7a46a288-7f8e-4242-bedf-ebc80bc9e693"),
@@ -316,6 +314,8 @@ class StartUp {
         )
 
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
+
+         */
 
 
     }
