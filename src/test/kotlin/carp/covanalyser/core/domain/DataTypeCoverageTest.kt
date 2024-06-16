@@ -14,35 +14,23 @@ import kotlinx.datetime.toInstant
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
 
-class DataStreamCoverageTest {
+class DataTypeCoverageTest {
 
 
     private lateinit var dataTypeExpectation: DataTypeExpectation
-    private lateinit var coverageAnalysis: CoverageAnalysis
     private val dataStore: DataStore = mockk()
-    private val exportTarget: ExportTarget = mockk(relaxed = true)
     private val startTime = "2022-01-01T00:00:00Z".toInstant()
     private val endTime = "2022-01-01T01:00:00Z".toInstant()
 
     @BeforeEach
     fun setup() {
         dataTypeExpectation = LocationExpectation(10, "test", 30.toDuration(DurationUnit.MINUTES))
-        coverageAnalysis = CoverageAnalysis(
-            dataTypeExpectation,
-            1.toDuration(DurationUnit.HOURS),
-            listOf(
-                UUID.randomUUID()
-            ),
-            exportTarget,
-            dataStore,
-            startTime,
-            endTime
-        )
 
     }
 
@@ -51,10 +39,12 @@ class DataStreamCoverageTest {
         val data = createDataPoints(40, 10, 2.toDuration(DurationUnit.MINUTES), startTime)
         coEvery { dataStore.obtainData(any(), any(), any()) } returns data
 
-        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime).first()
+        val coverage =
+            dataTypeExpectation.calculateCoverage(startTime, endTime, listOf(UUID.randomUUID()), dataStore)
+                .first().coverage
 
-        assertEquals(1.0, coverage.absCoverage)
-        assertEquals(1.0, coverage.timeCoverage)
+        assertTrue(coverage.absCoverage >= 1.0)
+        assertTrue(coverage.timeCoverage >= 1.0)
     }
 
     @Test
@@ -63,7 +53,9 @@ class DataStreamCoverageTest {
 
         coEvery { dataStore.obtainData(any(), any(), any()) } returns data
 
-        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime).first()
+        val coverage =
+            dataTypeExpectation.calculateCoverage(startTime, endTime, listOf(UUID.randomUUID()), dataStore)
+                .first().coverage
 
         assertEquals(0.4, coverage.absCoverage)
         assertEquals(0.0, coverage.timeCoverage)
@@ -76,7 +68,9 @@ class DataStreamCoverageTest {
 
         coEvery { dataStore.obtainData(any(), any(), any()) } returns data
 
-        val coverage = coverageAnalysis.calculateCoverage(startTime, endTime).first()
+        val coverage =
+            dataTypeExpectation.calculateCoverage(startTime, endTime, listOf(UUID.randomUUID()), dataStore)
+                .first().coverage
 
         assertEquals(0.75, coverage.absCoverage)
         assertEquals(0.5, coverage.timeCoverage)

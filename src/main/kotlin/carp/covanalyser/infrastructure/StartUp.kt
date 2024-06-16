@@ -28,8 +28,8 @@ class StartUp {
 
 
     suspend fun startUp() {
-        //testSurveyData()
-        testJsonData()
+        testSurveyData()
+        //testJsonData()
         //testDBData()
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
 
@@ -64,7 +64,6 @@ class StartUp {
             // "polar.ppg" to 3600,
             "deviceinformation" to 1,
             "error" to 6
-
         )
 
         val expectations = measures.map { (measure, frequency) ->
@@ -108,13 +107,14 @@ class StartUp {
     private suspend fun testSurveyData() {
         val dataSource = JSONDataStore("test_data\\survey_test.json")
         val exportTarget: ExportTarget =
-            CSVExportTarget("test_survey.csv")
+            CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\surveys_test\\test_survey.csv")
 
         val who5Expectation = WHO5Expectation(1, 7.toDuration(DurationUnit.DAYS))
         val hadsExpectation = HADSExpectation(1, 14.toDuration(DurationUnit.DAYS))
+        val stepCountExpectation = StepCountExpectation(1, "Primary Phone", 24.toDuration(DurationUnit.HOURS))
         val coverageAnalysis = CoverageAnalysis(
             UUID.randomUUID(),
-            listOf(who5Expectation, hadsExpectation),
+            listOf(who5Expectation, hadsExpectation, stepCountExpectation),
             28.toDuration(DurationUnit.DAYS),
             listOf(
                 UUID.parse("669fcecb-0071-4404-8b47-0debd2c2e2b5"),

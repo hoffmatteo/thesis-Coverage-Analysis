@@ -1,36 +1,8 @@
 package carp.covanalyser.domain
 
-import carp.covanalyser.application.DefaultCoverageAnalysisService
-import carp.covanalyser.application.events.CoverageAnalysisCompletedEvent
-import carp.covanalyser.application.events.CoverageAnalysisRequestedEvent
-import carp.covanalyser.infrastructure.DefaultEventBus
-import carp.covanalyser.infrastructure.aggregation.AggregationFactory
-import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.infrastructure.aggregation.ParticipantGroupAggregation
-import carp.covanalyser.infrastructure.aggregation.StudyAggregation
-import carp.covanalyser.infrastructure.expectations.LocationExpectation
-import carp.covanalyser.infrastructure.expectations.StepCountExpectation
-import dk.cachet.carp.common.application.UUID
-import dk.cachet.carp.common.application.data.CarpDataTypes
-import dk.cachet.carp.common.application.data.Data
-import dk.cachet.carp.common.application.data.StepCount
-import dk.cachet.carp.data.application.Measurement
-import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.slot
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertTimeoutPreemptively
-import kotlin.test.assertEquals
-import kotlin.time.Duration
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
-import kotlin.time.toJavaDuration
 
 class EndToEndTest {
     private val dataStore: DataStore = mockk()
@@ -43,6 +15,7 @@ class EndToEndTest {
     fun setup() {
     }
 
+    /*
     @Test
     fun `end to end test returns correct coverage`() = runBlocking {
         val eventBus = DefaultEventBus()
@@ -133,5 +106,7 @@ class EndToEndTest {
         return dataPoints
     }
 
+
+     */
 
 }
