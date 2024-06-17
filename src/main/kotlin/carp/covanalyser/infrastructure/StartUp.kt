@@ -91,7 +91,6 @@ class StartUp {
 
 
         val coverageAnalysis = CoverageAnalysis(
-            UUID.randomUUID(),
             expectations,
             1.toDuration(DurationUnit.HOURS),
             listOf(UUID.parse("a030c0a7-279a-4054-bfce-197cca7a7f94")),
@@ -113,7 +112,6 @@ class StartUp {
         val hadsExpectation = HADSExpectation(1, 14.toDuration(DurationUnit.DAYS))
         val stepCountExpectation = StepCountExpectation(1, "Primary Phone", 24.toDuration(DurationUnit.HOURS))
         val coverageAnalysis = CoverageAnalysis(
-            UUID.randomUUID(),
             listOf(who5Expectation, hadsExpectation, stepCountExpectation),
             28.toDuration(DurationUnit.DAYS),
             listOf(
@@ -156,7 +154,6 @@ class StartUp {
 
 
         var coverageAnalysis = CoverageAnalysis(
-            UUID.randomUUID(),
             listOf(locationExpectation, polarExpectation, stepCountExpectation),
             8.toDuration(DurationUnit.HOURS),
             listOf(
@@ -192,7 +189,6 @@ class StartUp {
         deploymentStepCount.expectations.add(stepCountExpectation)
 
         coverageAnalysis = CoverageAnalysis(
-            UUID.randomUUID(),
             listOf(deploymentPolar, deploymentLocation, deploymentStepCount),
             8.toDuration(DurationUnit.HOURS),
             listOf(

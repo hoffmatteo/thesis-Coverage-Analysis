@@ -16,7 +16,6 @@ import kotlin.time.Duration
  * @param endTime The end time of the coverage analysis.
  */
 class CoverageAnalysis(
-    val id: UUID = UUID.randomUUID(),
     val expectations: List<Expectation>,
     val timeBetweenCalculations: Duration,
     val deploymentIds: List<UUID>,
@@ -26,6 +25,8 @@ class CoverageAnalysis(
     //TODO endTime could be left open? Or make it mandatory?
     var endTime: Instant
 ) {
+    var id: UUID = UUID.randomUUID()
+
     /**
      * Calculates the coverage using the given [Expectation] and exports it to the [ExportTarget].
      *

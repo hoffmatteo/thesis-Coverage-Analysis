@@ -2,7 +2,6 @@ package carp.covanalyser.core.domain
 
 import carp.covanalyser.domain.DataStore
 import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.infrastructure.aggregation.DeviceAggregation
 import carp.covanalyser.infrastructure.aggregation.ParticipantGroupAggregation
 import carp.covanalyser.infrastructure.aggregation.StudyAggregation
 import carp.covanalyser.infrastructure.expectations.LocationExpectation
@@ -27,7 +26,6 @@ import kotlin.time.toDuration
 
 class AggregateCoverageTest {
 
-    private lateinit var deviceAggregations: List<DeviceAggregation>
     private lateinit var participantGroupAggregation: ParticipantGroupAggregation
     private lateinit var studyAggregation: StudyAggregation
     private val dataStore: DataStore = mockk()
