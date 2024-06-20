@@ -1,16 +1,16 @@
 package carp.covanalyser.infrastructure.aggregation
 
 import carp.covanalyser.domain.AggregateExpectation
+import carp.covanalyser.domain.AggregateExpectationStrategy
 import carp.covanalyser.domain.CoverageWithMetadata
 import carp.covanalyser.domain.DataStore
-import carp.covanalyser.domain.ExpectationAggregator
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
 /**
  * Aggregates over deployments.
  */
-class DeploymentExpectationAggregator : ExpectationAggregator {
+class DeploymentAggregateExpectationStrategy : AggregateExpectationStrategy {
     override suspend fun aggregate(
         expectation: AggregateExpectation<*>,
         startTime: Instant,

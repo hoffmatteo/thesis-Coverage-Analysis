@@ -11,7 +11,7 @@ import carp.covanalyser.domain.CoverageAnalysis
 import carp.covanalyser.domain.Expectation
 import carp.covanalyser.domain.ExportTarget
 import carp.covanalyser.infrastructure.aggregation.AverageCoverageAggregator
-import carp.covanalyser.infrastructure.aggregation.DeploymentExpectationAggregator
+import carp.covanalyser.infrastructure.aggregation.DeploymentAggregateExpectationStrategy
 import carp.covanalyser.infrastructure.aggregation.ParticipantGroupAggregation
 import carp.covanalyser.infrastructure.expectations.*
 import dk.cachet.carp.common.application.UUID
@@ -20,16 +20,16 @@ import kotlinx.datetime.Instant
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class StartUp {
-    private var eventBus: EventBus = DefaultEventBus()
+class TestApplication {
+    private val eventBus: EventBus = DefaultEventBus()
     private val inMemoryCoverageAnalysisRepository = InMemoryCoverageAnalysisRepository()
-    private var coverageAnalysisService: CoverageAnalysisService =
+    private val coverageAnalysisService: CoverageAnalysisService =
         DefaultCoverageAnalysisService(eventBus, inMemoryCoverageAnalysisRepository)
 
 
     suspend fun startUp() {
-        testSurveyData()
-        //testJsonData()
+        //testSurveyData()
+        testJsonData()
         //testDBData()
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
 
@@ -179,13 +179,13 @@ class StartUp {
         exportTarget =
             CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_deployments.csv")
         val deploymentLocation =
-            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentExpectationAggregator())
+            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentAggregateExpectationStrategy())
         deploymentLocation.expectations.add(locationExpectation)
         val deploymentPolar =
-            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentExpectationAggregator())
+            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentAggregateExpectationStrategy())
         deploymentPolar.expectations.add(polarExpectation)
         val deploymentStepCount =
-            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentExpectationAggregator())
+            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentAggregateExpectationStrategy())
         deploymentStepCount.expectations.add(stepCountExpectation)
 
         coverageAnalysis = CoverageAnalysis(

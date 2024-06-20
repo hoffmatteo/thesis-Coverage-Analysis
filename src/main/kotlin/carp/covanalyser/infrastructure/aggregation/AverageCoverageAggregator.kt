@@ -10,7 +10,7 @@ class AverageCoverageAggregator : CoverageAggregator {
     override fun aggregate(coverageList: List<Coverage>): Coverage {
         // calculate the average of the coverage values
         val totalCoverageSum = coverageList.sumOf { it.absCoverage }
-        val timeCoverageSum = coverageList.sumOf { it.timeCoverage }
+        val timeCoverageSum = coverageList.sumOf { it.expectationCoverage }
         val averageTotalCoverage = totalCoverageSum / coverageList.size
         val averageTimeCoverage = timeCoverageSum / coverageList.size
 

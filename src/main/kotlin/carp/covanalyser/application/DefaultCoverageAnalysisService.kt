@@ -23,13 +23,20 @@ class DefaultCoverageAnalysisService(
     private val analysisScope = CoroutineScope(Dispatchers.Default)
 
     init {
-        //TODO other events
         eventBus.subscribe(CoverageAnalysisRequestedEvent::class) {
             analysisScope.launch {
                 handleCoverageAnalysisRequested(
                     it
                 )
             }
+        }
+        eventBus.subscribe(CoverageAnalysisStopRequestedEvent::class) {
+            analysisScope.launch {
+                handleCoverageAnalysisStopRequested(
+                    it
+                )
+            }
+
         }
     }
 
@@ -92,10 +99,13 @@ class DefaultCoverageAnalysisService(
         var currStartTime = startTime
         val job = analysisScope.launch {
             while (isActive && currStartTime < endTime) {
-                //TODO what if endTime is not a multiple of timeBetweenCalculations?
-                var currEndTime = currStartTime.plus(analysis.timeBetweenCalculations)
-                analysis.calculateCoverage(currStartTime, currEndTime)
-                eventBus.publish(CoverageCalculatedEvent(id))
+                val currEndTime = currStartTime.plus(analysis.timeBetweenCalculations)
+                try {
+                    analysis.calculateCoverage(currStartTime, currEndTime)
+                    eventBus.publish(CoverageCalculatedEvent(id))
+                } catch (e: Exception) {
+                    eventBus.publish(CoverageCalculationFailedEvent(id, e))
+                }
                 currStartTime = currEndTime
                 if (hasWaitTime)
                     delay(analysis.timeBetweenCalculations) // delay is in milliseconds
@@ -105,7 +115,8 @@ class DefaultCoverageAnalysisService(
     }
 
     override suspend fun stopAnalysis(id: UUID) {
-        jobs[id]?.cancel()
+        val job = jobs[id] ?: throw IllegalArgumentException("No job found for analysis with id $id")
+        job.cancel()
     }
 
     override suspend fun stopAllAnalyses() {
@@ -123,6 +134,22 @@ class DefaultCoverageAnalysisService(
             coverageAnalysisRequestedEvent.coverageAnalysis
         )
         startAnalysis(coverageAnalysisRequestedEvent.coverageAnalysis.id)
+    }
+
+    private suspend fun handleCoverageAnalysisStopRequested(event: Event) {
+        val coverageAnalysisStopRequestedEvent = event as CoverageAnalysisStopRequestedEvent
+        try {
+            stopAnalysis(coverageAnalysisStopRequestedEvent.coverageAnalysisId)
+        } catch (e: Exception) {
+            eventBus.publish(
+                CoverageAnalysisStopFailedEvent(
+                    coverageAnalysisStopRequestedEvent.coverageAnalysisId,
+                    event.id,
+                    e
+                )
+            )
+        }
+
     }
 
 

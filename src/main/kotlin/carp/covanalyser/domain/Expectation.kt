@@ -16,6 +16,7 @@ interface Expectation {
      * @param deploymentIDs The deployment IDs to calculate coverage for.
      * @param dataStore The [DataStore] to obtain data from.
      */
+    @Throws(Exception::class)
     suspend fun calculateCoverage(
         startTime: Instant,
         endTime: Instant,

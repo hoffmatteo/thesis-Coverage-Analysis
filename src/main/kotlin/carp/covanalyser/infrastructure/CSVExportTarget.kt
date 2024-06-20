@@ -52,7 +52,7 @@ class CSVExportTarget(private val filepath: String) : ExportTarget {
                     toReadableString(coverageWithMetadata.coverage.startTime),
                     toReadableString(coverageWithMetadata.coverage.endTime),
                     coverageWithMetadata.coverage.absCoverage,
-                    coverageWithMetadata.coverage.timeCoverage,
+                    coverageWithMetadata.coverage.expectationCoverage,
                     coverageWithMetadata.deploymentIds.joinToString { it.toString() },
                     coverageWithMetadata.description
                 )

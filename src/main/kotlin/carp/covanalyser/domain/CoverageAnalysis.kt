@@ -33,6 +33,7 @@ class CoverageAnalysis(
      * @param calcStartTime The start time of the coverage calculation.
      * @param calcEndTime The end time of the coverage calculation.
      */
+    @Throws(Exception::class)
     suspend fun calculateCoverage(calcStartTime: Instant, calcEndTime: Instant) {
         for (expectation in expectations) {
             val coverage = expectation.calculateCoverage(calcStartTime, calcEndTime, deploymentIds, dataStore)

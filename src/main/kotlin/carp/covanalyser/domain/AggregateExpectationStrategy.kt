@@ -3,7 +3,7 @@ package carp.covanalyser.domain
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
-interface ExpectationAggregator {
+interface AggregateExpectationStrategy {
 
     suspend fun aggregate(
         expectation: AggregateExpectation<*>,

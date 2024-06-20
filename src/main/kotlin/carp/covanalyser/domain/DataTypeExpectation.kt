@@ -41,7 +41,7 @@ abstract class DataTypeExpectation(
     ): List<CoverageWithMetadata> {
         // validate expectation duration is not longer than duration of data
         validateDuration(startTime, endTime)
-        
+
         // calculate number of expected expectations
         val numExpectedExpectations = calculateNumExpectedExpectations(startTime, endTime)
 
@@ -123,6 +123,9 @@ abstract class DataTypeExpectation(
         fulfilledExpectations = checkExpectation(currCount, fulfilledExpectations)
 
         val timeCoverage = calculateTimeCoverage(fulfilledExpectations, numExpectedExpectations)
+        if (timeCoverage > 1.0) {
+            throw IllegalStateException("Time coverage is greater than 1.0")
+        }
         val absoluteCoverage = calculateAbsoluteCoverage(totalCountMeasurements, numExpectedExpectations)
 
         return Coverage(absoluteCoverage, timeCoverage, startTime, endTime)

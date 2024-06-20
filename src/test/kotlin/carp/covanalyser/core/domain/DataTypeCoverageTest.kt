@@ -44,7 +44,7 @@ class DataTypeCoverageTest {
                 .first().coverage
 
         assertTrue(coverage.absCoverage >= 1.0)
-        assertTrue(coverage.timeCoverage >= 1.0)
+        assertTrue(coverage.expectationCoverage >= 1.0)
     }
 
     @Test
@@ -58,7 +58,7 @@ class DataTypeCoverageTest {
                 .first().coverage
 
         assertEquals(0.4, coverage.absCoverage)
-        assertEquals(0.0, coverage.timeCoverage)
+        assertEquals(0.0, coverage.expectationCoverage)
     }
 
 
@@ -73,7 +73,7 @@ class DataTypeCoverageTest {
                 .first().coverage
 
         assertEquals(0.75, coverage.absCoverage)
-        assertEquals(0.5, coverage.timeCoverage)
+        assertEquals(0.5, coverage.expectationCoverage)
     }
 
     private fun createDataPoints(

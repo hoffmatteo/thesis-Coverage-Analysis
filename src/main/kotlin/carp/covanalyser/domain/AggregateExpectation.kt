@@ -10,7 +10,7 @@ import kotlinx.datetime.Instant
  */
 open class AggregateExpectation<T : Expectation>(
     val coverageAggregator: CoverageAggregator,
-    private val expectationAggregator: ExpectationAggregator
+    private val aggregateExpectationStrategy: AggregateExpectationStrategy
 ) :
     Expectation {
     val expectations: MutableList<T> = mutableListOf()
@@ -21,7 +21,7 @@ open class AggregateExpectation<T : Expectation>(
         deploymentIDs: List<UUID>,
         dataStore: DataStore
     ): List<CoverageWithMetadata> {
-        return expectationAggregator.aggregate(this, startTime, endTime, deploymentIDs, dataStore)
+        return aggregateExpectationStrategy.aggregate(this, startTime, endTime, deploymentIDs, dataStore)
     }
 
     override fun getDescription(): String {
