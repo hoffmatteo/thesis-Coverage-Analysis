@@ -4,6 +4,7 @@ import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
 interface AggregateExpectationStrategy {
+    var coverageAggregator: CoverageAggregator
 
     suspend fun aggregate(
         expectation: AggregateExpectation<*>,

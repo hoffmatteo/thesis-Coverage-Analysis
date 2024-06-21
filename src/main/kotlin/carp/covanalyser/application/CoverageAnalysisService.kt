@@ -1,5 +1,6 @@
 package carp.covanalyser.application
 
+import carp.covanalyser.application.events.EventBus
 import carp.covanalyser.domain.CoverageAnalysis
 import dk.cachet.carp.common.application.UUID
 
@@ -7,6 +8,8 @@ import dk.cachet.carp.common.application.UUID
  * Service to manage [CoverageAnalysis] objects.
  */
 interface CoverageAnalysisService {
+    val eventBus: EventBus
+
     /**
      * Registers a new [CoverageAnalysis].
      * @param analysis The [CoverageAnalysis] to register.

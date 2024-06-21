@@ -9,7 +9,6 @@ import kotlinx.datetime.Instant
  * @param T The type of [Expectation] this composite expectation is composed of.
  */
 open class AggregateExpectation<T : Expectation>(
-    val coverageAggregator: CoverageAggregator,
     private val aggregateExpectationStrategy: AggregateExpectationStrategy
 ) :
     Expectation {

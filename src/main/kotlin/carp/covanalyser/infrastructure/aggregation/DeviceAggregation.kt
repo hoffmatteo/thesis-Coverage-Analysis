@@ -8,7 +8,7 @@ import carp.covanalyser.domain.DataTypeExpectation
  * Aggregates a list of [DataTypeExpectation]s of the same device to a single expectation.
  */
 class DeviceAggregation(coverageAggregator: CoverageAggregator) :
-    AggregateExpectation<DataTypeExpectation>(coverageAggregator, ExpectationAggregateExpectationStrategy()) {
+    AggregateExpectation<DataTypeExpectation>(ExpectationAggregateExpectationStrategy(coverageAggregator)) {
 
     override fun getDescription(): String {
         return "DeviceAggregation: " + expectations.joinToString("\n") { it.getDescription() }

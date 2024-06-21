@@ -1,16 +1,14 @@
 package carp.covanalyser.infrastructure.aggregation
 
-import carp.covanalyser.domain.AggregateExpectation
-import carp.covanalyser.domain.AggregateExpectationStrategy
-import carp.covanalyser.domain.CoverageWithMetadata
-import carp.covanalyser.domain.DataStore
+import carp.covanalyser.domain.*
 import dk.cachet.carp.common.application.UUID
 import kotlinx.datetime.Instant
 
 /**
  * Aggregates over expectations.
  */
-class ExpectationAggregateExpectationStrategy : AggregateExpectationStrategy {
+class ExpectationAggregateExpectationStrategy(override var coverageAggregator: CoverageAggregator) :
+    AggregateExpectationStrategy {
     override suspend fun aggregate(
         expectation: AggregateExpectation<*>,
         startTime: Instant,
@@ -27,7 +25,7 @@ class ExpectationAggregateExpectationStrategy : AggregateExpectationStrategy {
                     subExpectation.calculateCoverage(startTime, endTime, listOf(deploymentID), dataStore).first()
                 deploymentAverages.add(coverage)
             }
-            val coverageAverage = expectation.coverageAggregator.aggregate(deploymentAverages.map { it.coverage })
+            val coverageAverage = coverageAggregator.aggregate(deploymentAverages.map { it.coverage })
             coverages.add(
                 CoverageWithMetadata(
                     coverageAverage,

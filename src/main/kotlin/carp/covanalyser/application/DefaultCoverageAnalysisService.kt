@@ -16,8 +16,7 @@ import kotlinx.datetime.Instant
  * @property jobs The [Job]s of the running analyses.
  */
 class DefaultCoverageAnalysisService(
-    private var eventBus: EventBus,
-    private var coverageAnalysisRepository: CoverageAnalysisRepository
+    override val eventBus: EventBus, private var coverageAnalysisRepository: CoverageAnalysisRepository,
 ) : CoverageAnalysisService {
     private val jobs = mutableMapOf<UUID, Job>()
     private val analysisScope = CoroutineScope(Dispatchers.Default)

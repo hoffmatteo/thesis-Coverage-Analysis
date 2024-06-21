@@ -179,13 +179,13 @@ class TestApplication {
         exportTarget =
             CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_deployments.csv")
         val deploymentLocation =
-            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentAggregateExpectationStrategy())
+            AggregateExpectation<Expectation>(DeploymentAggregateExpectationStrategy(AverageCoverageAggregator()))
         deploymentLocation.expectations.add(locationExpectation)
         val deploymentPolar =
-            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentAggregateExpectationStrategy())
+            AggregateExpectation<Expectation>(DeploymentAggregateExpectationStrategy(AverageCoverageAggregator()))
         deploymentPolar.expectations.add(polarExpectation)
         val deploymentStepCount =
-            AggregateExpectation<Expectation>(AverageCoverageAggregator(), DeploymentAggregateExpectationStrategy())
+            AggregateExpectation<Expectation>(DeploymentAggregateExpectationStrategy(AverageCoverageAggregator()))
         deploymentStepCount.expectations.add(stepCountExpectation)
 
         coverageAnalysis = CoverageAnalysis(
