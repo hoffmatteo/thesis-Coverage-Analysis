@@ -12,4 +12,3 @@ interface ExportTarget {
      */
     suspend fun exportCoverage(data: List<CoverageWithMetadata>, coverageAnalysis: CoverageAnalysis): Boolean
 }
-//TODO carp core data stream?

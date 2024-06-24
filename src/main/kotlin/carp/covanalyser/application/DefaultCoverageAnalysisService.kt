@@ -132,7 +132,16 @@ class DefaultCoverageAnalysisService(
         registerAnalysis(
             coverageAnalysisRequestedEvent.coverageAnalysis
         )
-        startAnalysis(coverageAnalysisRequestedEvent.coverageAnalysis.id)
+        try {
+            startAnalysis(coverageAnalysisRequestedEvent.coverageAnalysis.id)
+        } catch (e: Exception) {
+            eventBus.publish(
+                CoverageCalculationFailedEvent(
+                    coverageAnalysisRequestedEvent.coverageAnalysis.id,
+                    e
+                )
+            )
+        }
     }
 
     private suspend fun handleCoverageAnalysisStopRequested(event: Event) {

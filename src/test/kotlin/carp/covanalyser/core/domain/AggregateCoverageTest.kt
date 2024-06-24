@@ -88,7 +88,7 @@ class AggregateCoverageTest {
     }
 
     @Test
-    fun `calculateStudyCoverage returns correct study coverage when all expectations are met`() = runBlocking {
+    fun `calculateCoverage returns correct study coverage when all expectations are met`() = runBlocking {
         val deploymentIds = listOf(UUID.randomUUID(), UUID.randomUUID())
         val data = createDataPointsForDeployments(
             mapOf(deploymentIds[0] to 40, deploymentIds[1] to 40),
@@ -114,7 +114,7 @@ class AggregateCoverageTest {
     }
 
     @Test
-    fun `calculateStudyCoverage returns correct study coverage when some expectations are met`() = runBlocking {
+    fun `calculateCoverage returns correct study coverage when some expectations are met`() = runBlocking {
         val deploymentIds = listOf(UUID.randomUUID(), UUID.randomUUID())
         val data = createDataPointsForDeployments(
             mapOf(deploymentIds[0] to 2, deploymentIds[1] to 10),
@@ -140,7 +140,7 @@ class AggregateCoverageTest {
     }
 
     @Test
-    fun `calculateStudyCoverage returns correct study coverage when no expectations are met`() = runBlocking {
+    fun `calculateCoverage returns correct study coverage when no expectations are met`() = runBlocking {
         val deploymentIds = listOf(UUID.randomUUID(), UUID.randomUUID())
         val data = createDataPointsForDeployments(
             mapOf(deploymentIds[0] to 0, deploymentIds[1] to 0),

@@ -75,7 +75,7 @@ class EndToEndTest {
             }
 
         }
-        assertTimeoutPreemptively(10.toDuration(DurationUnit.MINUTES).toJavaDuration()) {
+        assertTimeoutPreemptively(3.toDuration(DurationUnit.MINUTES).toJavaDuration()) {
             runBlocking {
                 channel.receive()
             }

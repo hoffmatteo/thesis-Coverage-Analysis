@@ -20,7 +20,6 @@ class ExpectationAggregateExpectationStrategy(override var coverageAggregator: C
         for (deploymentID in deploymentIDs) {
             val deploymentAverages = mutableListOf<CoverageWithMetadata>()
             for (subExpectation in expectation.expectations) {
-                // this is coverage for a single expectation for a single deployment
                 val coverage =
                     subExpectation.calculateCoverage(startTime, endTime, listOf(deploymentID), dataStore).first()
                 deploymentAverages.add(coverage)
@@ -36,6 +35,5 @@ class ExpectationAggregateExpectationStrategy(override var coverageAggregator: C
             )
         }
         return coverages
-
     }
 }

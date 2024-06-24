@@ -16,7 +16,6 @@ import java.io.IOException
 
 class CSVExportTarget(private val filepath: String) : ExportTarget {
     init {
-        //TODO change to append at some point?
         val file = File(filepath)
         if (file.exists()) {
             file.delete()
@@ -28,7 +27,7 @@ class CSVExportTarget(private val filepath: String) : ExportTarget {
             "Start Time",
             "End Time",
             "Absolute Coverage",
-            "Time Coverage",
+            "Expectation Coverage",
             "Deployment IDs",
             "Description"
         )

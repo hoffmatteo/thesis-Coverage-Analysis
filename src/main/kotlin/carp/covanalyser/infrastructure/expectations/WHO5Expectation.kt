@@ -12,7 +12,6 @@ import kotlin.time.Duration
 class WHO5Expectation(numDataPoints: Int, duration: Duration) :
     DataTypeExpectation(
         numDataPoints, DataType("dk.cachet.carp", "who"),
-        //TODO maybe change this
         "Survey Service",
         duration
     ) {
