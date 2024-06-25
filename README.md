@@ -32,3 +32,7 @@ The framework was evaluated using three use cases:
 
 These three use cases are implemented in the `TestApplication.kt` file, and can be run using the `main` function.
 
+## Documentation
+
+While all classes are documented via code comments, a more detailed description of the project can be found in the
+corresponding thesis.
