@@ -9,6 +9,9 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration
 
+/**
+ * An expectation for the WHO5 survey.
+ */
 class WHO5Expectation(numDataPoints: Int, duration: Duration) :
     DataTypeExpectation(
         numDataPoints, DataType("dk.cachet.carp", "who"),

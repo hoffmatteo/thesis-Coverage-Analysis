@@ -7,6 +7,9 @@ import dk.cachet.carp.common.application.data.StepCount
 import dk.cachet.carp.data.application.Measurement
 import kotlin.time.Duration
 
+/**
+ * An expectation for the step count data type.
+ */
 class StepCountExpectation(
     numDataPoints: Int, deviceName: String, duration: Duration
 ) : DataTypeExpectation(

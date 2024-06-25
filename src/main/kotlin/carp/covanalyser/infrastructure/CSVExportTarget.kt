@@ -14,6 +14,9 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
+/**
+ * An implementation of [ExportTarget] that exports coverage data to a CSV file.
+ */
 class CSVExportTarget(private val filepath: String) : ExportTarget {
     init {
         val file = File(filepath)

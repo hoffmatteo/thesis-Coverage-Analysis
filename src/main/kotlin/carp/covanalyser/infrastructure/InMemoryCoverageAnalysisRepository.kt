@@ -4,6 +4,9 @@ import carp.covanalyser.domain.CoverageAnalysis
 import carp.covanalyser.domain.CoverageAnalysisRepository
 import dk.cachet.carp.common.application.UUID
 
+/**
+ * An in-memory implementation of a [CoverageAnalysisRepository].
+ */
 class InMemoryCoverageAnalysisRepository : CoverageAnalysisRepository {
     private val coverageAnalyses = mutableMapOf<UUID, CoverageAnalysis>()
 

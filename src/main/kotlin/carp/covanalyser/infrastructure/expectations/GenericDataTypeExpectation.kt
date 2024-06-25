@@ -6,6 +6,9 @@ import dk.cachet.carp.common.application.data.DataType
 import dk.cachet.carp.data.application.Measurement
 import kotlin.time.Duration
 
+/**
+ * An expectation for a generic data type.
+ */
 class GenericDataTypeExpectation(
     numDataPoints: Int,
     dataType: DataType,

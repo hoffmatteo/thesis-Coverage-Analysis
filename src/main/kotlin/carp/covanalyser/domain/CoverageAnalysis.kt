@@ -22,7 +22,6 @@ class CoverageAnalysis(
     val exportTarget: ExportTarget,
     val dataStore: DataStore,
     val startTime: Instant,
-    //TODO endTime could be left open? Or make it mandatory?
     var endTime: Instant
 ) {
     var id: UUID = UUID.randomUUID()

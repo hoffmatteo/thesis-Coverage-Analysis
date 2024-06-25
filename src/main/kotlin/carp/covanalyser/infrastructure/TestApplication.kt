@@ -28,9 +28,9 @@ class TestApplication {
 
 
     suspend fun startUp() {
-        //testSurveyData()
-        testJsonData()
-        //testDBData()
+        testDiaFocus()
+        testCATCH()
+        testCAMS()
         eventBus.subscribe(CoverageAnalysisCompletedEvent::class) { this.handleCoverageAnalysisCompletedEvent(it) }
 
         while (true) {
@@ -38,7 +38,7 @@ class TestApplication {
         }
     }
 
-    private suspend fun testDBData() {
+    private suspend fun testCAMS() {
         val dataStore = SQLiteDBDataStore("carp-data.db", "measurements")
         val exportTarget = CSVExportTarget("test_db.csv")
 
@@ -103,7 +103,7 @@ class TestApplication {
         eventBus.publish(CoverageAnalysisRequestedEvent(coverageAnalysis, UUID.randomUUID()))
     }
 
-    private suspend fun testSurveyData() {
+    private suspend fun testDiaFocus() {
         val dataSource = JSONDataStore("test_data\\survey_test.json")
         val exportTarget: ExportTarget =
             CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\surveys_test\\test_survey.csv")
@@ -137,7 +137,7 @@ class TestApplication {
 
     }
 
-    private suspend fun testJsonData() {
+    private suspend fun testCATCH() {
         val dataSource = JSONDataStore("test_data\\sensor_test.json")
         var exportTarget: ExportTarget =
             CSVExportTarget("C:\\Users\\matte\\Desktop\\DTU\\thesis_analysis\\json_test\\test_datastreams.csv")

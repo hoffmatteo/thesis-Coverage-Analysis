@@ -11,6 +11,9 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.datetime.Instant
 import java.io.File
 
+/**
+ * A [DataStore] implementation that uses a JSON file to obtain data.
+ */
 class JSONDataStore(filePath: String) : DataStore {
     private var streamBatch: DataStreamBatch
 

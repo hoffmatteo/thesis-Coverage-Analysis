@@ -28,7 +28,6 @@ import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 import kotlin.time.toJavaDuration
 
-//TODO error handling events
 class EndToEndTest {
     private val dataStore: DataStore = mockk()
     private val exportTarget: ExportTarget = mockk(relaxed = true)

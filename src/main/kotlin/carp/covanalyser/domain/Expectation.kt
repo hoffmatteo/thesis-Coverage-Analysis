@@ -7,7 +7,6 @@ import kotlinx.datetime.Instant
  * Represents an expectation to calculate coverage against.
  */
 interface Expectation {
-    //TODO if steps to be exported too, simply add exportTarget here
     /**
      * Calculates the coverage for the given expectation.
      *

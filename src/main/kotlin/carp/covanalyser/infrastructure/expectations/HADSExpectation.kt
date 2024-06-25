@@ -9,10 +9,12 @@ import dk.cachet.carp.data.application.Measurement
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration
 
+/**
+ * An expectation for the HADS survey.
+ */
 class HADSExpectation(numDataPoints: Int, duration: Duration) :
     DataTypeExpectation(
         numDataPoints, DataType("dk.cachet.carp", "hads"),
-        //TODO maybe change this
         "Survey Service",
         duration
     ) {

@@ -6,6 +6,9 @@ import dk.cachet.carp.common.application.data.DataType
 import dk.cachet.carp.data.application.Measurement
 import kotlin.time.Duration
 
+/**
+ * An expectation for the location data type.
+ */
 class LocationExpectation(
     numDataPoints: Int, deviceName: String, duration: Duration
 

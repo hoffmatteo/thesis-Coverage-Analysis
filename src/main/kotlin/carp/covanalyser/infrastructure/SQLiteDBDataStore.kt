@@ -12,6 +12,9 @@ import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 
+/**
+ * A [DataStore] implementation that uses a SQLite database to obtain  data.
+ */
 class SQLiteDBDataStore(dbName: String, private val tableName: String) : DataStore {
     private var connection: Connection? = null
 
